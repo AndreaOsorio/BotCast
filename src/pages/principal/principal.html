@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Your locations</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let ciudad of ciudades" class="my-cities-element" (click)="changeCity(ciudad.name)">
+        {{ciudad.name}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let today of todayForecast">
+        <img src="../../assets/imgs/rainy.gif"/>
+
+        <div class="location-content">
+          <div class="location-city-name">
+            {{today.cityName}}
+          </div>
+
+          <div class="location-avg-temp">
+            {{today.avgTemp}}<span class="centigrade-symbol">°C</span>
+          </div>
+
+          <div class="location-max-min-temps">
+            High:<b>{{today.tempMax}}</b><span class="centigrade-symbol">°C</span>
+            Low:<b>{{today.tempMin}}</b><span class="centigrade-symbol">°C</span>
+          </div>
+
+          <div class="location-todays-data">
+            {{this.todaysDate}}
+          </div>
+        </div>
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="row-container-hourly-forecasts">
+      <ion-col *ngFor="let hourForecast of todayHourlyForecast" class="col-hourly-forecasts">
+        <ion-row class="row-hourly-forecast">
+          {{hourForecast.time}}
+        </ion-row>
+        <ion-row class="row-hourly-forecast">
+          <ion-icon name={{hourForecast.condition}}></ion-icon>
+        </ion-row>
+        <ion-row class="row-hourly-forecast">
+          {{hourForecast.temp}} <span class="centigrade-symbol">°C</span>
+        </ion-row>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row *ngFor="let day of nextDaysForecast" class="row-forecasts">
+      <ion-col class="col-day-of-week-forecasts">{{day.dayOfWeek}}</ion-col>
+      <ion-col><ion-icon name={{day.condition}} class="icon-forecasts"></ion-icon></ion-col>
+      <ion-col>{{day.tempMax}} <span class="centigrade-symbol">°C</span></ion-col>
+      <ion-col>{{day.tempMin}} <span class="centigrade-symbol">°C</span></ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+
+</ion-content>
+

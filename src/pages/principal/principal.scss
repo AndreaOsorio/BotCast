@@ -1,0 +1,68 @@
+$colorEsquema: dodgerblue;
+
+.row-forecasts{
+  .icon-forecasts{
+    color:$colorEsquema;
+    font-size:20px;
+  }
+  ion-col:not(.col-day-of-week-forecasts){
+    text-align:center;
+  }
+  font-size:15px;
+  margin-top: 5px;
+  border-top:solid 1px lightgrey;
+}
+
+.col-hourly-forecasts, .row-container-hourly-forecasts{
+  ion-icon{
+    color:$colorEsquema;
+    font-size:25px;
+  }
+  text-align:center;
+}
+
+.row-hourly-forecast{
+  margin-top: 5px;
+}
+
+.centigrade-symbol{
+  font-size:11px;
+}
+
+.location-content{
+  position: absolute;
+  top:20%;
+  right:25%;
+  color:white;
+}
+
+$sizeTemp:20px;
+$sizeDate:15px;
+
+.location-city-name{
+  font-size:30px;
+  font-color:lightgrey;
+  font-family:"Arial";
+  font-weight: bold;
+}
+.location-avg-temp {
+  font-size: $sizeTemp;
+  font-weight: bold;
+}
+
+.location-max-min-temps{
+  font-size:$sizeDate;
+}
+
+.my-cities-element{
+  text-align:center;
+  font-size:15px;
+  font-family:"Arial";
+  &:hover{
+    background-color: $colorEsquema;
+    color:white;
+    font-weight: bold;
+    border-radius:4px;
+  }
+
+}

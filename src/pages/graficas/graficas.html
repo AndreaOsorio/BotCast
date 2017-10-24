@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Your locations</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-row >
+        <ion-col col-12>
+            <ion-item>
+                <ion-label>Select temp</ion-label>
+                <ion-select [(ngModel)]="selectedTempOption" multiple="false" (ngModelChange)="optionChanged($event)">
+                    <ion-option value="max">Max temperatures </ion-option>
+                    <ion-option value="min">Min temperatures </ion-option>
+                    <ion-option value="avg">Average temperatures </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+
+    <ion-row class="container-graph">
+        <ion-col>
+            <div>
+                <canvas baseChart width="350" height="250"  #baseChart="base-chart"
+                        [datasets]="lineChartData"
+                        [labels]="lineChartLabels"
+                        [options]="lineChartOptions"
+                        [colors]="lineChartColors"
+                        [legend]="lineChartLegend"
+                        [chartType]="lineChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+            </div>
+        </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-bottom: 10px">
+        <ion-col col-12>
+            <ion-item>
+                <ion-label>Select city</ion-label>
+                <ion-select [(ngModel)]="selectedCity" multiple="false" (ngModelChange)="changeCity($event)">
+                    <ion-option *ngFor="let c of ciudades"> {{c.name}} </ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-item>
+            <ion-label>Initial date</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{todaysDate}} [(ngModel)]="selectedInitDate"></ion-datetime>
+        </ion-item>
+    </ion-row>
+    <ion-row>
+        <ion-item>
+            <ion-label>Final date</ion-label>
+            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{maxFutureDate}} [(ngModel)]="selectedFinalDate" (ngModelChange)="triggerChartUpdateOnFinalDateChange($event)"></ion-datetime>
+        </ion-item>
+    </ion-row>
+
+
+</ion-content>

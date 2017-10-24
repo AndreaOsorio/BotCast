@@ -1,0 +1,82 @@
+[
+  {
+    "content":"What's the temperature today in Shanghai?",
+    "isBotMessage":false,
+    "timestamp":"0"
+  },
+  {
+    "content":"Right now is sunny in Shanghai with a max temperature of 32 C.",
+    "isBotMessage":true,
+    "timestamp":"0"
+  },
+  {
+    "content":"Could you add Cairo to my cities, please?",
+    "isBotMessage":false,
+    "timestamp":"0"
+  },
+  {
+    "content":"Done!",
+    "isBotMessage":true,
+    "timestamp":"0"
+  },
+  {
+    "content":"What is the weather forecast for the Yucatan Peninsula for the next two weeks?",
+    "isBotMessage":false,
+    "timestamp":"0"
+  },
+  {
+    "content":"There is a 50% probability of a hurricane forming in the Caribbean in the next 7 days, otherwise it will be sunny, as usual.",
+    "isBotMessage":true,
+    "timestamp":"0"
+  },
+  {
+    "content":"Will it snow in my location in the next few days?",
+    "isBotMessage":false,
+    "timestamp":"0"
+  },
+  {
+    "content":"Snow won't come until next Winter, in about 3 months from now, according to historical data.",
+    "isBotMessage":true,
+    "timestamp":"0"
+  },
+  {
+    "content":"What's the temperature today in Shanghai?",
+    "isBotMessage":false,
+    "timestamp":"0"
+  },
+  {
+    "content":"Right now is sunny in Shanghai with a max temperature of 32 C.",
+    "isBotMessage":true,
+    "timestamp":"0"
+  },
+  {
+    "content":"Could you add Cairo to my cities, please?",
+    "isBotMessage":false,
+    "timestamp":"0"
+  },
+  {
+    "content":"Done!",
+    "isBotMessage":true,
+    "timestamp":"0"
+  },
+  {
+    "content":"What is the weather forecast for the Yucatan Peninsula for the next two weeks?",
+    "isBotMessage":false,
+    "timestamp":"0"
+  },
+  {
+    "content":"There is a 50% probability of a hurricane forming in the Caribbean in the next 7 days, otherwise it will be sunny, as usual.",
+    "isBotMessage":true,
+    "timestamp":"0"
+  },
+  {
+    "content":"Will it snow in my location in the next few days?",
+    "isBotMessage":false,
+    "timestamp":"0"
+  },
+  {
+    "content":"Snow won't come until next Winter, in about 3 months from now, according to historical data.",
+    "isBotMessage":true,
+    "timestamp":"0"
+  }
+]
