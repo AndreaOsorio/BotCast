@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MyCitiesService, Ciudad } from '../../services/citiesService';
 import { ForecastService, TodayForecast, HourForecast, NextDaysForecast } from '../../services/forecastService';
+import { NavController, NavParams } from 'ionic-angular';
+
 
 //TODO: fix hour change bug based on location, should take 10 mins...
 //TODO: implement geoloc based forecast
@@ -21,13 +23,19 @@ export class PrincipalPage {
     private mcs: MyCitiesService;
     private fs: ForecastService;
 
-  public constructor(private myCitiesService: MyCitiesService, private forecastService: ForecastService) {
+  public constructor(private myCitiesService: MyCitiesService,
+                     private forecastService: ForecastService,
+                     public navCtrl: NavController,
+                     public navParams: NavParams) {
 
       this.todaysDate = this.getTodaysDate();
       this.mcs = this.myCitiesService;
       this.fs = this.forecastService;
 
       this.makeApiCalls("");
+
+      //TODO: through auth token get user info and retrieve preferences, forecasts, etc
+      console.log(this.navParams.data)
   }
 
   public makeApiCalls(city:string){

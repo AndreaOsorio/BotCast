@@ -1,0 +1,46 @@
+<ion-content has-header="true" padding="true" class="contenido_login">
+    <ion-grid>
+    <ion-row></ion-row>
+
+
+    <ion-row>
+        <ion-col col-12 class="titulo_bot_cast">
+            <b>Botcast</b>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col col-12>
+            <img src="../assets/imgs/bot_icon.png" height="100" width="100"/>
+        </ion-col>
+    </ion-row>
+
+
+    <ion-row>
+        <ion-col>
+            <ion-list inset>
+
+                <ion-item>
+                    <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="user.username" required></ion-input>
+                </ion-item>
+
+                <ion-item>
+                    <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="user.password" required></ion-input>
+                </ion-item>
+
+            </ion-list>
+        </ion-col>
+
+    </ion-row>
+
+
+        <ion-row>
+            <ion-col class="signup-col">
+                <button ion-button class="submit-btn" full (click)="login()" type="submit" >Login</button>
+                <button ion-button class="register-btn" block clear (click)="register()">Sign up</button>
+            </ion-col>
+        </ion-row>
+
+
+    </ion-grid>
+</ion-content>

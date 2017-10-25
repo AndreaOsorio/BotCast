@@ -1,0 +1,52 @@
+<ion-content>
+    <ion-list no-lines>
+        <ion-grid>
+
+            <ion-row>
+                <ion-col col-12 class="titulo_bot_cast">
+                    <b>Botcast</b>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col col-12>
+                    <img src="../assets/imgs/bot_icon.png" height="100" width="100"/>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+
+                <ion-col col-12>
+                    <form [formGroup]="slideOneForm">
+
+                        <ion-item>
+                            <ion-label floating>Name</ion-label>
+                            <ion-input formControlName="name" type="text"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label floating>E-mail</ion-label>
+                            <ion-input formControlName="email" type="text"></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label floating>Username</ion-label>
+                            <ion-input formControlName="username" type="number"></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label floating>Password</ion-label>
+                            <ion-input formControlName="password" type="password"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label floating>Confirm password</ion-label>
+                            <ion-input formControlName="confirmpassword" type="password"></ion-input>
+                        </ion-item>
+                    </form>
+
+                    <button ion-button full color="primary" (click)="register()">Create Account!</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+    </ion-list>
+</ion-content>

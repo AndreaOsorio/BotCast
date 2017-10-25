@@ -52,7 +52,8 @@ export class ForecastService {
         "Light rain shower":"md-rainy",
         "Moderate rain at times":"md-rainy",
         "Heavy snow":"md-snow",
-        "Heavy rain":"md-umbrella"
+        "Heavy rain":"md-umbrella",
+        "Patchy rain possible":"md-rainy"
     }
 
     private dayOfWeekMap = {

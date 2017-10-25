@@ -12,6 +12,8 @@ import { MyCitiesService } from '../services/citiesService';
 import { ForecastService } from '../services/forecastService';
 import { GraphsService } from '../services/graphsService';
 import { ChatbotService } from '../services/chatbotService';
+import { AuthorizationService } from '../services/authService';
+
 
 import { GraphsPage } from '../pages/graficas/graficas';
 
@@ -21,6 +23,9 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ChatbotPage } from '../pages/chatbot/chatbot';
+
+import { LoginPage } from '../login/login/login';
+import { RegisterPage } from '../login/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -34,7 +39,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage,
     PrincipalPage,
     GraphsPage,
-    ChatbotPage
+    ChatbotPage,
+    LoginPage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
@@ -51,7 +58,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage,
     PrincipalPage,
     GraphsPage,
-    ChatbotPage
+    ChatbotPage,
+    LoginPage,
+    RegisterPage
   ],
   providers: [
     StatusBar,
@@ -60,6 +69,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ForecastService,
     GraphsService,
     ChatbotService,
+    AuthorizationService,
     {provide: {ErrorHandler, LocationStrategy}, useClass: IonicErrorHandler}
   ]
 })
