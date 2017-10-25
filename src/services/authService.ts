@@ -7,7 +7,8 @@ export class UserLogin{
     constructor(
         public username:string,
         public password:string,
-        public timestamp:string
+        public timestamp:string,
+        public privileges:string
     ){}
 }
 
@@ -15,7 +16,8 @@ export class AuthorizationToken{
     constructor(
         public authorized:boolean,
         public timestamp:string,
-        public validUntil:string
+        public validUntil:string,
+        public privileges:string
     ){}
 }
 
@@ -36,17 +38,29 @@ export class AuthorizationService {
                 .toPromise()
                 .then(
                     res => {
-                        let user = res.json();
+
+                        let users = $.map(res.json(), function(e){return e});
+
                         let authorized:boolean = false;
                         let timestamp:string = (new Date())+"";
                         let validUntil:string = "0000";
+                        let authTokenPrivileges:string = "user";
 
-                        if(userToBeAuthorized.password == user.password && userToBeAuthorized.username == user.username){
-                            authorized = true;
-                            validUntil = "1111";
-                        }
+                        $.each(users, function(i,user){
+                            console.log(user)
+                            if(userToBeAuthorized.password == user.password && userToBeAuthorized.username == user.username){
+                                authorized = true;
+                                validUntil = "1111";
+                                if(user.privileges == "admin"){
+                                    authTokenPrivileges="admin";
+                                }
+                            }
+                        });
 
-                        resolve(new AuthorizationToken(authorized,timestamp,validUntil));
+                        let x = new AuthorizationToken(authorized,timestamp,validUntil, authTokenPrivileges);
+                        console.log(x)
+                        resolve(x);
+
                     },
                     msg => {
                         reject(msg);

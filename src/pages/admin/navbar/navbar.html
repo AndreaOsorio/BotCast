@@ -1,0 +1,51 @@
+<ion-navbar>
+
+
+    <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>
+        Admin portal
+    </ion-title>
+
+    <ion-buttons end>
+        <button ion-button icon-only (click)="toDashboardAdminPage()">
+            <ion-item>
+                <ion-icon name="ios-speedometer-outline" ></ion-icon>
+                Dashboard
+            </ion-item>
+        </button>
+
+
+        <button ion-button icon-only (click)="toStatsAdminPage()">
+            <ion-item>
+                <ion-icon name="ios-pie-outline" ></ion-icon>
+                Stats
+            </ion-item>
+        </button>
+
+        <button ion-button icon-only (click)="toUsersAdminPage()">
+            <ion-item>
+                <ion-icon name="ios-people-outline"></ion-icon>
+                Users
+            </ion-item>
+        </button>
+
+        <button ion-button icon-only (click)="toCitiesAdminPage()">
+            <ion-item>
+                <ion-icon name="md-globe" ></ion-icon>
+                Cities
+            </ion-item>
+        </button>
+
+        <button ion-button icon-only (click)="toAccountAdminPage()">
+            <ion-item>
+                <ion-icon name="ios-body-outline"></ion-icon>
+                My Account
+            </ion-item>
+        </button>
+
+
+    </ion-buttons>
+</ion-navbar>

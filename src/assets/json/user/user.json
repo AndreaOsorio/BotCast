@@ -1,5 +1,16 @@
-{
-  "username":"x",
-  "password":"123",
-  "timestamp":"0"
-}
+[
+  {
+
+    "username":"x",
+    "password":"123",
+    "timestamp":"0",
+    "privileges":"user"
+  },
+  {
+
+    "username":"y",
+    "password":"123",
+    "timestamp":"0",
+    "privileges":"admin"
+  }
+]

@@ -3,6 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { BrowserModule } from '@angular/platform-browser';;
 import {LocationStrategy} from '@angular/common';
 
+
 import { BotCast } from './app.component';
 import {HttpModule, Http, Response} from '@angular/http';
 
@@ -27,8 +28,19 @@ import { ChatbotPage } from '../pages/chatbot/chatbot';
 import { LoginPage } from '../login/login/login';
 import { RegisterPage } from '../login/register/register';
 
+import { NavBar } from '../pages/admin/navbar/navbar';
+
+import {AdminDashboard} from '../pages/admin/dashboard/dashboard';
+
+import {AdminCities} from '../pages/admin/cities/cities';
+import {AdminMyAccount} from '../pages/admin/myaccount/myaccount';
+import {AdminStats} from '../pages/admin/stats/stats';
+import {AdminUsers} from '../pages/admin/users/users';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { RouterModule, Routes } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -41,7 +53,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     GraphsPage,
     ChatbotPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    AdminDashboard,
+    NavBar,
+    AdminCities,
+    AdminUsers,
+    AdminMyAccount,
+    AdminStats,
+
   ],
   imports: [
     BrowserModule,
@@ -60,7 +79,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     GraphsPage,
     ChatbotPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    AdminDashboard,
+    NavBar,
+    AdminCities,
+    AdminUsers,
+    AdminMyAccount,
+    AdminStats,
+
   ],
   providers: [
     StatusBar,
