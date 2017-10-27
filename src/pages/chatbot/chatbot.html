@@ -1,4 +1,4 @@
-
+<!--Chatbot User Tab Component HTML Structure-->
 <ion-content padding>
     <div class="contenedor_conversacion">
         <ion-grid>
@@ -12,8 +12,6 @@
                     </ion-col>
                     <ion-col col-4></ion-col>
                 </ion-row>
-
-
                 <ion-row *ngIf="i%2!=0" col-12>
                     <ion-col col-4></ion-col>
                     <ion-col class="bot-message-content">
@@ -22,20 +20,8 @@
                     <ion-col col-1>
                         <ion-icon name="md-cloud"></ion-icon>
                     </ion-col>
-
                 </ion-row>
             </ion-row>
         </ion-grid>
     </div>
-
-
-    <!--<div class = "contenedor_mensaje">-->
-        <!--<div class="item item-input-inset">-->
-            <!--<label class="item item-input-wrapper">-->
-                <!--<i class="icon ion-edit ion-paper-airplane"></i>-->
-                <!--<input type="text" placeholder = "{{enviar_mensaje}}" />-->
-            <!--</label>-->
-        <!--</div>-->
-    <!--</div>-->
-
 </ion-content>

@@ -9,6 +9,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/do';
 
+//TODO: determine final DTO format for saved cities, should probably include location to use in geoloc services
 export class Ciudad {
     constructor(
         public name: string
@@ -16,17 +17,27 @@ export class Ciudad {
     }
 }
 
+/**
+ * Service that retrieves a user's saved cities to be displayed in the main tab of the mobile page.
+ */
 @Injectable()
 export class MyCitiesService {
 
+    //Currently a dummy call to a local json
+    /**
+     * Backend REST endpoint URL to retrieve the saved cities and its corresponding key (if any)
+     */
     apiRoot:string = '../assets/json/cities/mycities.json';
-
-    // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
+    // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //when the actual backend endpoints work
 
     constructor(private http: Http) {
     }
 
-    retrieveMyCities(): Promise<Ciudad[]>{
+    /**
+     * Function that performs a REST call to the backend and retrieves a user's saved cities as a list of cities...
+     * @returns {Promise<T>}: promise that resolves to an array of a user's saved cities in the appropriate DTO object
+     */
+    public retrieveMyCities(): Promise<Ciudad[]>{
 
         let apiURL = `${this.apiRoot}`;
 
@@ -37,7 +48,6 @@ export class MyCitiesService {
                     res => {
                         let ciudades:Ciudad[] =[]
                         let citiesJson = $.map(res.json(), function(e){return e});
-                        console.log(citiesJson)
                         $.each(citiesJson, function(i,city){
                             ciudades.push(new Ciudad(city.name))
                         });

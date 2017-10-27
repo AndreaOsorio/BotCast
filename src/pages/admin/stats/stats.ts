@@ -9,6 +9,9 @@ import {LoginPage} from '../../../login/login/login'
     templateUrl: 'stats.html'
 })
 
+/**
+ * Admin statistics tab constructor
+ */
 export class AdminStats {
 
     public constructor(public navCtrl: NavController) {

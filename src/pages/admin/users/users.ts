@@ -7,6 +7,9 @@ import {LoginPage} from '../../../login/login/login'
     templateUrl: 'users.html'
 })
 
+/**
+ * Admin users tab constructor
+ */
 export class AdminUsers {
 
     public constructor(public navCtrl: NavController) {

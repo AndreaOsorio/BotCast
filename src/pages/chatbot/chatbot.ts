@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { ChatbotService, Conversation, Message } from '../../services/chatbotService';
 
-//TODO: fix hour change bug based on location, should take 10 mins...
-//TODO: implement geoloc based forecast
-//TODO: background gif changes as a function of weather
+
 
 @Component({
     selector: 'bot',

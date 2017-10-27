@@ -9,6 +9,10 @@ import {LoginPage} from '../../../login/login/login'
     templateUrl: 'myaccount.html'
 })
 
+
+/**
+ * Admin account details tab constructor
+ */
 export class AdminMyAccount {
 
     public constructor(public navCtrl: NavController) {

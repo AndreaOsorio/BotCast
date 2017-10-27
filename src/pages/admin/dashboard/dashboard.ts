@@ -9,6 +9,9 @@ import {LoginPage} from '../../../login/login/login'
     templateUrl: 'dashboard.html'
 })
 
+/**
+ * Admin main dashboard tab constructor
+ */
 export class AdminDashboard {
 
     public constructor(public navCtrl: NavController) {

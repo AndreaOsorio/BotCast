@@ -8,7 +8,17 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/do';
 
 
+/**
+ * Model for information transmission object between this service and the user graph view
+ */
 export class GraphDayForecast{
+    /**
+     *
+     * @param date: forecast date/historical data point date
+     * @param tempMax: that day's maximum temperature
+     * @param tempMin: that day's minimum temperature
+     * @param condition: that day's weather condition e.g. "Light snow" or "Overcast"
+     */
     constructor(
         public date:string,
         public tempMax:number,
@@ -17,6 +27,9 @@ export class GraphDayForecast{
     ){}
 }
 
+/**
+ * Service that build the array of weather historical data for the user graphs tab
+ */
 @Injectable()
 export class GraphsService { //for historical data, pending, API in the past and 8+ days in the future requires premium account
 

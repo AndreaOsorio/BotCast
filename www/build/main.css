@@ -25628,9 +25628,27 @@ ion-icon {
   font-family: "Arial";
 }
 
-.my-cities-element:hover {
+.cities-slider {
+  position: relative;
+  width: 100%;
+  height: 10%;
+}
+
+.cityClicked {
   background-color: dodgerblue;
   color: white;
   font-weight: bold;
   border-radius: 4px;
+}
+
+.my-location-button {
+  position: relative;
+  top: -10px;
+  width: 100%;
+}
+
+.add-city-button {
+  position: relative;
+  top: -10px;
+  width: 100%;
 }

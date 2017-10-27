@@ -1,3 +1,4 @@
+<!--User Main Tab Component HTML Structure-->
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -8,13 +9,30 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-grid>
-    <ion-row>
-      <ion-col *ngFor="let ciudad of ciudades" class="my-cities-element" (click)="changeCity(ciudad.name)">
-        {{ciudad.name}}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
+  <ion-slides class="cities-slider">
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let ciudad of ciudades" class="my-cities-element" (click)="changeCity(ciudad.name)">
+            {{ciudad.name}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col >
+            <button ion-button color="primary" class="my-location-button" (click)="getMyLocation()">My location</button>
+          </ion-col>
+          <ion-col >
+            <button ion-button color="secondary" class="add-city-button">Add city</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
 
   <ion-grid>
     <ion-row>

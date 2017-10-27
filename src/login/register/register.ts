@@ -16,6 +16,13 @@ export class RegisterPage {
 
 
     //TODO: implement form validators
+    /**
+     *
+     * @param navCtrl: application navigation controller to find your way between views
+     * @param authorizationService: service that provides users with authorization tokens once registered
+     * @param formBuilder: angular utility for form validation
+     * Register form component basic constructor
+     */
     public constructor(public navCtrl: NavController, public authorizationService:AuthorizationService, public formBuilder: FormBuilder){
         this.slideOneForm = formBuilder.group({
             name: [''],
@@ -26,6 +33,9 @@ export class RegisterPage {
         });
     }
 
+    /**
+     * Form fields will be validated and sent to backend for user final registration
+     */
     public register():void{
         //TODO: implement here call to POST API endpoint when backend is ready
         this.navCtrl.push(LoginPage);

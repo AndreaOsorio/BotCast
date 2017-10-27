@@ -9,6 +9,9 @@ import {LoginPage} from '../../../login/login/login'
     templateUrl: 'cities.html'
 })
 
+/**
+ * Admin cities tab constructor
+ */
 export class AdminCities {
 
     public constructor(public navCtrl: NavController) {

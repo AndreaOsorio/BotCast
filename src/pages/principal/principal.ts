@@ -1,46 +1,63 @@
 import { Component } from '@angular/core';
 import { MyCitiesService, Ciudad } from '../../services/citiesService';
 import { ForecastService, TodayForecast, HourForecast, NextDaysForecast } from '../../services/forecastService';
-import { NavController, NavParams } from 'ionic-angular';
-
+import { NavController, NavParams} from 'ionic-angular';
+import {GeolocationService, RawLocation, GeolocationAddress} from '../../services/geolocationService';
 
 //TODO: fix hour change bug based on location, should take 10 mins...
-//TODO: implement geoloc based forecast
 //TODO: background gif changes as a function of weather
 
 @Component({
   selector: 'principal',
   templateUrl: 'principal.html'
 })
-
+/**
+ * Component for user main interface, user can add cities, select cities, select current location and
+ * today's weather along withnext week's forecasts will be displayed.
+ * This component's state contains the user's currently saved cities, today's and next week's weather, today's date,
+ * the user's current location in latitude and longitude (raw format) and the user's approximate address.
+ */
 export class PrincipalPage {
     private ciudades: Ciudad[] = [];
     private todayForecast:TodayForecast[] = [];
     private todayHourlyForecast: HourForecast[] = [];
     private nextDaysForecast: NextDaysForecast[] = [];
     private todaysDate:string;
+    private mycurrentLocationLatLong:RawLocation;
+    private myCurrentLocationReverseGeocoded:GeolocationAddress;
 
-    private mcs: MyCitiesService;
-    private fs: ForecastService;
-
+    /**
+     *
+     * @param myCitiesService: service that retrieves a user's saved cities
+     * @param forecastService: service that retrieves today's and next week's weather forecasts
+     * @param navCtrl: application navigation controller
+     * @param navParams: parameters to be passed between different screens
+     * @param geolocationService: service that retrieves user's current location in latLong format, then performs an external call
+     * to a geocoder to get the exact address
+     */
   public constructor(private myCitiesService: MyCitiesService,
                      private forecastService: ForecastService,
                      public navCtrl: NavController,
-                     public navParams: NavParams) {
+                     public navParams: NavParams,
+                     private geolocationService: GeolocationService) {
 
       this.todaysDate = this.getTodaysDate();
-      this.mcs = this.myCitiesService;
-      this.fs = this.forecastService;
 
       this.makeApiCalls("");
 
-      //TODO: through auth token get user info and retrieve preferences, forecasts, etc
+      //TODO: through auth token get user info and retrieve preferences, forecasts, etc, when backend is ready
       console.log(this.navParams.data)
   }
 
+    /**
+     *
+     * @param city: city whose current and future weather wants to be known
+     * This method calls all the different services to retrieve the selected city's weather and then redraws
+     * the whole view with the retrieved data in the appropriate format
+     */
   public makeApiCalls(city:string){
 
-      if(city == undefined || city == "") city = "Mexico City"; //implementar geolocalizacion aqui
+      if(city == undefined || city == "") city = "Amsterdam";
 
       this.myCitiesService.retrieveMyCities().then(data=>{
           this.ciudades = data
@@ -54,13 +71,40 @@ export class PrincipalPage {
 
       this.forecastService.weatherNextDays(city).then( data=>{
           this.nextDaysForecast = data
+          console.log(this.nextDaysForecast)
       });
   }
 
-  public changeCity(cityName:string){
-    this.makeApiCalls(cityName);
+    /**
+     * First acquires user's longitude and latitude with cordova's native hardware interaction API,
+     * then performs an external call to retrieve the user's approximate address but, most importantly, his/her current city
+     * to call makeApiCalls() and redraw the view with the current location's weather
+     */
+  public getMyLocation(){
+      this.geolocationService.getMyCurrentLocation().then(data=>{
+          this.mycurrentLocationLatLong = data;
+          this.geolocationService.getMyCurrentAddressBasedOnLatLong(data).then(data=>{
+              this.myCurrentLocationReverseGeocoded = data;
+              this.makeApiCalls(data.city)
+          });
+      })
   }
 
+    /**
+     *
+     * @param cityName: city parameter used in templates to know which city has been selected from the slider
+     * Event binding function to retrieve users current location and update screen
+     */
+  public changeCity(cityName:string){
+      this.makeApiCalls(cityName);
+      //TODO: implement here changes to classes when users selects a particular city
+  }
+
+    /**
+     *
+     * @returns {string} returns today's date in a pretty format (DayOfWeek, MonthName DayOfMonth, CurrentYear e.g. Thursday, January 20, 2099)
+     * Auxiliary method for date formatting
+     */
   public getTodaysDate(){
     let dayOfWeekMap = {
           0: "Sunday",

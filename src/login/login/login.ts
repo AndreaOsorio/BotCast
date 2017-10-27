@@ -19,8 +19,14 @@ export class LoginPage {
         this.user = new UserLogin("y","123","",""); //testing user
     }
 
+    /**
+     * Makes a call to authorize users according to their credentials
+     * Currently, only 2 types of users exist: administrators and common users
+     * Administrators are redirected to the admin dashboard, while common users are directed to the main mobile
+     * page with current a list of currently registered cities.
+     * An authorization token is provided to every user which specifies his/her privileges and expiration time
+     */
     public login():void{
-        console.log("SHI!")
         console.log(this.user);
         this.authorizationService.authorizeUser(this.user).then(data=>{
             if(data.authorized){
