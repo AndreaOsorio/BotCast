@@ -15,6 +15,9 @@ import { ChatbotService } from '../services/chatbotService';
 import { AuthorizationService } from '../services/authService';
 import {GeolocationService} from '../services/geolocationService';
 
+import { MyForecastService } from '../services/myForecastService';
+import { StatService } from '../services/statsService';
+
 import { GraphsPage } from '../pages/graficas/graficas';
 import { ChartsModule } from 'ng2-charts';
 
@@ -97,6 +100,8 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     Geolocation,
     NativeGeocoder,
     GeolocationService,
+    MyForecastService,
+    StatService,
     {provide: {ErrorHandler, LocationStrategy}, useClass: IonicErrorHandler}
   ]
 })
