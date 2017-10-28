@@ -1,6 +1,50 @@
 <!--Administrator User Control Tab Component HTML Structure-->
 
 <ion-content>
-    <navbar></navbar>
-    Users
-</ion-content>
+  <navbar></navbar>
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col><ion-searchbar 
+          placeholder="Search by User"
+          [(ngModel)]="myInput"
+          [showCancelButton]="shouldShowCancel"
+          (ionInput)="onInput($event)"
+          (ionCancel)="onCancel($event)">
+        </ion-searchbar></ion-col>
+        <ion-col> <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="add"></ion-icon></button></ion-col>  
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div>
+    <ion-grid>
+      <ion-row>
+        <ion-col><h4>Name</h4></ion-col>
+        <ion-col><h4>Age</h4></ion-col>
+        <ion-col><h4>Username</h4></ion-col>
+        <ion-col><h4>Email</h4></ion-col>
+        <ion-col><h4># of Logins</h4></ion-col>
+        <ion-col><h4>Last Login</h4></ion-col>
+        <ion-col><h4>Last Location</h4></ion-col>
+        <ion-col><h4></h4></ion-col>
+      </ion-row>
+      <ion-row *ngFor="let info of information">
+        <ion-col>{{info.name}}</ion-col>
+        <ion-col>{{info.age}}</ion-col>
+        <ion-col>{{info.username}}</ion-col>
+        <ion-col>{{info.email}}</ion-col>
+        <ion-col>{{info.logins}}</ion-col>
+        <ion-col>{{info.lastlogin}}</ion-col>
+        <ion-col>{{info.lastlocation}}</ion-col>
+        <ion-col>
+          <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="close-circle"></ion-icon></button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+ </ion-content> 
+
+
+
+
+

@@ -1,0 +1,50 @@
+[
+  {
+
+    "city":"New York",
+    "country":"United States",
+    "status":"Active"
+  },
+  {
+
+    "city":"Mexico City",
+    "country":"Mexico",
+    "status":"Active"
+  },
+  {
+
+    "city":"Vancouver",
+    "country":"Canada",
+    "status":"Inactive"
+  },
+  {
+
+    "city":"Moscow",
+    "country":"Russia",
+    "status":"Active"
+  },
+  {
+
+    "city":"Rome",
+    "country":"Italy",
+    "status":"Inactive"
+  },
+  {
+
+    "city":"Calcuta",
+    "country":"India",
+    "status":"Active"
+  },
+  {
+
+    "city":"Lima",
+    "country":"Peru",
+    "status":"Active"
+  },
+  {
+
+    "city":"Melbourne",
+    "country":"Australia",
+    "status":"Inactive"
+  }
+]

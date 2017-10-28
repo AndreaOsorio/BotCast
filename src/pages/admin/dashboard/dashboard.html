@@ -1,6 +1,60 @@
 <!--Administrator Dashoboard Tab Component HTML Structure-->
 <ion-content>
-    <navbar></navbar>
+  <navbar></navbar>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
 
-    Dashboard
-</ion-content>
+          <div>
+            <h2>Top Searched Cities</h2>
+            <ion-grid>
+              <ion-row>
+                <ion-col><h4>City</h4></ion-col>
+                <ion-col><h4>Visits</h4></ion-col>
+              </ion-row>
+              <ion-row *ngFor="let top of tops">
+                <ion-col>{{top.name}}</ion-col>
+                <ion-col>{{top.searches}}</ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+
+        </ion-col>
+        <ion-col>
+
+          <h2>Monthly Visitors</h2>
+          <div class="container-graph">
+            <canvas baseChart width="350" height="250"  #baseChart="base-chart"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+          </div>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>  
+ </ion-content> 
+
+      
+  
+<!-- Monthly visitors grid
+  <div>
+    <h2>Monthly Visitors</h2>
+    <ion-grid>
+      <ion-row>
+        <ion-col><h4>Month</h4></ion-col>
+        <ion-col><h4>Visits</h4></ion-col>
+      </ion-row>
+      <ion-row *ngFor="let visit of visitors">
+        <ion-col>{{visit.month}}</ion-col>
+        <ion-col>{{visit.visits}}</ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+-->
+  

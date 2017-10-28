@@ -14,7 +14,11 @@ import { GraphsService } from '../services/graphsService';
 import { ChatbotService } from '../services/chatbotService';
 import { AuthorizationService } from '../services/authService';
 import {GeolocationService} from '../services/geolocationService';
-
+import { UsersInfoService } from '../services/usersInfoService';
+import { CityManagerService } from '../services/cityManagerService';
+import { VisitorService } from '../services/dashboardService';
+import { SearchedService } from '../services/dashboardService';
+                            
 import { GraphsPage } from '../pages/graficas/graficas';
 import { ChartsModule } from 'ng2-charts';
 
@@ -94,9 +98,13 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     GraphsService,
     ChatbotService,
     AuthorizationService,
+    UsersInfoService,
+    CityManagerService,
     Geolocation,
     NativeGeocoder,
     GeolocationService,
+    SearchedService,
+    VisitorService,
     {provide: {ErrorHandler, LocationStrategy}, useClass: IonicErrorHandler}
   ]
 })

@@ -1,0 +1,50 @@
+[
+  {
+    "month":"January",
+    "visits": "45"
+  },
+  {
+    "month":"February",
+    "visits": "65"
+  },
+  {
+    "month":"March",
+    "visits": "21"
+  },
+  {
+    "month":"April",
+    "visits": "68"
+  },
+  {
+    "month":"May",
+    "visits": "55"
+  },
+  {
+    "month":"June",
+    "visits": "75"
+  },
+  {
+    "month":"July",
+    "visits": "39"
+  },
+  {
+    "month":"August",
+    "visits": "80"
+  },
+  {
+    "month":"September",
+    "visits": "79"
+  },
+  {
+    "month":"October",
+    "visits": "66"
+  },
+  {
+    "month":"November",
+    "visits": "75"
+  },
+  {
+    "month":"December",
+    "visits": "89"
+  }
+]

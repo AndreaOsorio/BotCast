@@ -1,0 +1,49 @@
+[
+  {
+
+    "name":"Mexico City",
+    "searches":"65424"
+  },
+
+  {
+
+    "name":"New York",
+    "searches":"546545748"
+  },
+  
+  {
+
+    "name":"Beijing",
+    "searches":"543213854"
+  },
+
+  {
+
+    "name":"Tokyo",
+    "searches":"4654645"
+  },
+
+  {
+
+    "name":"Hong Kong",
+    "searches":"951874"
+  },
+
+  {
+
+    "name":"Chicago",
+    "searches":"32467"
+  },
+
+  {
+
+    "name":"London",
+    "searches":"7523211"
+  },
+
+  {
+
+    "name":"Sidney",
+    "searches":"132879"
+  }
+]

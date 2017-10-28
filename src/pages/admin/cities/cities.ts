@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {LoginPage} from '../../../login/login/login'
-
-
+import { CityManagerService, Cities } from '../../../services/cityManagerService'
 
 @Component({
     selector: 'adminCities',
@@ -14,8 +13,10 @@ import {LoginPage} from '../../../login/login/login'
  */
 export class AdminCities {
 
-    public constructor(public navCtrl: NavController) {
+    public cities: Cities[] = [];
 
+    public constructor(private cityManagerService: CityManagerService, public navCtrl: NavController) {
+        cityManagerService.retrieveInfo().then(data=>this.cities=data);
     }
 
 }
