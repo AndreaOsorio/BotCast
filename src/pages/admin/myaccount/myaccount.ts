@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {LoginPage} from '../../../login/login/login'
+import { UserLogin, AuthorizationService} from '../../../services/authService';
 
 
 
@@ -9,14 +10,12 @@ import {LoginPage} from '../../../login/login/login'
     templateUrl: 'myaccount.html'
 })
 
-
-/**
- * Admin account details tab constructor
- */
 export class AdminMyAccount {
 
-    public constructor(public navCtrl: NavController) {
+    private info: UserLogin[] = [];
 
+    public constructor(private myInfo: AuthorizationService, public navCtrl: NavController) {
+        myInfo.retrieveUserInfo().then(data=>this.info=data);
     }
 
 }

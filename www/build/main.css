@@ -25628,6 +25628,74 @@ ion-icon {
   font-family: "Arial";
 }
 
+.my-cities-element:hover {
+  background-color: dodgerblue;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.row-forecasts {
+  font-size: 15px;
+  margin-top: 5px;
+  border-top: solid 1px lightgrey;
+}
+
+.row-forecasts .icon-forecasts {
+  color: dodgerblue;
+  font-size: 20px;
+}
+
+.row-forecasts ion-col:not(.col-day-of-week-forecasts) {
+  text-align: center;
+}
+
+.col-hourly-forecasts, .row-container-hourly-forecasts {
+  text-align: center;
+}
+
+.col-hourly-forecasts ion-icon, .row-container-hourly-forecasts ion-icon {
+  color: dodgerblue;
+  font-size: 25px;
+}
+
+.row-hourly-forecast {
+  margin-top: 5px;
+}
+
+.centigrade-symbol {
+  font-size: 11px;
+}
+
+.location-content {
+  position: absolute;
+  top: 20%;
+  right: 25%;
+  color: white;
+}
+
+.location-city-name {
+  font-size: 30px;
+  font-color: lightgrey;
+  font-family: "Arial";
+  font-weight: bold;
+}
+
+.location-avg-temp {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.location-max-min-temps {
+  font-size: 15px;
+}
+
+.my-cities-element {
+  text-align: center;
+  font-size: 15px;
+  font-family: "Arial";
+}
+
 .cities-slider {
   position: relative;
   width: 100%;

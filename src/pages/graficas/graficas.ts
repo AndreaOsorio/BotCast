@@ -5,7 +5,6 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 
 //TODO: fix initial graph pop bug
-//TODO: implement geoloc based initial graph
 //TODO: fix initial date bug
 
 @Component({

@@ -101,4 +101,33 @@ export class AuthorizationService {
         return promise;
     }
 
+    public retrieveUserInfo(): Promise<UserLogin[]>{
+
+        let apiURL = `${this.apiRoot}`;
+
+        let promise = new Promise((resolve, reject) => {
+            this.http.get(apiURL)
+                .toPromise()
+                .then(
+                    res => {
+                        let info:UserLogin[] =[]
+                        let infoJson = $.map(res.json(), function(e){return e});
+                        console.log(infoJson)
+                        $.each(infoJson, function(i,information){
+                            info.push(new UserLogin(information.username,
+                                information.password,
+                                information.timestamp,
+                                information.privilages))
+                        })
+                        resolve(info);
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                );
+        });
+
+        return promise;
+    }
+
 }
