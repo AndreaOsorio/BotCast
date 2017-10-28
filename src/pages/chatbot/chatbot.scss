@@ -11,13 +11,12 @@ ion-icon{
   border:1px solid rgba(45,45,45,0.4);
   border-radius:$border-radius;
   background-color: dodgerblue;
-  font-weight:bold;
   color:white;
 }
 
 .bot-message-content{
-  text-align: right;
+  text-align: justify;
   border:1px solid black;
   border-radius:$border-radius;
-  background-color: lime
+  background-color: #EAEAEA;
 }

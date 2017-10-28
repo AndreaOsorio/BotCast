@@ -1,46 +1,46 @@
 <!--Administrator Statistics Tab Component HTML Structure-->
-<ion-header>
-    <ion-navbar>
-        <ion-title>
-            Map
-        </ion-title>
-        <ion-buttons end>
-            <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>
-        </ion-buttons>
-    </ion-navbar>
-</ion-header>
 
 <ion-content>
-    <iframe
+    <navbar></navbar>
+
+    
+    <ion-grid>
+        <ion-row class="mapFrame">
+            <iframe
             width="600"
             height="450"
             frameborder="0" style="border:0"
             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD0tHxsyV4X0BNu3WarQAts8gy8_Q2dh9k&q=center=-33.8569,151.2152
-  &zoom=18" allowfullscreen>
-    </iframe>
-    <ion-grid>
-        <ion-row *ngFor="let stat of stats">
+            &zoom=18" allowfullscreen>
+            </iframe>
+        </ion-row>
+        <ion-row>
+            <ion-buttons end class="endB">
+                <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>
+            </ion-buttons>
+        </ion-row>
+        <ion-row >
+                <ion-col><h4>Users</h4></ion-col>
 
+                <ion-col><h4>Active Users</h4></ion-col>
+                <ion-col><h4>Max Users</h4></ion-col>
+                <ion-col><h4>Favorite City</h4></ion-col>
+              </ion-row>
+        <ion-row *ngFor="let stat of stats" class="row-stats">
             <ion-col>
-                Users: {{stat.users}}
+                {{stat.users}}
             </ion-col>
 
             <ion-col>
-                <ion-icon name="md-sunny"></ion-icon>
+                {{stat.activeUsers}}
             </ion-col>
 
             <ion-col>
-                activeUsers: {{stat.activeUsers}}
+                {{stat.maxUsers}}
             </ion-col>
 
             <ion-col>
-                maxUsers: {{stat.maxUsers}}
-
-            </ion-col>
-
-            <ion-col>
-                Favorite City : {{stat.favoriteCity}}
-
+                {{stat.favoriteCity}}
             </ion-col>
         </ion-row>
     </ion-grid>
