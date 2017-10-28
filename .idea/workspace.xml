@@ -2,36 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fc10e0d-aefe-4177-930a-5125517f510e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/plugins/ionic-plugin-keyboard/src/blackberry10/native/.project" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.sourcemaps/main.js.map" afterPath="$PROJECT_DIR$/.sourcemaps/main.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/json/forecast/myforecasts.json" afterPath="$PROJECT_DIR$/src/assets/json/forecast/myforecasts.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/login/login/login.html" afterPath="$PROJECT_DIR$/src/login/login/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/login/login/login.scss" afterPath="$PROJECT_DIR$/src/login/login/login.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/login/register/register.html" afterPath="$PROJECT_DIR$/src/login/register/register.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/login/register/register.scss" afterPath="$PROJECT_DIR$/src/login/register/register.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.html" afterPath="$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.scss" afterPath="$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/admin/navbar/navbar.html" afterPath="$PROJECT_DIR$/src/pages/admin/navbar/navbar.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/admin/navbar/navbar.scss" afterPath="$PROJECT_DIR$/src/pages/admin/navbar/navbar.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/admin/stats/stats.html" afterPath="$PROJECT_DIR$/src/pages/admin/stats/stats.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/admin/stats/stats.scss" afterPath="$PROJECT_DIR$/src/pages/admin/stats/stats.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/chatbot/chatbot.html" afterPath="$PROJECT_DIR$/src/pages/chatbot/chatbot.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/chatbot/chatbot.scss" afterPath="$PROJECT_DIR$/src/pages/chatbot/chatbot.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/graficas/graficas.html" afterPath="$PROJECT_DIR$/src/pages/graficas/graficas.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/graficas/graficas.scss" afterPath="$PROJECT_DIR$/src/pages/graficas/graficas.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/graficas/graficas.ts" afterPath="$PROJECT_DIR$/src/pages/graficas/graficas.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.html" afterPath="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.scss" afterPath="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.ts" afterPath="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/principal/principal.html" afterPath="$PROJECT_DIR$/src/pages/principal/principal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/principal/principal.scss" afterPath="$PROJECT_DIR$/src/pages/principal/principal.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/myForecastService.ts" afterPath="$PROJECT_DIR$/src/services/myForecastService.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/assets/json/forecast/myforecasts.json" afterPath="$PROJECT_DIR$/www/assets/json/forecast/myforecasts.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/main.css" afterPath="$PROJECT_DIR$/www/build/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/main.js" afterPath="$PROJECT_DIR$/www/build/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/main.js.map" afterPath="$PROJECT_DIR$/www/build/main.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/vendor.js" afterPath="$PROJECT_DIR$/www/build/vendor.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/vendor.js.map" afterPath="$PROJECT_DIR$/www/build/vendor.js.map" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -77,8 +53,18 @@
       <file leaf-file-name="myaccount.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="20" column="1" lean-forward="false" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
+            <state relative-caret-position="105">
+              <caret line="10" column="2" lean-forward="true" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="myaccount.scss" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="31" column="22" lean-forward="true" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -109,8 +95,8 @@
       <file leaf-file-name="stats.scss" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/pages/admin/stats/stats.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="465">
+              <caret line="31" column="1" lean-forward="true" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -119,11 +105,11 @@
       <file leaf-file-name="stats.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/admin/stats/stats.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="6" column="13" lean-forward="true" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state relative-caret-position="75">
+              <caret line="5" column="21" lean-forward="true" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="35" />
               <folding>
                 <element signature="n#style#0;n#iframe#0;n#ion-row#0;n#ion-grid#0;n#ion-content#0;n#!!top" expanded="true" />
-                <marker date="1509211664000" expanded="true" signature="1434:1456" ph="..." />
+                <marker date="1509212908000" expanded="true" signature="1457:1479" ph="..." />
               </folding>
             </state>
           </provider>
@@ -132,8 +118,8 @@
       <file leaf-file-name="navbar.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/admin/navbar/navbar.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="27" column="1" lean-forward="false" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
+            <state relative-caret-position="240">
+              <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -242,9 +228,9 @@
         <option value="$PROJECT_DIR$/src/pages/graficas/graficas.html" />
         <option value="$PROJECT_DIR$/src/pages/graficas/graficas.scss" />
         <option value="$PROJECT_DIR$/src/pages/admin/navbar/navbar.html" />
-        <option value="$PROJECT_DIR$/src/pages/admin/navbar/navbar.scss" />
         <option value="$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.scss" />
         <option value="$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.html" />
+        <option value="$PROJECT_DIR$/src/pages/admin/navbar/navbar.scss" />
         <option value="$PROJECT_DIR$/src/pages/admin/stats/stats.html" />
         <option value="$PROJECT_DIR$/src/pages/admin/stats/stats.scss" />
       </list>
@@ -1303,12 +1289,12 @@
       <workItem from="1508960881072" duration="10800000" />
       <workItem from="1509074850188" duration="15102000" />
       <workItem from="1509153308673" duration="428000" />
-      <workItem from="1509201631240" duration="8824000" />
+      <workItem from="1509201631240" duration="9582000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="102273000" />
+    <option name="totallyTimeSpent" value="103031000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -1528,7 +1514,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1538,7 +1524,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1630,7 +1616,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
+            <element signature="e#0#42#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1707,34 +1693,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" column="19" lean-forward="false" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/admin/navbar/navbar.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="1" lean-forward="false" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/graficas/graficas.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/admin/stats/stats.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -1747,14 +1709,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="20" column="1" lean-forward="false" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1763,14 +1717,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/admin/stats/stats.html">
+    <entry file="file://$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="6" column="13" lean-forward="true" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding>
-            <element signature="n#style#0;n#iframe#0;n#ion-row#0;n#ion-grid#0;n#ion-content#0;n#!!top" expanded="true" />
-            <marker date="1509211664000" expanded="true" signature="1434:1456" ph="..." />
-          </folding>
+        <state relative-caret-position="105">
+          <caret line="10" column="2" lean-forward="true" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/admin/myaccount/myaccount.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" column="22" lean-forward="true" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/admin/stats/stats.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1784,10 +1751,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/admin/navbar/navbar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="17" lean-forward="true" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/admin/stats/stats.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="21" lean-forward="true" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="35" />
+          <folding>
+            <element signature="n#style#0;n#iframe#0;n#ion-row#0;n#ion-grid#0;n#ion-content#0;n#!!top" expanded="true" />
+            <marker date="1509212908000" expanded="true" signature="1457:1479" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/admin/stats/stats.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="465">
+          <caret line="31" column="1" lean-forward="true" selection-start-line="31" selection-start-column="1" selection-end-line="31" selection-end-column="1" />
           <folding />
         </state>
       </provider>

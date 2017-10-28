@@ -25669,10 +25669,6 @@ h4, h2 {
   font-weight: bold;
 }
 
-.toolbar-background {
-  background-color: dodgerblue;
-}
-
 .mapFrame {
   position: relative;
   left: 25%;
@@ -25701,7 +25697,7 @@ h4, h2 {
   font-weight: bold;
 }
 
-ion-grid {
+.ion-grid-stats {
   position: relative;
   top: 10px;
 }
