@@ -1,5 +1,24 @@
 <!--Administrator Account Detail Tab Component HTML Structure-->
 <ion-content>
+
     <navbar></navbar>
-    MyAccount
+    <div>
+        <ion-grid>
+            <ion-title>Your account information</ion-title>
+            <ion-row *ngFor="let x of info; let i = index">
+                <ion-row *ngIf="i==0">
+
+                    <ion-col>
+                        username:{{x.username}}
+                    </ion-col>
+                    <ion-col>
+                        password:{{x.password}}
+                    </ion-col>
+
+                </ion-row>
+
+            </ion-row>
+        </ion-grid>
+    </div>
+
 </ion-content>

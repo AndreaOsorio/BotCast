@@ -1,0 +1,35 @@
+[
+  {
+    "cityName":"New York",
+    "condition":"Heavy rain",
+    "startDate":"2017-10-27 00:00",
+    "endDate" :"2017-10-27 02:00"
+  },
+  {
+    "cityName":"Mexico City",
+    "condition":"Heavy rain",
+    "startDate":"2017-10-27 00:00",
+    "endDate" :"2017-10-27 02:00"
+  },
+  {
+    "cityName":"Calcuta",
+    "condition":"Sunny",
+    "startDate":"2017-10-27 00:00",
+    "endDate" :"2017-10-27 02:00"
+  },
+  {
+    "cityName":"Moscow",
+    "condition":"Sunny",
+    "startDate":"2017-10-27 00:00",
+    "endDate" :"2017-10-27 02:00"
+
+  },
+  {
+    "cityName":"Lima",
+    "condition":"Sunny",
+    "startDate":"2017-10-27 00:00",
+    "endDate" :"2017-10-27 02:00"
+
+  }
+
+]

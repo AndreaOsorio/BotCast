@@ -18,7 +18,10 @@ import { UsersInfoService } from '../services/usersInfoService';
 import { CityManagerService } from '../services/cityManagerService';
 import { VisitorService } from '../services/dashboardService';
 import { SearchedService } from '../services/dashboardService';
-                            
+import { MyForecastService } from '../services/myForecastService';
+import { StatService } from '../services/statsService';
+
+
 import { GraphsPage } from '../pages/graficas/graficas';
 import { ChartsModule } from 'ng2-charts';
 
@@ -105,6 +108,9 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     GeolocationService,
     SearchedService,
     VisitorService,
+    MyForecastService,
+    StatService,
+
     {provide: {ErrorHandler, LocationStrategy}, useClass: IonicErrorHandler}
   ]
 })

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
+import { MyForecastService, MyForecast } from '../../services/myForecastService';
 
 @Component({
     selector: 'myforecasts',
@@ -17,7 +18,13 @@ export class MyForecastsPage {
      */
     public constructor(
                        public navCtrl: NavController,
-                       public navParams: NavParams) {
+                       public navParams: NavParams,
+                       private myForecastService: MyForecastService) {
+
+        this.myForecastService.retrieveMyForecasts().then(data=>this.forecasts=data);
 
     }
+
+    private forecasts: MyForecast[] = [];
+
 }
