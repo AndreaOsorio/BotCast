@@ -25512,6 +25512,17 @@ ion-navbar.toolbar {
   min-height: calc(46px + constant(safe-area-inset-top));
 }
 
+.titulo_bot_cast {
+  color: dodgerblue;
+  font-size: 20px;
+  text-align: center;
+}
+
+.botcast_icon {
+  align: center;
+  padding-left: 35%;
+}
+
 p {
   font-size: 0.8em;
   color: #d2d2d2;
@@ -25535,6 +25546,87 @@ ion-input, ion-select, ion-textarea {
   border: 1px solid #ea6153;
 }
 
+.botcast_icon {
+  position: relative;
+  padding-left: 35%;
+}
+
+.row-cities {
+  font-size: 15px;
+  border-top: solid 1px lightgrey;
+}
+
+.row-cities ion-col {
+  text-align: center;
+}
+
+.back {
+  background-color: #a4d3ee;
+}
+
+h4, h2 {
+  text-align: center;
+}
+
+.row-visits {
+  font-size: 15px;
+  margin-top: 5px;
+  border-top: solid 1px lightgrey;
+}
+
+.row-visits ion-col {
+  text-align: center;
+}
+
+.profileInfo {
+  font-size: 18px;
+  position: relative;
+  padding-left: 45%;
+}
+
+.bt1, .bt2, .bt3, .bt4, .bt5 {
+  color: dodgerblue;
+}
+
+.back {
+  background-color: blue;
+}
+
+.selected:active {
+  background-color: yellow;
+}
+
+.mapFrame {
+  position: relative;
+  padding-left: 33%;
+  padding-top: 15px;
+}
+
+.endB {
+  position: relative;
+  padding-left: 45%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.row-stats {
+  text-align: center;
+}
+
+.row-users {
+  font-size: 15px;
+  margin-top: 2px;
+  border-top: solid 1px lightgrey;
+}
+
+.row-users ion-col {
+  text-align: center;
+}
+
+.row-users .searchBarGrid {
+  align: center;
+}
+
 ion-icon {
   font-size: 30px;
 }
@@ -25544,15 +25636,14 @@ ion-icon {
   border: 1px solid rgba(45, 45, 45, 0.4);
   border-radius: 10px;
   background-color: dodgerblue;
-  font-weight: bold;
   color: white;
 }
 
 .bot-message-content {
-  text-align: right;
+  text-align: justify;
   border: 1px solid black;
   border-radius: 10px;
-  background-color: lime;
+  background-color: #EAEAEA;
 }
 
 .selectBox-cities {
@@ -25633,6 +25724,21 @@ ion-icon {
   color: white;
   font-weight: bold;
   border-radius: 4px;
+}
+
+.row-myforecasts {
+  font-size: 15px;
+  margin-top: 5px;
+  border-top: solid 1px lightgrey;
+}
+
+.row-myforecasts .icon-forecasts {
+  color: dodgerblue;
+  font-size: 20px;
+}
+
+.row-myforecasts ion-col:not(.col-day-of-week-forecasts) {
+  text-align: center;
 }
 
 .row-forecasts {

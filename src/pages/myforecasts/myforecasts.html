@@ -1,11 +1,14 @@
 <!--User saved forecasts Tab Component HTML Structure-->
 <ion-content>
     <ion-header>
-        <ion-title>Your saved Forecasts</ion-title>
+        <ion-navbar>
+            <ion-title>Your saved Forecasts</ion-title>
+        </ion-navbar>
     </ion-header>
+
     <ion-content>
             <ion-grid>
-                <ion-row *ngFor="let forecast of forecasts">
+                <ion-row *ngFor="let forecast of forecasts" class="row-myforecasts">
 
                     <ion-col>
                         {{forecast.cityName}}
@@ -13,7 +16,7 @@
 
                     <ion-col>
 
-                        <ion-icon name={{forecast.condition}}></ion-icon>
+                        <ion-icon name={{forecast.condition}} class="icon-forecasts"></ion-icon>
                     </ion-col>
 
                     <ion-col>

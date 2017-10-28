@@ -3,7 +3,7 @@
 <ion-content>
   <navbar></navbar>
   <div>
-    <ion-grid>
+    <ion-grid class="searchBarGrid">
       <ion-row>
         <ion-col><ion-searchbar 
           placeholder="Search by User"
@@ -28,7 +28,7 @@
         <ion-col><h4>Last Location</h4></ion-col>
         <ion-col><h4></h4></ion-col>
       </ion-row>
-      <ion-row *ngFor="let info of information">
+      <ion-row *ngFor="let info of information" class="row-users">
         <ion-col>{{info.name}}</ion-col>
         <ion-col>{{info.age}}</ion-col>
         <ion-col>{{info.username}}</ion-col>

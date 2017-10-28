@@ -3,21 +3,26 @@
 
     <navbar></navbar>
     <div>
+
+
         <ion-grid>
-            <ion-title>Your account information</ion-title>
-            <ion-row *ngFor="let x of info; let i = index">
-                <ion-row *ngIf="i==0">
+            <ion-title><h2>Account information</h2></ion-title>
+            <ion-col *ngFor="let x of info; let i = index" class="profileInfo">
+                <ion-col *ngIf="i==0">
+                    <ion-row>
+                        Username: {{x.username}}
+                    </ion-row>
+                    <ion-row>
+                        Password: {{x.password}}
+                    </ion-row>
+                    <ion-row>
+                        <ion-buttons end>
+                        <button ion-button (click)="addMarker()" class="editButton">Edit</button>
+                        </ion-buttons>
+                    </ion-row>
+                </ion-col>
+            </ion-col>
 
-                    <ion-col>
-                        username:{{x.username}}
-                    </ion-col>
-                    <ion-col>
-                        password:{{x.password}}
-                    </ion-col>
-
-                </ion-row>
-
-            </ion-row>
         </ion-grid>
     </div>
 

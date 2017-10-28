@@ -1,6 +1,5 @@
 <!--Administrator Navigation Bar Component HTML Structure-->
-<ion-navbar>
-
+<ion-navbar class="back">
 
     <button ion-button icon-only menuToggle>
         <ion-icon name="menu"></ion-icon>
@@ -10,9 +9,9 @@
         Admin portal
     </ion-title>
 
-    <ion-buttons end>
-        <button ion-button icon-only (click)="toDashboardAdminPage()">
-            <ion-item>
+    <ion-buttons end >
+        <button ion-button icon-only (click)="toDashboardAdminPage()" class="selected">
+            <ion-item class="bt1">
                 <ion-icon name="ios-speedometer-outline" ></ion-icon>
                 Dashboard
             </ion-item>
@@ -20,28 +19,28 @@
 
 
         <button ion-button icon-only (click)="toStatsAdminPage()">
-            <ion-item>
+            <ion-item class="bt2">
                 <ion-icon name="ios-pie-outline" ></ion-icon>
                 Stats
             </ion-item>
         </button>
 
         <button ion-button icon-only (click)="toUsersAdminPage()">
-            <ion-item>
+            <ion-item class="bt3">
                 <ion-icon name="ios-people-outline"></ion-icon>
                 Users
             </ion-item>
         </button>
 
         <button ion-button icon-only (click)="toCitiesAdminPage()">
-            <ion-item>
+            <ion-item class="bt4">
                 <ion-icon name="md-globe" ></ion-icon>
                 Cities
             </ion-item>
         </button>
 
         <button ion-button icon-only (click)="toAccountAdminPage()">
-            <ion-item>
+            <ion-item class="bt5">
                 <ion-icon name="ios-body-outline"></ion-icon>
                 My Account
             </ion-item>
