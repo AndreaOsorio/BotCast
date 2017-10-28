@@ -4,7 +4,42 @@
 .profileInfo{
 	font-size:18px;
 	position:relative;
-	padding-left:45%;
+	top:40px;
 }
 
+$color-labels:$colorEsquema;
+$font-size-labels:20px;
+
+.label-campo-admin{
+	position: relative;
+	top:40px;
+	color:$color-labels;
+	font-size:$font-size-labels;
+	text-align: right;
+	font-weight: bold;
+}
+
+.campo-nombre-usuario{
+	text-align: left;
+	font-weight: bold;
+	font-size:25px;
+	position: relative;
+	left:100px;
+}
+
+
+.label-campo-admin2{
+	font-weight: bold;
+	color:$color-labels;
+	font-size: $font-size-labels;
+	text-align: right;
+	position: relative;
+	top:8px;
+}
+
+.editButton{
+	position: relative;
+	font-size:40px;
+	left:50%;
+}
 

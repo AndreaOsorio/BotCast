@@ -207,7 +207,6 @@ export class GraphsPage {
         }
         let d = new Date(date)
         return abbreviatedMonthMap[d.getMonth()]+" "+(d.getDate()+1);
-
     }
 
     /**

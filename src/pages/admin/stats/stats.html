@@ -3,7 +3,6 @@
 <ion-content>
     <navbar></navbar>
 
-    
     <ion-grid>
         <ion-row class="mapFrame">
             <iframe
@@ -13,6 +12,7 @@
             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD0tHxsyV4X0BNu3WarQAts8gy8_Q2dh9k&q=center=-33.8569,151.2152
             &zoom=18" allowfullscreen>
             </iframe>
+
         </ion-row>
         <ion-row>
             <ion-buttons end class="endB">
@@ -20,26 +20,25 @@
             </ion-buttons>
         </ion-row>
         <ion-row >
-                <ion-col><h4>Users</h4></ion-col>
-
+                <ion-col><h4>Registered Users</h4></ion-col>
                 <ion-col><h4>Active Users</h4></ion-col>
-                <ion-col><h4>Max Users</h4></ion-col>
+                <ion-col><h4>Max Users Streak</h4></ion-col>
                 <ion-col><h4>Favorite City</h4></ion-col>
               </ion-row>
         <ion-row *ngFor="let stat of stats" class="row-stats">
-            <ion-col>
+            <ion-col class="stat-data-column">
                 {{stat.users}}
             </ion-col>
 
-            <ion-col>
+            <ion-col class="stat-data-column">
                 {{stat.activeUsers}}
             </ion-col>
 
-            <ion-col>
+            <ion-col class="stat-data-column">
                 {{stat.maxUsers}}
             </ion-col>
 
-            <ion-col>
+            <ion-col class="stat-data-column">
                 {{stat.favoriteCity}}
             </ion-col>
         </ion-row>

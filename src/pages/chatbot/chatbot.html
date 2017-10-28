@@ -1,11 +1,18 @@
 <!--Chatbot User Tab Component HTML Structure-->
-<ion-content padding>
+
+<ion-header>
+    <ion-navbar>
+        <ion-title>Botcast</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding class="yo">
     <div class="contenedor_conversacion">
         <ion-grid>
             <ion-row *ngFor="let message of conversation; let i = index">
                 <ion-row *ngIf="i%2==0" col-12>
                     <ion-col col-1>
-                        <ion-icon name="md-contact" class="icon-user-chatbot"></ion-icon>
+                        <ion-icon name="ios-contact-outline" class="icon-user-chatbot"></ion-icon>
                     </ion-col>
                     <ion-col class="user-message-content">
                         {{message.content}}
@@ -18,10 +25,13 @@
                         {{message.content}}
                     </ion-col>
                     <ion-col col-1>
-                        <ion-icon name="md-cloud"></ion-icon>
+                        <ion-icon name="ios-ionitron-outline"></ion-icon>
                     </ion-col>
                 </ion-row>
             </ion-row>
         </ion-grid>
     </div>
 </ion-content>
+
+<ion-input placeholder="Say something..." class="mensaje-caja-texto" type="text"></ion-input>
+<button ion-button class="boton-enviar-mensaje">Send</button>

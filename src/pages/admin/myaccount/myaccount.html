@@ -8,19 +8,31 @@
         <ion-grid>
             <ion-title><h2>Account information</h2></ion-title>
             <ion-col *ngFor="let x of info; let i = index" class="profileInfo">
+                <ion-row>
                 <ion-col *ngIf="i==0">
                     <ion-row>
-                        Username: {{x.username}}
+                        <ion-col class="label-campo-admin2">Username</ion-col>
+                        <ion-col class="campo-nombre-usuario">{{x.username}}</ion-col>
                     </ion-row>
                     <ion-row>
-                        Password: {{x.password}}
+                        <ion-col class="label-campo-admin">Password</ion-col>
+                        <ion-col><ion-input placeholder="Type current password" clearInput></ion-input></ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-buttons end>
-                        <button ion-button (click)="addMarker()" class="editButton">Edit</button>
+                        <ion-col class="label-campo-admin">New password</ion-col>
+                        <ion-col><ion-input placeholder="Type new password" clearInput></ion-input></ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="label-campo-admin">Confirm new password</ion-col>
+                        <ion-col><ion-input placeholder="Confirm..." clearInput></ion-input></ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-buttons class="editButton">
+                        <button ion-button (click)="addMarker()" >Save changes</button>
                         </ion-buttons>
                     </ion-row>
                 </ion-col>
+                </ion-row>
             </ion-col>
 
         </ion-grid>

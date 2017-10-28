@@ -15,21 +15,34 @@
     "cityName":"Calcuta",
     "condition":"Sunny",
     "startDate":"2017-10-27 00:00",
-    "endDate" :"2017-10-27 02:00"
+    "endDate" :"2017-10-29 02:00"
   },
   {
     "cityName":"Moscow",
-    "condition":"Sunny",
-    "startDate":"2017-10-27 00:00",
-    "endDate" :"2017-10-27 02:00"
+    "condition":"Overcast",
+    "startDate":"2017-11-21 00:00",
+    "endDate" :"2017-11-22 02:00"
 
   },
   {
     "cityName":"Lima",
     "condition":"Sunny",
-    "startDate":"2017-10-27 00:00",
-    "endDate" :"2017-10-27 02:00"
+    "startDate":"2017-12-01 00:00",
+    "endDate" :"2017-12-13 02:00"
+
+  },
+  {
+    "cityName":"Cancun",
+    "condition":"Overcast",
+    "startDate":"2017-09-23 00:00",
+    "endDate" :"2017-09-25 02:00"
+
+  },
+  {
+    "cityName":"Sarajevo",
+    "condition":"Partly cloudy",
+    "startDate":"2017-03-06 00:00",
+    "endDate" :"2017-03-12 02:00"
 
   }
-
 ]

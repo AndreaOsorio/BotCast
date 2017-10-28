@@ -8,7 +8,7 @@ webpackJsonp([0],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_tabs_tabs__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register_register__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register_register__ = __webpack_require__(346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_authService__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_admin_dashboard_dashboard__ = __webpack_require__(120);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -64,7 +64,7 @@ var LoginPage = (function () {
 }());
 LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'login',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\login\login\login.html"*/'<!--Login Componente HTML Structure-->\n\n<ion-content has-header="true" padding="true" class="contenido_login">\n\n    <ion-grid>\n\n    <ion-row></ion-row>\n\n\n\n\n\n    <ion-row>\n\n        <ion-col col-12 class="titulo_bot_cast">\n\n            <b>Botcast</b>\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n        <ion-col col-12 class="botcast_icon">\n\n            <img src="../assets/imgs/bot_icon.png" height="100" width="100"/>\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n\n\n    <ion-row>\n\n        <ion-col>\n\n            <ion-list inset>\n\n\n\n                <ion-item>\n\n                    <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="user.username" required></ion-input>\n\n                </ion-item>\n\n\n\n                <ion-item>\n\n                    <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="user.password" required></ion-input>\n\n                </ion-item>\n\n\n\n            </ion-list>\n\n        </ion-col>\n\n\n\n    </ion-row>\n\n\n\n\n\n        <ion-row>\n\n            <ion-col class="signup-col">\n\n                <button ion-button class="submit-btn" full (click)="login()" type="submit" >Login</button>\n\n                <button ion-button class="register-btn" block clear (click)="register()">Sign up</button>\n\n            </ion-col>\n\n        </ion-row>\n\n\n\n\n\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\login\login\login.html"*/
+        selector: 'login',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/login/login.html"*/'<!--Login Componente HTML Structure-->\n<ion-content has-header="true" padding="true" class="contenido_login">\n    <ion-grid>\n    <ion-row></ion-row>\n\n\n    <ion-row>\n        <ion-col col-12 class="titulo_bot_cast">\n            <b>Botcast</b>\n        </ion-col>\n    </ion-row>\n\n    <ion-row>\n        <ion-col col-12 class="botcast_icon">\n            <img src="../assets/imgs/bot_icon.png" height="100" width="100"/>\n        </ion-col>\n    </ion-row>\n\n\n    <ion-row>\n        <ion-col>\n            <ion-list inset class="contenedorCamposLogin">\n                <ion-item>\n                    <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="user.username" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="user.password" required></ion-input>\n                </ion-item>\n\n            </ion-list>\n        </ion-col>\n\n    </ion-row>\n\n\n        <ion-row>\n            <ion-col class="signup-col">\n                <button ion-button class="submit-btn" full (click)="login()" type="submit" >Login</button>\n                <button ion-button class="register-btn" block clear (click)="register()">Sign up</button>\n            </ion-col>\n        </ion-row>\n\n\n    </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/login/login.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__services_authService__["a" /* AuthorizationService */]])
 ], LoginPage);
@@ -518,7 +518,7 @@ __decorate([
 ], AdminDashboard.prototype, "chart", void 0);
 AdminDashboard = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'dashboard',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\admin\dashboard\dashboard.html"*/'<!--Administrator Dashoboard Tab Component HTML Structure-->\n\n<ion-content >\n\n  <navbar></navbar>\n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col>\n\n          <div>\n\n            <h2>Top Searched Cities</h2>\n\n            <ion-grid>\n\n              <ion-row >\n\n                <ion-col><h4>City</h4></ion-col>\n\n                <ion-col><h4>Visits</h4></ion-col>\n\n              </ion-row>\n\n              <ion-row *ngFor="let top of tops" class="row-visits">\n\n                <ion-col>{{top.name}}</ion-col>\n\n                <ion-col>{{top.searches}}</ion-col>\n\n              </ion-row>\n\n            </ion-grid>\n\n          </div>\n\n\n\n        </ion-col>\n\n        <ion-col>\n\n\n\n          <h2>Monthly Visitors</h2>\n\n          <div class="container-graph">\n\n            <canvas baseChart width="350" height="250"  #baseChart="base-chart"\n\n              [datasets]="lineChartData"\n\n              [labels]="lineChartLabels"\n\n              [options]="lineChartOptions"\n\n              [colors]="lineChartColors"\n\n              [legend]="lineChartLegend"\n\n              [chartType]="lineChartType"\n\n              (chartHover)="chartHovered($event)"\n\n              (chartClick)="chartClicked($event)"></canvas>\n\n          </div>\n\n\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>  \n\n </ion-content> \n\n\n\n      \n\n  \n\n<!-- Monthly visitors grid\n\n  <div>\n\n    <h2>Monthly Visitors</h2>\n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col><h4>Month</h4></ion-col>\n\n        <ion-col><h4>Visits</h4></ion-col>\n\n      </ion-row>\n\n      <ion-row *ngFor="let visit of visitors">\n\n        <ion-col>{{visit.month}}</ion-col>\n\n        <ion-col>{{visit.visits}}</ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n  </div>\n\n-->\n\n  \n\n'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\admin\dashboard\dashboard.html"*/
+        selector: 'dashboard',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/dashboard/dashboard.html"*/'<!--Administrator Dashoboard Tab Component HTML Structure-->\n<ion-content >\n  <navbar></navbar>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n          <div>\n            <h2>Top Searched Cities</h2>\n            <ion-grid>\n              <ion-row >\n                <ion-col><h4>City</h4></ion-col>\n                <ion-col><h4>Visits</h4></ion-col>\n              </ion-row>\n              <ion-row *ngFor="let top of tops" class="row-visits">\n                <ion-col>{{top.name}}</ion-col>\n                <ion-col>{{top.searches}}</ion-col>\n              </ion-row>\n            </ion-grid>\n          </div>\n\n        </ion-col>\n        <ion-col>\n\n          <h2>Monthly Visitors</h2>\n          <div class="container-graph">\n            <canvas baseChart width="350" height="250"  #baseChart="base-chart"\n              [datasets]="lineChartData"\n              [labels]="lineChartLabels"\n              [options]="lineChartOptions"\n              [colors]="lineChartColors"\n              [legend]="lineChartLegend"\n              [chartType]="lineChartType"\n              (chartHover)="chartHovered($event)"\n              (chartClick)="chartClicked($event)"></canvas>\n          </div>\n\n        </ion-col>\n      </ion-row>\n    </ion-grid>  \n </ion-content> \n\n      \n  \n<!-- Monthly visitors grid\n  <div>\n    <h2>Monthly Visitors</h2>\n    <ion-grid>\n      <ion-row>\n        <ion-col><h4>Month</h4></ion-col>\n        <ion-col><h4>Visits</h4></ion-col>\n      </ion-row>\n      <ion-row *ngFor="let visit of visitors">\n        <ion-col>{{visit.month}}</ion-col>\n        <ion-col>{{visit.visits}}</ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n-->\n  \n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/dashboard/dashboard.html"*/
     })
     /**
      * Admin main dashboard tab constructor
@@ -709,8 +709,8 @@ webpackEmptyAsyncContext.id = 171;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__principal_principal__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graficas_graficas__ = __webpack_require__(219);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__chatbot_chatbot__ = __webpack_require__(340);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__myforecasts_myforecasts__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__chatbot_chatbot__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__myforecasts_myforecasts__ = __webpack_require__(344);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -735,7 +735,7 @@ var TabsPage = (function () {
     return TabsPage;
 }());
 TabsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\tabs\tabs.html"*/'<!--User Tabs Root Component HTML Structure-->\n\n<ion-tabs>\n\n  <ion-tab [root]="tab1Root" tabTitle="Cities" tabIcon="md-globe"></ion-tab>\n\n  <ion-tab [root]="tab2Root" tabTitle="Graphs" tabIcon="md-trending-up"></ion-tab>\n\n  <ion-tab [root]="tab3Root" tabTitle="Bot" tabIcon="md-chatboxes"></ion-tab>\n\n  <ion-tab [root]="tab4Root" tabTitle="Forecasts" tabIcon="md-rainy"></ion-tab>\n\n</ion-tabs>\n\n'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\tabs\tabs.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/tabs/tabs.html"*/'<!--User Tabs Root Component HTML Structure-->\n<ion-tabs>\n  <ion-tab [root]="tab1Root" tabTitle="Cities" tabIcon="md-globe"></ion-tab>\n  <ion-tab [root]="tab2Root" tabTitle="Graphs" tabIcon="md-trending-up"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="Bot" tabIcon="md-chatboxes"></ion-tab>\n  <ion-tab [root]="tab4Root" tabTitle="Forecasts" tabIcon="md-rainy"></ion-tab>\n</ion-tabs>\n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/tabs/tabs.html"*/
     })
     /**
      * Tabs Root Component Class: declare here any additional tabs for user main mobile view, then map to appropriate HTML ionic tags in template
@@ -885,7 +885,7 @@ var PrincipalPage = (function () {
 }());
 PrincipalPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'principal',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\principal\principal.html"*/'<!--User Main Tab Component HTML Structure-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Your locations</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <ion-slides class="cities-slider">\n\n    <ion-slide>\n\n      <ion-grid>\n\n        <ion-row>\n\n          <ion-col *ngFor="let ciudad of ciudades" class="my-cities-element" (click)="changeCity(ciudad.name)">\n\n            {{ciudad.name}}\n\n          </ion-col>\n\n        </ion-row>\n\n      </ion-grid>\n\n    </ion-slide>\n\n    <ion-slide>\n\n      <ion-grid>\n\n        <ion-row>\n\n          <ion-col >\n\n            <button ion-button color="primary" class="my-location-button" (click)="getMyLocation()">My location</button>\n\n          </ion-col>\n\n          <ion-col >\n\n            <button ion-button color="secondary" class="add-city-button">Add city</button>\n\n          </ion-col>\n\n        </ion-row>\n\n      </ion-grid>\n\n    </ion-slide>\n\n  </ion-slides>\n\n\n\n  <ion-grid>\n\n    <ion-row>\n\n      <ion-col *ngFor="let today of todayForecast">\n\n        <img src="../../assets/imgs/rainy.gif"/>\n\n\n\n        <div class="location-content">\n\n          <div class="location-city-name">\n\n            {{today.cityName}}\n\n          </div>\n\n\n\n          <div class="location-avg-temp">\n\n            {{today.avgTemp}}<span class="centigrade-symbol">°C</span>\n\n          </div>\n\n\n\n          <div class="location-max-min-temps">\n\n            High:<b>{{today.tempMax}}</b><span class="centigrade-symbol">°C</span>\n\n            Low:<b>{{today.tempMin}}</b><span class="centigrade-symbol">°C</span>\n\n          </div>\n\n\n\n          <div class="location-todays-data">\n\n            {{this.todaysDate}}\n\n          </div>\n\n        </div>\n\n\n\n      </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row class="row-container-hourly-forecasts">\n\n      <ion-col *ngFor="let hourForecast of todayHourlyForecast" class="col-hourly-forecasts">\n\n        <ion-row class="row-hourly-forecast">\n\n          {{hourForecast.time}}\n\n        </ion-row>\n\n        <ion-row class="row-hourly-forecast">\n\n          <ion-icon name={{hourForecast.condition}}></ion-icon>\n\n        </ion-row>\n\n        <ion-row class="row-hourly-forecast">\n\n          {{hourForecast.temp}} <span class="centigrade-symbol">°C</span>\n\n        </ion-row>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n\n\n    <ion-row *ngFor="let day of nextDaysForecast" class="row-forecasts">\n\n      <ion-col class="col-day-of-week-forecasts">{{day.dayOfWeek}}</ion-col>\n\n      <ion-col><ion-icon name={{day.condition}} class="icon-forecasts"></ion-icon></ion-col>\n\n      <ion-col>{{day.tempMax}} <span class="centigrade-symbol">°C</span></ion-col>\n\n      <ion-col>{{day.tempMin}} <span class="centigrade-symbol">°C</span></ion-col>\n\n    </ion-row>\n\n\n\n\n\n  </ion-grid>\n\n\n\n</ion-content>\n\n\n\n'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\principal\principal.html"*/
+        selector: 'principal',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/principal.html"*/'<!--User Main Tab Component HTML Structure-->\n<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Your locations</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <ion-slides class="cities-slider">\n    <ion-slide>\n      <ion-grid>\n        <ion-row>\n          <ion-col *ngFor="let ciudad of ciudades" class="my-cities-element" (click)="changeCity(ciudad.name)">\n            {{ciudad.name}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-slide>\n    <ion-slide>\n      <ion-grid>\n        <ion-row>\n          <ion-col >\n            <button ion-button color="primary" class="my-location-button" (click)="getMyLocation()">My location</button>\n          </ion-col>\n          <ion-col >\n            <button ion-button color="secondary" class="add-city-button">Add city</button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-slide>\n  </ion-slides>\n\n  <ion-grid class="ion_grid_forecasts">\n    <ion-row>\n      <ion-col *ngFor="let today of todayForecast">\n        <img src="../../assets/imgs/rainy.gif"/>\n\n        <div class="location-content">\n          <div class="location-city-name">\n            {{today.cityName}}\n          </div>\n\n          <div class="location-avg-temp">\n            {{today.avgTemp}}<span class="centigrade-symbol">°C</span>\n          </div>\n\n          <div class="location-max-min-temps">\n            High:<b>{{today.tempMax}}</b><span class="centigrade-symbol">°C</span>\n            Low:<b>{{today.tempMin}}</b><span class="centigrade-symbol">°C</span>\n          </div>\n\n          <div class="location-todays-data">\n            {{this.todaysDate}}\n          </div>\n        </div>\n\n      </ion-col>\n    </ion-row>\n\n    <ion-row class="row-container-hourly-forecasts">\n      <ion-col *ngFor="let hourForecast of todayHourlyForecast" class="col-hourly-forecasts">\n        <ion-row class="row-hourly-forecast">\n          {{hourForecast.time}}\n        </ion-row>\n        <ion-row class="row-hourly-forecast">\n          <ion-icon name={{hourForecast.condition}}></ion-icon>\n        </ion-row>\n        <ion-row class="row-hourly-forecast">\n          {{hourForecast.temp}} <span class="centigrade-symbol">°C</span>\n        </ion-row>\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row *ngFor="let day of nextDaysForecast" class="row-forecasts">\n      <ion-col class="col-day-of-week-forecasts">{{day.dayOfWeek}}</ion-col>\n      <ion-col><ion-icon name={{day.condition}} class="icon-forecasts"></ion-icon></ion-col>\n      <ion-col>{{day.tempMax}} <span class="centigrade-symbol">°C</span></ion-col>\n      <ion-col>{{day.tempMin}} <span class="centigrade-symbol">°C</span></ion-col>\n    </ion-row>\n\n\n  </ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/principal.html"*/
     })
     /**
      * Component for user main interface, user can add cities, select cities, select current location and
@@ -1266,7 +1266,7 @@ __decorate([
 ], GraphsPage.prototype, "chart", void 0);
 GraphsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'graphs',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\graficas\graficas.html"*/'<!--Graphs User Tab Component HTML Structure-->\n\n<ion-header>\n\n    <ion-navbar>\n\n        <button ion-button menuToggle>\n\n            <ion-icon name="menu"></ion-icon>\n\n        </button>\n\n        <ion-title>Your locations</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n    <ion-row >\n\n        <ion-col col-12>\n\n            <ion-item>\n\n                <ion-label>Select temp</ion-label>\n\n                <ion-select [(ngModel)]="selectedTempOption" multiple="false" (ngModelChange)="optionChanged($event)">\n\n                    <ion-option value="max">Max temperatures </ion-option>\n\n                    <ion-option value="min">Min temperatures </ion-option>\n\n                    <ion-option value="avg">Average temperatures </ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row class="container-graph">\n\n        <ion-col>\n\n            <div>\n\n                <canvas baseChart width="350" height="250"  #baseChart="base-chart"\n\n                        [datasets]="lineChartData"\n\n                        [labels]="lineChartLabels"\n\n                        [options]="lineChartOptions"\n\n                        [colors]="lineChartColors"\n\n                        [legend]="lineChartLegend"\n\n                        [chartType]="lineChartType"\n\n                        (chartHover)="chartHovered($event)"\n\n                        (chartClick)="chartClicked($event)"></canvas>\n\n            </div>\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row style="margin-bottom: 10px">\n\n        <ion-col col-12>\n\n            <ion-item>\n\n                <ion-label>Select city</ion-label>\n\n                <ion-select [(ngModel)]="selectedCity" multiple="false" (ngModelChange)="changeCity($event)">\n\n                    <ion-option *ngFor="let c of ciudades"> {{c.name}} </ion-option>\n\n                </ion-select>\n\n            </ion-item>\n\n        </ion-col>\n\n    </ion-row>\n\n\n\n    <ion-row>\n\n        <ion-item>\n\n            <ion-label>Initial date</ion-label>\n\n            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{todaysDate}} [(ngModel)]="selectedInitDate"></ion-datetime>\n\n        </ion-item>\n\n    </ion-row>\n\n    <ion-row>\n\n        <ion-item>\n\n            <ion-label>Final date</ion-label>\n\n            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{maxFutureDate}} [(ngModel)]="selectedFinalDate" (ngModelChange)="triggerChartUpdateOnFinalDateChange($event)"></ion-datetime>\n\n        </ion-item>\n\n    </ion-row>\n\n\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\graficas\graficas.html"*/
+        selector: 'graphs',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/graficas/graficas.html"*/'<!--Graphs User Tab Component HTML Structure-->\n<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Forecasts graph</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n    <ion-row >\n        <ion-col col-12>\n            <ion-item>\n                <ion-label>Select temp</ion-label>\n                <ion-select [(ngModel)]="selectedTempOption" multiple="false" (ngModelChange)="optionChanged($event)">\n                    <ion-option value="max">Max temperatures </ion-option>\n                    <ion-option value="min">Min temperatures </ion-option>\n                    <ion-option value="avg">Average temperatures </ion-option>\n                </ion-select>\n            </ion-item>\n        </ion-col>\n    </ion-row>\n\n    <ion-row class="container-graph">\n        <ion-col>\n            <div>\n                <canvas baseChart width="350" height="250"  #baseChart="base-chart"\n                        [datasets]="lineChartData"\n                        [labels]="lineChartLabels"\n                        [options]="lineChartOptions"\n                        [colors]="lineChartColors"\n                        [legend]="lineChartLegend"\n                        [chartType]="lineChartType"\n                        (chartHover)="chartHovered($event)"\n                        (chartClick)="chartClicked($event)"></canvas>\n            </div>\n        </ion-col>\n    </ion-row>\n\n    <ion-row style="margin-bottom: 10px">\n        <ion-col col-12>\n            <ion-item>\n                <ion-label>Select city</ion-label>\n                <ion-select [(ngModel)]="selectedCity" multiple="false" (ngModelChange)="changeCity($event)">\n                    <ion-option *ngFor="let c of ciudades"> {{c.name}} </ion-option>\n                </ion-select>\n            </ion-item>\n        </ion-col>\n    </ion-row>\n\n    <ion-row>\n        <ion-item>\n            <ion-label>Initial date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{todaysDate}} [(ngModel)]="selectedInitDate"></ion-datetime>\n        </ion-item>\n    </ion-row>\n    <ion-row>\n        <ion-item>\n            <ion-label>Final date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{maxFutureDate}} [(ngModel)]="selectedFinalDate" (ngModelChange)="triggerChartUpdateOnFinalDateChange($event)"></ion-datetime>\n        </ion-item>\n    </ion-row>\n    <ion-row>\n        <ion-col>\n            <button ion-button outline class="save-forecast">Save this forecast</button>\n        </ion-col>\n    </ion-row>\n\n\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/graficas/graficas.html"*/
     })
     /**
      * User graph componennt, controlls the user interaction between the different fields, the API calls and the corresponding UI updates
@@ -1281,13 +1281,13 @@ GraphsPage = __decorate([
 
 /***/ }),
 
-/***/ 340:
+/***/ 342:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatbotPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__ = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__ = __webpack_require__(343);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1309,7 +1309,7 @@ var ChatbotPage = (function () {
 }());
 ChatbotPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'bot',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\chatbot\chatbot.html"*/'<!--Chatbot User Tab Component HTML Structure-->\n\n<ion-content padding>\n\n    <div class="contenedor_conversacion">\n\n        <ion-grid>\n\n            <ion-row *ngFor="let message of conversation; let i = index">\n\n                <ion-row *ngIf="i%2==0" col-12>\n\n                    <ion-col col-1>\n\n                        <ion-icon name="md-contact" class="icon-user-chatbot"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col class="user-message-content">\n\n                        {{message.content}}\n\n                    </ion-col>\n\n                    <ion-col col-4></ion-col>\n\n                </ion-row>\n\n                <ion-row *ngIf="i%2!=0" col-12>\n\n                    <ion-col col-4></ion-col>\n\n                    <ion-col class="bot-message-content">\n\n                        {{message.content}}\n\n                    </ion-col>\n\n                    <ion-col col-1>\n\n                        <ion-icon name="md-cloud"></ion-icon>\n\n                    </ion-col>\n\n                </ion-row>\n\n            </ion-row>\n\n        </ion-grid>\n\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\chatbot\chatbot.html"*/
+        selector: 'bot',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/'<!--Chatbot User Tab Component HTML Structure-->\n\n<ion-header>\n    <ion-navbar>\n        <ion-title>Botcast</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding class="yo">\n    <div class="contenedor_conversacion">\n        <ion-grid>\n            <ion-row *ngFor="let message of conversation; let i = index">\n                <ion-row *ngIf="i%2==0" col-12>\n                    <ion-col col-1>\n                        <ion-icon name="ios-contact-outline" class="icon-user-chatbot"></ion-icon>\n                    </ion-col>\n                    <ion-col class="user-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-4></ion-col>\n                </ion-row>\n                <ion-row *ngIf="i%2!=0" col-12>\n                    <ion-col col-4></ion-col>\n                    <ion-col class="bot-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-1>\n                        <ion-icon name="ios-ionitron-outline"></ion-icon>\n                    </ion-col>\n                </ion-row>\n            </ion-row>\n        </ion-grid>\n    </div>\n</ion-content>\n\n<ion-input placeholder="Say something..." class="mensaje-caja-texto" type="text"></ion-input>\n<button ion-button class="boton-enviar-mensaje">Send</button>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_chatbotService__["a" /* ChatbotService */]])
 ], ChatbotPage);
@@ -1318,7 +1318,7 @@ ChatbotPage = __decorate([
 
 /***/ }),
 
-/***/ 341:
+/***/ 343:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1438,14 +1438,14 @@ ChatbotService = __decorate([
 
 /***/ }),
 
-/***/ 342:
+/***/ 344:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyForecastsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__ = __webpack_require__(343);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__ = __webpack_require__(345);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1469,6 +1469,12 @@ var MyForecastsPage = (function () {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.myForecastService = myForecastService;
+        // constructor(
+        //     public cityName: string,
+        //     public condition: string,
+        //     public startDate:string,
+        //     public endDate:string
+        // ){}
         this.forecasts = [];
         this.myForecastService.retrieveMyForecasts().then(function (data) { return _this.forecasts = data; });
     }
@@ -1476,7 +1482,7 @@ var MyForecastsPage = (function () {
 }());
 MyForecastsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'myforecasts',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\myforecasts\myforecasts.html"*/'<!--User saved forecasts Tab Component HTML Structure-->\n\n<ion-content>\n\n    <ion-header>\n\n        <ion-navbar>\n\n            <ion-title>Your saved Forecasts</ion-title>\n\n        </ion-navbar>\n\n    </ion-header>\n\n\n\n    <ion-content>\n\n            <ion-grid>\n\n                <ion-row *ngFor="let forecast of forecasts" class="row-myforecasts">\n\n\n\n                    <ion-col>\n\n                        {{forecast.cityName}}\n\n                    </ion-col>\n\n\n\n                    <ion-col>\n\n\n\n                        <ion-icon name={{forecast.condition}} class="icon-forecasts"></ion-icon>\n\n                    </ion-col>\n\n\n\n                    <ion-col>\n\n                        {{forecast.startDate}}\n\n\n\n                    </ion-col>\n\n\n\n                    <ion-col>\n\n                        {{forecast.endDate}}\n\n                    </ion-col>\n\n                </ion-row>\n\n            </ion-grid>\n\n    </ion-content>\n\n</ion-content>'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\myforecasts\myforecasts.html"*/
+        selector: 'myforecasts',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/myforecasts/myforecasts.html"*/'<!--User saved forecasts Tab Component HTML Structure-->\n<ion-content>\n    <ion-header>\n        <ion-navbar>\n            <ion-title>Your saved Forecasts</ion-title>\n        </ion-navbar>\n    </ion-header>\n\n    <ion-content>\n            <ion-grid>\n                <ion-row *ngFor="let forecast of forecasts" class="row-myforecasts">\n\n                    <ion-col class="city-forecast">\n                        {{forecast.cityName}}\n                    </ion-col>\n\n                    <ion-col>\n\n                        <ion-icon name={{forecast.condition}} class="icon-forecasts"></ion-icon>\n                    </ion-col>\n\n                    <ion-col>\n                        {{forecast.startDate}}\n\n                    </ion-col>\n\n                    <ion-col>\n                        {{forecast.endDate}}\n                    </ion-col>\n                </ion-row>\n            </ion-grid>\n    </ion-content>\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/myforecasts/myforecasts.html"*/
     })
     /**
      * Component that contains the user's saved forecasts
@@ -1491,7 +1497,7 @@ MyForecastsPage = __decorate([
 
 /***/ }),
 
-/***/ 343:
+/***/ 345:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1571,11 +1577,18 @@ var MyForecastService = (function () {
             _this.http.get(apiURL)
                 .toPromise()
                 .then(function (res) {
+                var abbreviatedMonthMap = {
+                    0: "Jan", 1: "Feb", 2: "Mar", 3: "Apr", 4: "May", 5: "Jun", 6: "Jul", 7: "Aug", 8: "Sep", 9: "Oct", 10: "Nov", 11: "Dec"
+                };
                 var forecasts = [];
                 var forecastsJson = __WEBPACK_IMPORTED_MODULE_2_jquery__["map"](res.json(), function (e) { return e; });
                 __WEBPACK_IMPORTED_MODULE_2_jquery__["each"](forecastsJson, function (i, forecast) {
+                    var d1 = new Date(forecast.startDate);
+                    var d2 = new Date(forecast.endDate);
+                    var init_date = abbreviatedMonthMap[d1.getMonth()] + " " + (d1.getDate());
+                    var final_date = abbreviatedMonthMap[d2.getMonth()] + " " + (d2.getDate());
                     console.log(forecast);
-                    forecasts.push(new MyForecast(forecast.cityName, iconMap[forecast.condition], forecast.startDate, forecast.endDate));
+                    forecasts.push(new MyForecast(forecast.cityName, iconMap[forecast.condition], init_date, final_date));
                 });
                 resolve(forecasts);
             }, function (msg) {
@@ -1595,7 +1608,7 @@ MyForecastService = __decorate([
 
 /***/ }),
 
-/***/ 344:
+/***/ 346:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1651,7 +1664,7 @@ var RegisterPage = (function () {
 }());
 RegisterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'register',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\login\register\register.html"*/'<!--Register Componente HTML Structure-->\n\n<ion-content>\n\n    <ion-list no-lines>\n\n        <ion-grid>\n\n\n\n            <ion-row>\n\n                <ion-col col-12 class="titulo_bot_cast">\n\n                    <b>Botcast</b>\n\n                </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row>\n\n                <ion-col col-12 class="botcast_icon">\n\n                    <img src="../assets/imgs/bot_icon.png" height="100" width="100"/>\n\n                </ion-col>\n\n            </ion-row>\n\n\n\n            <ion-row>\n\n\n\n                <ion-col col-12>\n\n                    <form [formGroup]="slideOneForm">\n\n\n\n                        <ion-item>\n\n                            <ion-label floating>Name</ion-label>\n\n                            <ion-input formControlName="name" type="text"></ion-input>\n\n                        </ion-item>\n\n                        <ion-item>\n\n                            <ion-label floating>E-mail</ion-label>\n\n                            <ion-input formControlName="email" type="text"></ion-input>\n\n                        </ion-item>\n\n\n\n                        <ion-item>\n\n                            <ion-label floating>Username</ion-label>\n\n                            <ion-input formControlName="username" type="number"></ion-input>\n\n                        </ion-item>\n\n\n\n                        <ion-item>\n\n                            <ion-label floating>Password</ion-label>\n\n                            <ion-input formControlName="password" type="password"></ion-input>\n\n                        </ion-item>\n\n                        <ion-item>\n\n                            <ion-label floating>Confirm password</ion-label>\n\n                            <ion-input formControlName="confirmpassword" type="password"></ion-input>\n\n                        </ion-item>\n\n                    </form>\n\n\n\n                    <button ion-button full color="primary" (click)="register()">Create Account!</button>\n\n                </ion-col>\n\n            </ion-row>\n\n        </ion-grid>\n\n\n\n    </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\login\register\register.html"*/
+        selector: 'register',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/register/register.html"*/'<!--Register Componente HTML Structure-->\n<ion-content>\n    <ion-list no-lines>\n        <ion-grid>\n\n            <ion-row>\n                <ion-col col-12 class="titulo_bot_cast">\n                    <b>Botcast</b>\n                </ion-col>\n            </ion-row>\n\n            <ion-row>\n                <ion-col col-12 class="botcast_icon">\n                    <img src="../assets/imgs/bot_icon.png" height="100" width="100"/>\n                </ion-col>\n            </ion-row>\n\n            <ion-row>\n\n                <ion-col col-12>\n                    <form [formGroup]="slideOneForm">\n\n                        <ion-item>\n                            <ion-input formControlName="name" placeholder="Name" type="text"></ion-input>\n                        </ion-item>\n                        <ion-item>\n                            <ion-input formControlName="email" placeholder="E-mail" type="text"></ion-input>\n                        </ion-item>\n\n                        <ion-item>\n                            <ion-input formControlName="username" placeholder="Username" type="number"></ion-input>\n                        </ion-item>\n\n                        <ion-item>\n                            <ion-input formControlName="password" placeholder="Password" type="password"></ion-input>\n                        </ion-item>\n                        <ion-item>\n                            <ion-input formControlName="confirmpassword"  placeholder="Confirm password"type="password"></ion-input>\n                        </ion-item>\n                    </form>\n\n                    <button ion-button class="botonRegistrarse" full color="primary" (click)="register()">Create Account!</button>\n                </ion-col>\n            </ion-row>\n        </ion-grid>\n\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/register/register.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__services_authService__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]])
 ], RegisterPage);
@@ -1660,7 +1673,7 @@ RegisterPage = __decorate([
 
 /***/ }),
 
-/***/ 345:
+/***/ 347:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1763,7 +1776,7 @@ UsersInfoService = __decorate([
 
 /***/ }),
 
-/***/ 346:
+/***/ 348:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1853,7 +1866,7 @@ CityManagerService = __decorate([
 
 /***/ }),
 
-/***/ 347:
+/***/ 349:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1940,14 +1953,14 @@ StatService = __decorate([
 
 /***/ }),
 
-/***/ 348:
+/***/ 350:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminCities; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_cityManagerService__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_cityManagerService__ = __webpack_require__(348);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1972,7 +1985,7 @@ var AdminCities = (function () {
 }());
 AdminCities = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'adminCities',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\admin\cities\cities.html"*/'<!--Administrator City Tab Component HTML Structure-->\n\n<ion-content>\n\n    <navbar></navbar>\n\n    <div>\n\n        <ion-grid>\n\n          <ion-row>\n\n            <ion-col><ion-searchbar \n\n              placeholder="Search by City"\n\n              [(ngModel)]="myInput"\n\n              [showCancelButton]="shouldShowCancel"\n\n              (ionInput)="onInput($event)"\n\n              (ionCancel)="onCancel($event)">\n\n            </ion-searchbar></ion-col>\n\n            <ion-col> <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="add"></ion-icon></button></ion-col>  \n\n          </ion-row>\n\n        </ion-grid>\n\n    </div>\n\n    <div>\n\n        <ion-grid>\n\n            <ion-row>\n\n                <ion-col><h4>City</h4></ion-col>\n\n                <ion-col><h4>Country</h4></ion-col>\n\n                <ion-col><h4>Status</h4></ion-col>\n\n                <ion-col><h4></h4></ion-col>\n\n            </ion-row>\n\n            <ion-row *ngFor="let city of cities" class="row-cities">\n\n                <ion-col>{{city.city}}</ion-col>\n\n                <ion-col>{{city.country}}</ion-col>\n\n                <ion-col>{{city.status}}</ion-col>\n\n                <ion-col>\n\n                    <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="close-circle"></ion-icon></button>\n\n                </ion-col>\n\n            </ion-row>\n\n        </ion-grid>\n\n    </div>\n\n</ion-content> \n\n'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\admin\cities\cities.html"*/
+        selector: 'adminCities',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/cities/cities.html"*/'<!--Administrator City Tab Component HTML Structure-->\n<ion-content>\n    <navbar></navbar>\n    <div>\n        <ion-grid>\n          <ion-row>\n            <ion-col><ion-searchbar \n              placeholder="Search by City"\n              [(ngModel)]="myInput"\n              [showCancelButton]="shouldShowCancel"\n              (ionInput)="onInput($event)"\n              (ionCancel)="onCancel($event)">\n            </ion-searchbar></ion-col>\n            <ion-col> <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="add"></ion-icon></button></ion-col>  \n          </ion-row>\n        </ion-grid>\n    </div>\n    <div>\n        <ion-grid>\n            <ion-row>\n                <ion-col><h4>City</h4></ion-col>\n                <ion-col><h4>Country</h4></ion-col>\n                <ion-col><h4>Status</h4></ion-col>\n                <ion-col><h4></h4></ion-col>\n            </ion-row>\n            <ion-row *ngFor="let city of cities" class="row-cities">\n                <ion-col>{{city.city}}</ion-col>\n                <ion-col>{{city.country}}</ion-col>\n                <ion-col>{{city.status}}</ion-col>\n                <ion-col>\n                    <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="close-circle"></ion-icon></button>\n                </ion-col>\n            </ion-row>\n        </ion-grid>\n    </div>\n</ion-content> \n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/cities/cities.html"*/
     })
     /**
      * Admin cities tab constructor
@@ -1985,7 +1998,7 @@ AdminCities = __decorate([
 
 /***/ }),
 
-/***/ 349:
+/***/ 351:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2017,7 +2030,7 @@ var AdminMyAccount = (function () {
 }());
 AdminMyAccount = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'myaccount',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\admin\myaccount\myaccount.html"*/'<!--Administrator Account Detail Tab Component HTML Structure-->\n\n<ion-content>\n\n\n\n    <navbar></navbar>\n\n    <div>\n\n\n\n\n\n        <ion-grid>\n\n            <ion-title><h2>Account information</h2></ion-title>\n\n            <ion-col *ngFor="let x of info; let i = index" class="profileInfo">\n\n                <ion-col *ngIf="i==0">\n\n                    <ion-row>\n\n                        Username: {{x.username}}\n\n                    </ion-row>\n\n                    <ion-row>\n\n                        Password: {{x.password}}\n\n                    </ion-row>\n\n                    <ion-row>\n\n                        <ion-buttons end>\n\n                        <button ion-button (click)="addMarker()" class="editButton">Edit</button>\n\n                        </ion-buttons>\n\n                    </ion-row>\n\n                </ion-col>\n\n            </ion-col>\n\n\n\n        </ion-grid>\n\n    </div>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\admin\myaccount\myaccount.html"*/
+        selector: 'myaccount',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/myaccount/myaccount.html"*/'<!--Administrator Account Detail Tab Component HTML Structure-->\n<ion-content>\n\n    <navbar></navbar>\n    <div>\n\n\n        <ion-grid>\n            <ion-title><h2>Account information</h2></ion-title>\n            <ion-col *ngFor="let x of info; let i = index" class="profileInfo">\n                <ion-row>\n                <ion-col *ngIf="i==0">\n                    <ion-row>\n                        <ion-col class="label-campo-admin2">Username</ion-col>\n                        <ion-col class="campo-nombre-usuario">{{x.username}}</ion-col>\n                    </ion-row>\n                    <ion-row>\n                        <ion-col class="label-campo-admin">Password</ion-col>\n                        <ion-col><ion-input placeholder="Type current password" clearInput></ion-input></ion-col>\n                    </ion-row>\n                    <ion-row>\n                        <ion-col class="label-campo-admin">New password</ion-col>\n                        <ion-col><ion-input placeholder="Type new password" clearInput></ion-input></ion-col>\n                    </ion-row>\n                    <ion-row>\n                        <ion-col class="label-campo-admin">Confirm new password</ion-col>\n                        <ion-col><ion-input placeholder="Confirm..." clearInput></ion-input></ion-col>\n                    </ion-row>\n                    <ion-row>\n                        <ion-buttons class="editButton">\n                        <button ion-button (click)="addMarker()" >Save changes</button>\n                        </ion-buttons>\n                    </ion-row>\n                </ion-col>\n                </ion-row>\n            </ion-col>\n\n        </ion-grid>\n    </div>\n\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/myaccount/myaccount.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_authService__["a" /* AuthorizationService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]])
 ], AdminMyAccount);
@@ -2026,14 +2039,14 @@ AdminMyAccount = __decorate([
 
 /***/ }),
 
-/***/ 350:
+/***/ 352:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminStats; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_statsService__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_statsService__ = __webpack_require__(349);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2074,7 +2087,7 @@ __decorate([
 ], AdminStats.prototype, "mapElement", void 0);
 AdminStats = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'stats',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\admin\stats\stats.html"*/'<!--Administrator Statistics Tab Component HTML Structure-->\n\n\n\n<ion-content>\n\n    <navbar></navbar>\n\n\n\n    \n\n    <ion-grid>\n\n        <ion-row class="mapFrame">\n\n            <iframe\n\n            width="600"\n\n            height="450"\n\n            frameborder="0" style="border:0"\n\n            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD0tHxsyV4X0BNu3WarQAts8gy8_Q2dh9k&q=center=-33.8569,151.2152\n\n            &zoom=18" allowfullscreen>\n\n            </iframe>\n\n        </ion-row>\n\n        <ion-row>\n\n            <ion-buttons end class="endB">\n\n                <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>\n\n            </ion-buttons>\n\n        </ion-row>\n\n        <ion-row >\n\n                <ion-col><h4>Users</h4></ion-col>\n\n\n\n                <ion-col><h4>Active Users</h4></ion-col>\n\n                <ion-col><h4>Max Users</h4></ion-col>\n\n                <ion-col><h4>Favorite City</h4></ion-col>\n\n              </ion-row>\n\n        <ion-row *ngFor="let stat of stats" class="row-stats">\n\n            <ion-col>\n\n                {{stat.users}}\n\n            </ion-col>\n\n\n\n            <ion-col>\n\n                {{stat.activeUsers}}\n\n            </ion-col>\n\n\n\n            <ion-col>\n\n                {{stat.maxUsers}}\n\n            </ion-col>\n\n\n\n            <ion-col>\n\n                {{stat.favoriteCity}}\n\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\admin\stats\stats.html"*/
+        selector: 'stats',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/stats/stats.html"*/'<!--Administrator Statistics Tab Component HTML Structure-->\n\n<ion-content>\n    <navbar></navbar>\n\n    <ion-grid>\n        <ion-row class="mapFrame">\n            <iframe\n            width="600"\n            height="450"\n            frameborder="0" style="border:0"\n            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD0tHxsyV4X0BNu3WarQAts8gy8_Q2dh9k&q=center=-33.8569,151.2152\n            &zoom=18" allowfullscreen>\n            </iframe>\n\n        </ion-row>\n        <ion-row>\n            <ion-buttons end class="endB">\n                <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>\n            </ion-buttons>\n        </ion-row>\n        <ion-row >\n                <ion-col><h4>Registered Users</h4></ion-col>\n                <ion-col><h4>Active Users</h4></ion-col>\n                <ion-col><h4>Max Users Streak</h4></ion-col>\n                <ion-col><h4>Favorite City</h4></ion-col>\n              </ion-row>\n        <ion-row *ngFor="let stat of stats" class="row-stats">\n            <ion-col class="stat-data-column">\n                {{stat.users}}\n            </ion-col>\n\n            <ion-col class="stat-data-column">\n                {{stat.activeUsers}}\n            </ion-col>\n\n            <ion-col class="stat-data-column">\n                {{stat.maxUsers}}\n            </ion-col>\n\n            <ion-col class="stat-data-column">\n                {{stat.favoriteCity}}\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n</ion-content>\n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/stats/stats.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_statsService__["a" /* StatService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]])
 ], AdminStats);
@@ -2083,14 +2096,14 @@ AdminStats = __decorate([
 
 /***/ }),
 
-/***/ 351:
+/***/ 353:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminUsers; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_usersInfoService__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_usersInfoService__ = __webpack_require__(347);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2115,7 +2128,7 @@ var AdminUsers = (function () {
 }());
 AdminUsers = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'adminUsers',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\admin\users\users.html"*/'<!--Administrator User Control Tab Component HTML Structure-->\n\n\n\n<ion-content>\n\n  <navbar></navbar>\n\n  <div>\n\n    <ion-grid class="searchBarGrid">\n\n      <ion-row>\n\n        <ion-col><ion-searchbar \n\n          placeholder="Search by User"\n\n          [(ngModel)]="myInput"\n\n          [showCancelButton]="shouldShowCancel"\n\n          (ionInput)="onInput($event)"\n\n          (ionCancel)="onCancel($event)">\n\n        </ion-searchbar></ion-col>\n\n        <ion-col> <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="add"></ion-icon></button></ion-col>  \n\n      </ion-row>\n\n    </ion-grid>\n\n  </div>\n\n  <div>\n\n    <ion-grid>\n\n      <ion-row>\n\n        <ion-col><h4>Name</h4></ion-col>\n\n        <ion-col><h4>Age</h4></ion-col>\n\n        <ion-col><h4>Username</h4></ion-col>\n\n        <ion-col><h4>Email</h4></ion-col>\n\n        <ion-col><h4># of Logins</h4></ion-col>\n\n        <ion-col><h4>Last Login</h4></ion-col>\n\n        <ion-col><h4>Last Location</h4></ion-col>\n\n        <ion-col><h4></h4></ion-col>\n\n      </ion-row>\n\n      <ion-row *ngFor="let info of information" class="row-users">\n\n        <ion-col>{{info.name}}</ion-col>\n\n        <ion-col>{{info.age}}</ion-col>\n\n        <ion-col>{{info.username}}</ion-col>\n\n        <ion-col>{{info.email}}</ion-col>\n\n        <ion-col>{{info.logins}}</ion-col>\n\n        <ion-col>{{info.lastlogin}}</ion-col>\n\n        <ion-col>{{info.lastlocation}}</ion-col>\n\n        <ion-col>\n\n          <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="close-circle"></ion-icon></button>\n\n        </ion-col>\n\n      </ion-row>\n\n    </ion-grid>\n\n  </div>\n\n </ion-content> \n\n\n\n\n\n\n\n\n\n\n\n'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\admin\users\users.html"*/
+        selector: 'adminUsers',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/users/users.html"*/'<!--Administrator User Control Tab Component HTML Structure-->\n\n<ion-content>\n  <navbar></navbar>\n  <div>\n    <ion-grid class="searchBarGrid">\n      <ion-row>\n        <ion-col><ion-searchbar \n          placeholder="Search by User"\n          [(ngModel)]="myInput"\n          [showCancelButton]="shouldShowCancel"\n          (ionInput)="onInput($event)"\n          (ionCancel)="onCancel($event)">\n        </ion-searchbar></ion-col>\n        <ion-col> <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="add"></ion-icon></button></ion-col>  \n      </ion-row>\n    </ion-grid>\n  </div>\n  <div>\n    <ion-grid>\n      <ion-row>\n        <ion-col><h4>Name</h4></ion-col>\n        <ion-col><h4>Age</h4></ion-col>\n        <ion-col><h4>Username</h4></ion-col>\n        <ion-col><h4>Email</h4></ion-col>\n        <ion-col><h4># of Logins</h4></ion-col>\n        <ion-col><h4>Last Login</h4></ion-col>\n        <ion-col><h4>Last Location</h4></ion-col>\n        <ion-col><h4></h4></ion-col>\n      </ion-row>\n      <ion-row *ngFor="let info of information" class="row-users">\n        <ion-col>{{info.name}}</ion-col>\n        <ion-col>{{info.age}}</ion-col>\n        <ion-col>{{info.username}}</ion-col>\n        <ion-col>{{info.email}}</ion-col>\n        <ion-col>{{info.logins}}</ion-col>\n        <ion-col>{{info.lastlogin}}</ion-col>\n        <ion-col>{{info.lastlocation}}</ion-col>\n        <ion-col>\n          <button ion-button icon-only clear item-right (click)="remove()"><ion-icon name="close-circle"></ion-icon></button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n </ion-content> \n\n\n\n\n\n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/users/users.html"*/
     })
     /**
      * Admin users tab constructor
@@ -2128,13 +2141,13 @@ AdminUsers = __decorate([
 
 /***/ }),
 
-/***/ 352:
+/***/ 354:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(353);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(371);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(355);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(373);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -2142,7 +2155,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 371:
+/***/ 373:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2151,34 +2164,34 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(411);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(413);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_principal_principal__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_citiesService__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_forecastService__ = __webpack_require__(119);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_graphsService__ = __webpack_require__(480);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_chatbotService__ = __webpack_require__(341);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_graphsService__ = __webpack_require__(481);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_chatbotService__ = __webpack_require__(343);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_authService__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_geolocationService__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_usersInfoService__ = __webpack_require__(345);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_cityManagerService__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_usersInfoService__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_cityManagerService__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_dashboardService__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_myForecastService__ = __webpack_require__(343);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_statsService__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_myForecastService__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_statsService__ = __webpack_require__(349);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_graficas_graficas__ = __webpack_require__(219);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_charts__ = __webpack_require__(221);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19_ng2_charts__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_tabs_tabs__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_chatbot_chatbot__ = __webpack_require__(340);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_myforecasts_myforecasts__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_chatbot_chatbot__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_myforecasts_myforecasts__ = __webpack_require__(344);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__login_login_login__ = __webpack_require__(117);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__login_register_register__ = __webpack_require__(344);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_admin_navbar_navbar__ = __webpack_require__(481);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__login_register_register__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_admin_navbar_navbar__ = __webpack_require__(482);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_admin_dashboard_dashboard__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_admin_cities_cities__ = __webpack_require__(348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_admin_myaccount_myaccount__ = __webpack_require__(349);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_admin_stats_stats__ = __webpack_require__(350);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_admin_users_users__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_admin_cities_cities__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_admin_myaccount_myaccount__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_admin_stats_stats__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_admin_users_users__ = __webpack_require__(353);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__ionic_native_status_bar__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__ionic_native_splash_screen__ = __webpack_require__(213);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__ionic_native_geolocation__ = __webpack_require__(217);
@@ -2303,7 +2316,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 411:
+/***/ 413:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2338,7 +2351,7 @@ var BotCast = (function () {
     return BotCast;
 }());
 BotCast = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\app\app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/app/app.html"*/
     })
     /**
      * Initialize application, register platform and aux services
@@ -2351,240 +2364,240 @@ BotCast = __decorate([
 
 /***/ }),
 
-/***/ 462:
+/***/ 463:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 225,
-	"./af.js": 225,
-	"./ar": 226,
-	"./ar-dz": 227,
-	"./ar-dz.js": 227,
-	"./ar-kw": 228,
-	"./ar-kw.js": 228,
-	"./ar-ly": 229,
-	"./ar-ly.js": 229,
-	"./ar-ma": 230,
-	"./ar-ma.js": 230,
-	"./ar-sa": 231,
-	"./ar-sa.js": 231,
-	"./ar-tn": 232,
-	"./ar-tn.js": 232,
-	"./ar.js": 226,
-	"./az": 233,
-	"./az.js": 233,
-	"./be": 234,
-	"./be.js": 234,
-	"./bg": 235,
-	"./bg.js": 235,
-	"./bn": 236,
-	"./bn.js": 236,
-	"./bo": 237,
-	"./bo.js": 237,
-	"./br": 238,
-	"./br.js": 238,
-	"./bs": 239,
-	"./bs.js": 239,
-	"./ca": 240,
-	"./ca.js": 240,
-	"./cs": 241,
-	"./cs.js": 241,
-	"./cv": 242,
-	"./cv.js": 242,
-	"./cy": 243,
-	"./cy.js": 243,
-	"./da": 244,
-	"./da.js": 244,
-	"./de": 245,
-	"./de-at": 246,
-	"./de-at.js": 246,
-	"./de-ch": 247,
-	"./de-ch.js": 247,
-	"./de.js": 245,
-	"./dv": 248,
-	"./dv.js": 248,
-	"./el": 249,
-	"./el.js": 249,
-	"./en-au": 250,
-	"./en-au.js": 250,
-	"./en-ca": 251,
-	"./en-ca.js": 251,
-	"./en-gb": 252,
-	"./en-gb.js": 252,
-	"./en-ie": 253,
-	"./en-ie.js": 253,
-	"./en-nz": 254,
-	"./en-nz.js": 254,
-	"./eo": 255,
-	"./eo.js": 255,
-	"./es": 256,
-	"./es-do": 257,
-	"./es-do.js": 257,
-	"./es.js": 256,
-	"./et": 258,
-	"./et.js": 258,
-	"./eu": 259,
-	"./eu.js": 259,
-	"./fa": 260,
-	"./fa.js": 260,
-	"./fi": 261,
-	"./fi.js": 261,
-	"./fo": 262,
-	"./fo.js": 262,
-	"./fr": 263,
-	"./fr-ca": 264,
-	"./fr-ca.js": 264,
-	"./fr-ch": 265,
-	"./fr-ch.js": 265,
-	"./fr.js": 263,
-	"./fy": 266,
-	"./fy.js": 266,
-	"./gd": 267,
-	"./gd.js": 267,
-	"./gl": 268,
-	"./gl.js": 268,
-	"./gom-latn": 269,
-	"./gom-latn.js": 269,
-	"./he": 270,
-	"./he.js": 270,
-	"./hi": 271,
-	"./hi.js": 271,
-	"./hr": 272,
-	"./hr.js": 272,
-	"./hu": 273,
-	"./hu.js": 273,
-	"./hy-am": 274,
-	"./hy-am.js": 274,
-	"./id": 275,
-	"./id.js": 275,
-	"./is": 276,
-	"./is.js": 276,
-	"./it": 277,
-	"./it.js": 277,
-	"./ja": 278,
-	"./ja.js": 278,
-	"./jv": 279,
-	"./jv.js": 279,
-	"./ka": 280,
-	"./ka.js": 280,
-	"./kk": 281,
-	"./kk.js": 281,
-	"./km": 282,
-	"./km.js": 282,
-	"./kn": 283,
-	"./kn.js": 283,
-	"./ko": 284,
-	"./ko.js": 284,
-	"./ky": 285,
-	"./ky.js": 285,
-	"./lb": 286,
-	"./lb.js": 286,
-	"./lo": 287,
-	"./lo.js": 287,
-	"./lt": 288,
-	"./lt.js": 288,
-	"./lv": 289,
-	"./lv.js": 289,
-	"./me": 290,
-	"./me.js": 290,
-	"./mi": 291,
-	"./mi.js": 291,
-	"./mk": 292,
-	"./mk.js": 292,
-	"./ml": 293,
-	"./ml.js": 293,
-	"./mr": 294,
-	"./mr.js": 294,
-	"./ms": 295,
-	"./ms-my": 296,
-	"./ms-my.js": 296,
-	"./ms.js": 295,
-	"./my": 297,
-	"./my.js": 297,
-	"./nb": 298,
-	"./nb.js": 298,
-	"./ne": 299,
-	"./ne.js": 299,
-	"./nl": 300,
-	"./nl-be": 301,
-	"./nl-be.js": 301,
-	"./nl.js": 300,
-	"./nn": 302,
-	"./nn.js": 302,
-	"./pa-in": 303,
-	"./pa-in.js": 303,
-	"./pl": 304,
-	"./pl.js": 304,
-	"./pt": 305,
-	"./pt-br": 306,
-	"./pt-br.js": 306,
-	"./pt.js": 305,
-	"./ro": 307,
-	"./ro.js": 307,
-	"./ru": 308,
-	"./ru.js": 308,
-	"./sd": 309,
-	"./sd.js": 309,
-	"./se": 310,
-	"./se.js": 310,
-	"./si": 311,
-	"./si.js": 311,
-	"./sk": 312,
-	"./sk.js": 312,
-	"./sl": 313,
-	"./sl.js": 313,
-	"./sq": 314,
-	"./sq.js": 314,
-	"./sr": 315,
-	"./sr-cyrl": 316,
-	"./sr-cyrl.js": 316,
-	"./sr.js": 315,
-	"./ss": 317,
-	"./ss.js": 317,
-	"./sv": 318,
-	"./sv.js": 318,
-	"./sw": 319,
-	"./sw.js": 319,
-	"./ta": 320,
-	"./ta.js": 320,
-	"./te": 321,
-	"./te.js": 321,
-	"./tet": 322,
-	"./tet.js": 322,
-	"./th": 323,
-	"./th.js": 323,
-	"./tl-ph": 324,
-	"./tl-ph.js": 324,
-	"./tlh": 325,
-	"./tlh.js": 325,
-	"./tr": 326,
-	"./tr.js": 326,
-	"./tzl": 327,
-	"./tzl.js": 327,
-	"./tzm": 328,
-	"./tzm-latn": 329,
-	"./tzm-latn.js": 329,
-	"./tzm.js": 328,
-	"./uk": 330,
-	"./uk.js": 330,
-	"./ur": 331,
-	"./ur.js": 331,
-	"./uz": 332,
-	"./uz-latn": 333,
-	"./uz-latn.js": 333,
-	"./uz.js": 332,
-	"./vi": 334,
-	"./vi.js": 334,
-	"./x-pseudo": 335,
-	"./x-pseudo.js": 335,
-	"./yo": 336,
-	"./yo.js": 336,
-	"./zh-cn": 337,
-	"./zh-cn.js": 337,
-	"./zh-hk": 338,
-	"./zh-hk.js": 338,
-	"./zh-tw": 339,
-	"./zh-tw.js": 339
+	"./af": 227,
+	"./af.js": 227,
+	"./ar": 228,
+	"./ar-dz": 229,
+	"./ar-dz.js": 229,
+	"./ar-kw": 230,
+	"./ar-kw.js": 230,
+	"./ar-ly": 231,
+	"./ar-ly.js": 231,
+	"./ar-ma": 232,
+	"./ar-ma.js": 232,
+	"./ar-sa": 233,
+	"./ar-sa.js": 233,
+	"./ar-tn": 234,
+	"./ar-tn.js": 234,
+	"./ar.js": 228,
+	"./az": 235,
+	"./az.js": 235,
+	"./be": 236,
+	"./be.js": 236,
+	"./bg": 237,
+	"./bg.js": 237,
+	"./bn": 238,
+	"./bn.js": 238,
+	"./bo": 239,
+	"./bo.js": 239,
+	"./br": 240,
+	"./br.js": 240,
+	"./bs": 241,
+	"./bs.js": 241,
+	"./ca": 242,
+	"./ca.js": 242,
+	"./cs": 243,
+	"./cs.js": 243,
+	"./cv": 244,
+	"./cv.js": 244,
+	"./cy": 245,
+	"./cy.js": 245,
+	"./da": 246,
+	"./da.js": 246,
+	"./de": 247,
+	"./de-at": 248,
+	"./de-at.js": 248,
+	"./de-ch": 249,
+	"./de-ch.js": 249,
+	"./de.js": 247,
+	"./dv": 250,
+	"./dv.js": 250,
+	"./el": 251,
+	"./el.js": 251,
+	"./en-au": 252,
+	"./en-au.js": 252,
+	"./en-ca": 253,
+	"./en-ca.js": 253,
+	"./en-gb": 254,
+	"./en-gb.js": 254,
+	"./en-ie": 255,
+	"./en-ie.js": 255,
+	"./en-nz": 256,
+	"./en-nz.js": 256,
+	"./eo": 257,
+	"./eo.js": 257,
+	"./es": 258,
+	"./es-do": 259,
+	"./es-do.js": 259,
+	"./es.js": 258,
+	"./et": 260,
+	"./et.js": 260,
+	"./eu": 261,
+	"./eu.js": 261,
+	"./fa": 262,
+	"./fa.js": 262,
+	"./fi": 263,
+	"./fi.js": 263,
+	"./fo": 264,
+	"./fo.js": 264,
+	"./fr": 265,
+	"./fr-ca": 266,
+	"./fr-ca.js": 266,
+	"./fr-ch": 267,
+	"./fr-ch.js": 267,
+	"./fr.js": 265,
+	"./fy": 268,
+	"./fy.js": 268,
+	"./gd": 269,
+	"./gd.js": 269,
+	"./gl": 270,
+	"./gl.js": 270,
+	"./gom-latn": 271,
+	"./gom-latn.js": 271,
+	"./he": 272,
+	"./he.js": 272,
+	"./hi": 273,
+	"./hi.js": 273,
+	"./hr": 274,
+	"./hr.js": 274,
+	"./hu": 275,
+	"./hu.js": 275,
+	"./hy-am": 276,
+	"./hy-am.js": 276,
+	"./id": 277,
+	"./id.js": 277,
+	"./is": 278,
+	"./is.js": 278,
+	"./it": 279,
+	"./it.js": 279,
+	"./ja": 280,
+	"./ja.js": 280,
+	"./jv": 281,
+	"./jv.js": 281,
+	"./ka": 282,
+	"./ka.js": 282,
+	"./kk": 283,
+	"./kk.js": 283,
+	"./km": 284,
+	"./km.js": 284,
+	"./kn": 285,
+	"./kn.js": 285,
+	"./ko": 286,
+	"./ko.js": 286,
+	"./ky": 287,
+	"./ky.js": 287,
+	"./lb": 288,
+	"./lb.js": 288,
+	"./lo": 289,
+	"./lo.js": 289,
+	"./lt": 290,
+	"./lt.js": 290,
+	"./lv": 291,
+	"./lv.js": 291,
+	"./me": 292,
+	"./me.js": 292,
+	"./mi": 293,
+	"./mi.js": 293,
+	"./mk": 294,
+	"./mk.js": 294,
+	"./ml": 295,
+	"./ml.js": 295,
+	"./mr": 296,
+	"./mr.js": 296,
+	"./ms": 297,
+	"./ms-my": 298,
+	"./ms-my.js": 298,
+	"./ms.js": 297,
+	"./my": 299,
+	"./my.js": 299,
+	"./nb": 300,
+	"./nb.js": 300,
+	"./ne": 301,
+	"./ne.js": 301,
+	"./nl": 302,
+	"./nl-be": 303,
+	"./nl-be.js": 303,
+	"./nl.js": 302,
+	"./nn": 304,
+	"./nn.js": 304,
+	"./pa-in": 305,
+	"./pa-in.js": 305,
+	"./pl": 306,
+	"./pl.js": 306,
+	"./pt": 307,
+	"./pt-br": 308,
+	"./pt-br.js": 308,
+	"./pt.js": 307,
+	"./ro": 309,
+	"./ro.js": 309,
+	"./ru": 310,
+	"./ru.js": 310,
+	"./sd": 311,
+	"./sd.js": 311,
+	"./se": 312,
+	"./se.js": 312,
+	"./si": 313,
+	"./si.js": 313,
+	"./sk": 314,
+	"./sk.js": 314,
+	"./sl": 315,
+	"./sl.js": 315,
+	"./sq": 316,
+	"./sq.js": 316,
+	"./sr": 317,
+	"./sr-cyrl": 318,
+	"./sr-cyrl.js": 318,
+	"./sr.js": 317,
+	"./ss": 319,
+	"./ss.js": 319,
+	"./sv": 320,
+	"./sv.js": 320,
+	"./sw": 321,
+	"./sw.js": 321,
+	"./ta": 322,
+	"./ta.js": 322,
+	"./te": 323,
+	"./te.js": 323,
+	"./tet": 324,
+	"./tet.js": 324,
+	"./th": 325,
+	"./th.js": 325,
+	"./tl-ph": 326,
+	"./tl-ph.js": 326,
+	"./tlh": 327,
+	"./tlh.js": 327,
+	"./tr": 328,
+	"./tr.js": 328,
+	"./tzl": 329,
+	"./tzl.js": 329,
+	"./tzm": 330,
+	"./tzm-latn": 331,
+	"./tzm-latn.js": 331,
+	"./tzm.js": 330,
+	"./uk": 332,
+	"./uk.js": 332,
+	"./ur": 333,
+	"./ur.js": 333,
+	"./uz": 334,
+	"./uz-latn": 335,
+	"./uz-latn.js": 335,
+	"./uz.js": 334,
+	"./vi": 336,
+	"./vi.js": 336,
+	"./x-pseudo": 337,
+	"./x-pseudo.js": 337,
+	"./yo": 338,
+	"./yo.js": 338,
+	"./zh-cn": 339,
+	"./zh-cn.js": 339,
+	"./zh-hk": 340,
+	"./zh-hk.js": 340,
+	"./zh-tw": 341,
+	"./zh-tw.js": 341
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -2600,11 +2613,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 462;
+webpackContext.id = 463;
 
 /***/ }),
 
-/***/ 480:
+/***/ 481:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2681,7 +2694,7 @@ GraphsService = __decorate([
 
 /***/ }),
 
-/***/ 481:
+/***/ 482:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2689,10 +2702,10 @@ GraphsService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dashboard_dashboard__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__cities_cities__ = __webpack_require__(348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__myaccount_myaccount__ = __webpack_require__(349);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__stats_stats__ = __webpack_require__(350);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_users__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__cities_cities__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__myaccount_myaccount__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__stats_stats__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__users_users__ = __webpack_require__(353);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2761,7 +2774,7 @@ var NavBar = (function () {
 }());
 NavBar = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'navbar',template:/*ion-inline-start:"C:\Users\danji\Desktop\BotCast\src\pages\admin\navbar\navbar.html"*/'<!--Administrator Navigation Bar Component HTML Structure-->\n\n<ion-navbar class="back">\n\n\n\n    <button ion-button icon-only menuToggle>\n\n        <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n\n\n    <ion-title>\n\n        Admin portal\n\n    </ion-title>\n\n\n\n    <ion-buttons end >\n\n        <button ion-button icon-only (click)="toDashboardAdminPage()" class="selected">\n\n            <ion-item class="bt1">\n\n                <ion-icon name="ios-speedometer-outline" ></ion-icon>\n\n                Dashboard\n\n            </ion-item>\n\n        </button>\n\n\n\n\n\n        <button ion-button icon-only (click)="toStatsAdminPage()">\n\n            <ion-item class="bt2">\n\n                <ion-icon name="ios-pie-outline" ></ion-icon>\n\n                Stats\n\n            </ion-item>\n\n        </button>\n\n\n\n        <button ion-button icon-only (click)="toUsersAdminPage()">\n\n            <ion-item class="bt3">\n\n                <ion-icon name="ios-people-outline"></ion-icon>\n\n                Users\n\n            </ion-item>\n\n        </button>\n\n\n\n        <button ion-button icon-only (click)="toCitiesAdminPage()">\n\n            <ion-item class="bt4">\n\n                <ion-icon name="md-globe" ></ion-icon>\n\n                Cities\n\n            </ion-item>\n\n        </button>\n\n\n\n        <button ion-button icon-only (click)="toAccountAdminPage()">\n\n            <ion-item class="bt5">\n\n                <ion-icon name="ios-body-outline"></ion-icon>\n\n                My Account\n\n            </ion-item>\n\n        </button>\n\n\n\n\n\n    </ion-buttons>\n\n</ion-navbar>'/*ion-inline-end:"C:\Users\danji\Desktop\BotCast\src\pages\admin\navbar\navbar.html"*/
+        selector: 'navbar',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/navbar/navbar.html"*/'<!--Administrator Navigation Bar Component HTML Structure-->\n<ion-navbar primary class="back">\n\n    <button ion-button icon-only menuToggle>\n        <ion-icon name="menu"></ion-icon>\n    </button>\n\n    <ion-title class="titulo-barra">\n        Admin portal\n    </ion-title>\n\n    <ion-buttons end >\n        <button ion-button icon-only (click)="toDashboardAdminPage()" class="selected">\n            <ion-item class="bt1">\n                <ion-icon class="icono-boton" name="ios-speedometer-outline" ></ion-icon>\n                Dashboard\n            </ion-item>\n        </button>\n    </ion-buttons>\n\n\n    <ion-buttons end >\n        <button ion-button icon-only (click)="toStatsAdminPage()">\n            <ion-item class="bt2">\n                <ion-icon class="icono-boton" name="ios-pie-outline" ></ion-icon>\n                Stats\n            </ion-item>\n        </button>\n    </ion-buttons>\n\n    <ion-buttons end >\n        <button ion-button icon-only (click)="toUsersAdminPage()">\n            <ion-item class="bt3">\n                <ion-icon class="icono-boton" name="ios-people-outline"></ion-icon>\n                Users\n            </ion-item>\n        </button>\n    </ion-buttons>\n\n        <ion-buttons end >\n        <button ion-button icon-only (click)="toCitiesAdminPage()">\n            <ion-item class="bt4">\n                <ion-icon class="icono-boton" name="md-globe" ></ion-icon>\n                Cities\n            </ion-item>\n        </button>\n        </ion-buttons>\n\n            <ion-buttons end >\n        <button ion-button icon-only (click)="toAccountAdminPage()">\n            <ion-item class="bt5">\n                <ion-icon  class="icono-boton" name="ios-body-outline"></ion-icon>\n                My Account\n            </ion-item>\n        </button>\n            </ion-buttons>\n\n\n\n</ion-navbar>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/navbar/navbar.html"*/
     })
     /**
      * Admin navigation bar component, corresponds to the reusable visual element displayed at the top of all administrator views
@@ -2915,5 +2928,5 @@ AuthorizationService = __decorate([
 
 /***/ })
 
-},[352]);
+},[354]);
 //# sourceMappingURL=main.js.map

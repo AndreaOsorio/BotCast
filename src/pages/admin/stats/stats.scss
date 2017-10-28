@@ -2,8 +2,10 @@
 
 .mapFrame{
 	position:relative;
-	padding-left:33%;
-	padding-top:15px;
+	left:25%;
+	width:50%;
+	top:15px;
+	box-shadow: 10px 10px 50px #888888;
 }
 .endB{
 	position:relative;
@@ -14,4 +16,17 @@
 
 .row-stats{
 	text-align:center;
+}
+
+.stat-data-column{
+	position: relative;
+	top:-20px;
+	font-size: 25px;
+	color:$colorEsquema;
+	font-weight: bold;
+}
+
+ion-grid{
+	position: relative;
+	top:10px;
 }

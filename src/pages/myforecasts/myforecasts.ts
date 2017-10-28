@@ -11,6 +11,16 @@ import { MyForecastService, MyForecast } from '../../services/myForecastService'
  * Component that contains the user's saved forecasts
  */
 export class MyForecastsPage {
+
+    // constructor(
+    //     public cityName: string,
+    //     public condition: string,
+    //     public startDate:string,
+    //     public endDate:string
+    // ){}
+
+    private forecasts: MyForecast[] = [];
+
     /**
      * Componennt constructor
      * @param navCtrl: application navigation controller
@@ -25,6 +35,7 @@ export class MyForecastsPage {
 
     }
 
-    private forecasts: MyForecast[] = [];
+
+
 
 }

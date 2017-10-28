@@ -1,12 +1,28 @@
 //CSS for Administrator Navbar Component
 
 .bt1,.bt2,.bt3,.bt4,.bt5{
-	color:dodgerblue;	
+	color:white;
+	background-color: dodgerblue;
+	height:5%;
+}
+
+.icono-boton{
+	font-size: 20px;
 }
 
 .back{
 	background-color:blue;
+	height:40px;
 }
 .selected:active{
 	background-color: yellow;
+}
+
+.titulo-barra{
+	color:dodgerblue;
+	font-weight: bold;
+}
+
+.toolbar-background {
+	background-color: dodgerblue;
 }

@@ -8,15 +8,41 @@ ion-icon{
 
 .user-message-content{
   text-align: left;
-  border:1px solid rgba(45,45,45,0.4);
+  border:0px solid rgba(45,45,45,0.4);
   border-radius:$border-radius;
   background-color: dodgerblue;
   color:white;
+  position: relative;
+  left:15px;
 }
 
 .bot-message-content{
-  text-align: justify;
-  border:1px solid black;
+  text-align: right;
+  border:0px solid black;
   border-radius:$border-radius;
   background-color: #EAEAEA;
+  position: relative;
+  right:5px;
+}
+
+.mensaje-caja-texto{
+  position:relative;
+  width:90%;
+  left:5%;
+  top:80%;
+  z-index:10000;
+  border:2px solid $colorEsquema;
+}
+
+.boton-enviar-mensaje{
+  position:relative;
+  width:19%;
+  left:74%;
+  top:482px;
+  z-index:10000;
+
+}
+
+.yo{
+  z-index:-200;
 }

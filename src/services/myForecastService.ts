@@ -23,6 +23,7 @@ export class MyForecastService {
 
     apiRoot:string = '../assets/json/forecast/myforecasts.json';
 
+
     // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
 
     constructor(private http: Http) {
@@ -48,6 +49,7 @@ export class MyForecastService {
             "Moderate snow":"md-snow"
         };
 
+
         let apiURL = `${this.apiRoot}`;
 
         let promise = new Promise((resolve, reject) => {
@@ -55,14 +57,23 @@ export class MyForecastService {
                 .toPromise()
                 .then(
                     res => {
+                        let abbreviatedMonthMap = {
+                            0:"Jan", 1:"Feb", 2:"Mar", 3:"Apr", 4:"May", 5:"Jun", 6:"Jul", 7:"Aug", 8:"Sep", 9:"Oct", 10:"Nov", 11:"Dec"
+                        }
                         let forecasts:MyForecast[] =[]
                         let forecastsJson = $.map(res.json(), function(e){return e});
                         $.each(forecastsJson, function(i,forecast){
+
+                            let d1 = new Date(forecast.startDate)
+                            let d2 = new Date(forecast.endDate)
+                            let init_date = abbreviatedMonthMap[d1.getMonth()]+" "+(d1.getDate());
+                            let final_date = abbreviatedMonthMap[d2.getMonth()]+" "+(d2.getDate());
+
                             console.log(forecast)
                             forecasts.push(new MyForecast(forecast.cityName,
                                 iconMap[forecast.condition],
-                                forecast.startDate,
-                                forecast.endDate))
+                                init_date,
+                                final_date))
                         })
                         resolve(forecasts);
                     },
@@ -74,4 +85,6 @@ export class MyForecastService {
 
         return promise;
     }
+
+
 }
