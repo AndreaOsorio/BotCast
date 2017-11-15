@@ -25980,3 +25980,64 @@ ion-icon {
   position: relative;
   top: -10px;
 }
+
+#gif-loading {
+  position: absolute;
+  width: 100%;
+  left: -1%;
+  z-index: 10000;
+}
+
+#gif-loading-container {
+  position: absolute;
+  width: 100%;
+  height: 110%;
+  z-index: 10000;
+  left: -0.3%;
+  background-color: white;
+  top: 2%;
+  display: none;
+}
+
+#message {
+  position: absolute;
+  z-index: 10000;
+  color: dodgerblue;
+  font-size: 20px;
+  top: 50%;
+  left: 20%;
+  font-weight: bold;
+}
+
+.x {
+  display: none;
+}
+
+.y {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.grid-ciudades-activas {
+  position: relative;
+  top: 26px;
+}
+
+.col-city-name {
+  color: dodgerblue;
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.ciudad-row {
+  border-bottom: 1px solid lightgrey;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.active-city {
+  background-color: lightgreen;
+}

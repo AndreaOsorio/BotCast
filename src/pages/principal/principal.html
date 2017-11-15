@@ -27,12 +27,17 @@
             <button ion-button color="primary" class="my-location-button" (click)="getMyLocation()">My location</button>
           </ion-col>
           <ion-col >
-            <button ion-button color="secondary" class="add-city-button">Add city</button>
+            <button ion-button color="secondary" class="add-city-button" (click)="presentAddCityModal()">Manage cities</button>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-slide>
   </ion-slides>
+
+  <div id="gif-loading-container">
+    <img src="../../assets/imgs/loading.gif" id="gif-loading"/>
+    <div id="message">Retrieving your location...</div>
+  </div>
 
   <ion-grid class="ion_grid_forecasts">
     <ion-row>

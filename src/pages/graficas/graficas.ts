@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ForecastService, TodayForecast, HourForecast, NextDaysForecast } from '../../services/forecastService';
 import { MyCitiesService, Ciudad } from '../../services/citiesService';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { NavParams } from 'ionic-angular';
 
 
 //TODO: fix initial graph pop bug
@@ -78,7 +79,8 @@ export class GraphsPage {
      * @param forecastService: retrieves weather data from the services
      * @param myCitiesService: retrieves currently saved cities by users
      */
-    constructor(private forecastService: ForecastService, private myCitiesService: MyCitiesService) {
+    constructor(private forecastService: ForecastService,
+                private myCitiesService: MyCitiesService, private navParams: NavParams) {
 
         this.forecastService.weatherNextDays("Mexico City").then( data => {
             this.lineChartData = [{data: this.getMaxTemps(data), label: "Mexico City"}];
@@ -92,6 +94,8 @@ export class GraphsPage {
 
         this.setTodayDateTime();
         this.setMaxDateTime();
+
+        this.navParams.get('a');
     }
 
     /**

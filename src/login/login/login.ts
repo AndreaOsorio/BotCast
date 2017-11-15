@@ -16,7 +16,7 @@ export class LoginPage {
     public user:UserLogin;
 
     public constructor(public navCtrl: NavController, public authorizationService:AuthorizationService){
-        this.user = new UserLogin("y","123","",""); //testing user
+        this.user = new UserLogin("x","123","",""); //testing user
     }
 
     /**

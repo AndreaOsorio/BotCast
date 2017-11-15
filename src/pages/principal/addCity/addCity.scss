@@ -1,0 +1,27 @@
+.contenido-lista-ciudades-activas{
+
+}
+
+$colorEsquema: dodgerblue;
+
+.grid-ciudades-activas{
+  position: relative;
+  top:26px;
+}
+
+.col-city-name{
+  color:$colorEsquema;
+  text-align: left;
+  font-size:15px;
+  font-weight: bold;
+}
+
+.ciudad-row{
+  border-bottom:1px solid lightgrey;
+  margin-top:5px;
+  margin-bottom: 5px;
+}
+
+.active-city{
+  background-color: lightgreen;
+}

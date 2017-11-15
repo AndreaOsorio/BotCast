@@ -1,0 +1,30 @@
+<ion-content padding class="contenido-lista-ciudades-activas">
+
+    <ion-header>
+        <ion-navbar>
+            <ion-title>Available Cities</ion-title>
+            <button ion-button small color="danger" (click)="dismiss()">
+                Close
+            </button>
+        </ion-navbar>
+    </ion-header>
+
+    <ion-grid class="grid-ciudades-activas">
+        <ion-row>
+        </ion-row>
+        <ion-row *ngFor = "let ciudad of cities" class="ciudad-row" (click)="addRemoveCity($event)">
+            <input type="hidden" value={{ciudad.id}} />
+            <ion-col class = "col-city-name">
+                {{ciudad.name}}
+            </ion-col>
+            <ion-col>
+                {{ciudad.country}}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <button full ion-button color="secondary" (click)="saveCities()">Regresar</button>
+        </ion-row>
+    </ion-grid>
+
+
+</ion-content>

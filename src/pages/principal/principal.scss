@@ -91,3 +91,40 @@ $sizeDate:15px;
   position: relative;
   top:-10px;
 }
+
+#gif-loading{
+  position:absolute;
+  width:100%;
+  left:-1%;
+  z-index: 10000;
+}
+
+#gif-loading-container{
+  position:absolute;
+  width:100%;
+  height:110%;
+  z-index: 10000;
+  left:-0.3%;
+  background-color: white;
+  top:2%;
+  //TODO: comment in prod
+  display:none
+}
+
+#message{
+  position:absolute;
+  z-index: 10000;
+  color:$colorEsquema;
+  font-size:20px;
+  top:50%;
+  left:20%;
+  font-weight:bold;
+
+}
+
+.x{
+  display: none;
+}
+.y{
+  display: flex;
+}

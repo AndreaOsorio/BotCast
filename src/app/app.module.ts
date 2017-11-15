@@ -8,6 +8,7 @@ import { BotCast } from './app.component';
 import {HttpModule, Http, Response} from '@angular/http';
 
 import { PrincipalPage } from '../pages/principal/principal';
+import { AddCityModal } from '../pages/principal/addCity/addCity';
 import { MyCitiesService } from '../services/citiesService';
 import { ForecastService } from '../services/forecastService';
 import { GraphsService } from '../services/graphsService';
@@ -57,6 +58,7 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     BotCast,
     TabsPage,
     PrincipalPage,
+    AddCityModal,
     GraphsPage,
     MyForecastsPage,
     ChatbotPage,
@@ -80,6 +82,7 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     BotCast,
     TabsPage,
     PrincipalPage,
+    AddCityModal,
     GraphsPage,
     MyForecastsPage,
     ChatbotPage,

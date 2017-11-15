@@ -30,6 +30,17 @@ export class Information{
     ){}
 }
 
+export class Usuario{
+    constructor(
+        public name:string,
+        public lastname:string,
+        public username:string,
+        public email:string,
+        public password:string,
+        public cities: [object]
+    ){}
+}
+
 
 @Injectable()
 export class UsersInfoService {
@@ -42,7 +53,34 @@ export class UsersInfoService {
      * Backend REST endpoint URL to retrieve the user info from JSON
      */
     apiRoot:string = '../assets/json/admin/usersinfo/usersinfo.json';
-    // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
+
+    apiRootUsuario:string = 'http://localhost:3000/api/Usuarios';
+
+
+    public retrieveUserInfoById(idUsuario:string):Promise<Usuario>{
+        let apiURL = `${this.apiRootUsuario}/${idUsuario}`;
+        let promise = new Promise((resolve, reject) => {
+            this.http.get(apiURL)
+                .toPromise()
+                .then(
+                    res=>{
+                        let user = res.json()
+                        resolve(new Usuario(
+                            user.nombre,
+                            user.apellido,
+                            user.usuario,
+                            user.email,
+                            user.password,
+                            user.ciudades
+                        ))
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                )
+        });
+        return promise;
+    }
 
 
     public retrieveInfo():Promise<Information[]>{
@@ -75,6 +113,33 @@ export class UsersInfoService {
                 );
         });
 
+        return promise;
+    }
+
+
+    public updateUserInfo(idUsuario:string, params):Promise<Usuario>{
+        let apiURL = `${this.apiRootUsuario}/${idUsuario}`;
+        console.log(apiURL)
+        let promise = new Promise((resolve, reject) => {
+            this.http.put(apiURL, params)
+                .toPromise()
+                .then(
+                    res=>{
+                        let user = res.json()
+                        resolve(new Usuario(
+                            user.nombre,
+                            user.apellido,
+                            user.usuario,
+                            user.email,
+                            user.password,
+                            user.ciudades
+                        ))
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                )
+        });
         return promise;
     }
 

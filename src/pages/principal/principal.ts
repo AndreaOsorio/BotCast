@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
 import { MyCitiesService, Ciudad } from '../../services/citiesService';
 import { ForecastService, TodayForecast, HourForecast, NextDaysForecast } from '../../services/forecastService';
-import { NavController, NavParams} from 'ionic-angular';
-import {GeolocationService, RawLocation, GeolocationAddress} from '../../services/geolocationService';
+import { ModalController, NavController, NavParams} from 'ionic-angular';
+import { GeolocationService, RawLocation, GeolocationAddress} from '../../services/geolocationService';
+import { CityManagerService, Cities, ActiveCity } from '../../services/cityManagerService'
+import { UsersInfoService, Usuario } from '../../services/usersInfoService'
+import { AddCityModal } from './addCity/addCity'
+import * as $ from 'jquery';
+
 
 //TODO: fix hour change bug based on location, should take 10 mins...
 //TODO: background gif changes as a function of weather
@@ -26,6 +31,10 @@ export class PrincipalPage {
     private mycurrentLocationLatLong:RawLocation;
     private myCurrentLocationReverseGeocoded:GeolocationAddress;
 
+    private currentUser:Usuario;
+
+    private activeCitiesCurrentUser = [];
+
     /**
      *
      * @param myCitiesService: service that retrieves a user's saved cities
@@ -39,25 +48,50 @@ export class PrincipalPage {
                      private forecastService: ForecastService,
                      public navCtrl: NavController,
                      public navParams: NavParams,
-                     private geolocationService: GeolocationService) {
+                     private geolocationService: GeolocationService,
+                     private cityManagerService: CityManagerService,
+                     public modalCtrl: ModalController,
+                     public usersInfoService: UsersInfoService) {
 
-      this.todaysDate = this.getTodaysDate();
+        this.todaysDate = this.getTodaysDate();
 
-      this.makeApiCalls("");
+        this.makeApiCalls("");
 
-      //TODO: through auth token get user info and retrieve preferences, forecasts, etc, when backend is ready
-      console.log(this.navParams.data)
+        //TODO: through auth token get user info and retrieve preferences, forecasts, etc, when backend is ready
+        console.log(this.navParams.data)
+
+        usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(
+            res =>{
+                this.currentUser=  res;
+            }
+        );
+        this.navParams.data={a:"sheller"};
+
+  }
+
+
+  presentAddCityModal() {
+      let contactModal = this.modalCtrl.create(AddCityModal, {user: this.currentUser});
+      contactModal .onDidDismiss(usuario => {
+          this.ciudades = usuario.cities;
+          console.log(usuario.cities)
+          console.log(this.ciudades);
+      });
+      contactModal.present();
   }
 
     /**
-     *
      * @param city: city whose current and future weather wants to be known
      * This method calls all the different services to retrieve the selected city's weather and then redraws
      * the whole view with the retrieved data in the appropriate format
      */
-  public makeApiCalls(city:string){
+  public makeApiCalls(city:string) {
 
-      if(city == undefined || city == "") city = "Amsterdam";
+      if(city == undefined || city == ""){
+          //TODO: uncomment in prod
+          // this.getMyLocation();
+          city = "Amsterdam";
+      }
 
       this.myCitiesService.retrieveMyCities().then(data=>{
           this.ciudades = data
@@ -81,13 +115,17 @@ export class PrincipalPage {
      * to call makeApiCalls() and redraw the view with the current location's weather
      */
   public getMyLocation(){
-      this.geolocationService.getMyCurrentLocation().then(data=>{
+      $("#gif-loading-container").removeClass("x");
+      $("#gif-loading-container").addClass("y");
+      this.geolocationService.getMyCurrentLocation().then(data => {
           this.mycurrentLocationLatLong = data;
-          this.geolocationService.getMyCurrentAddressBasedOnLatLong(data).then(data=>{
+          this.geolocationService.getMyCurrentAddressBasedOnLatLong(data).then(data => {
               this.myCurrentLocationReverseGeocoded = data;
               this.makeApiCalls(data.city)
+              $("#gif-loading-container").removeClass("y");
+              $("#gif-loading-container").addClass("x");
           });
-      })
+      });
   }
 
     /**
@@ -95,10 +133,15 @@ export class PrincipalPage {
      * @param cityName: city parameter used in templates to know which city has been selected from the slider
      * Event binding function to retrieve users current location and update screen
      */
-  public changeCity(cityName:string){
+  public changeCity(cityName:string) {
       this.makeApiCalls(cityName);
       //TODO: implement here changes to classes when users selects a particular city
   }
+
+  public moveToAddCityWindow() {
+      console.log("moving window!");
+  }
+
 
     /**
      *
