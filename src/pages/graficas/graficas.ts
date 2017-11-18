@@ -245,7 +245,6 @@ export class GraphsPage {
 
     public checkCitySelectedFromForecastList(){
         setInterval(()=>{
-            console.log(localStorage.citySelectedFromForecastList)
             if (localStorage.citySelectedFromForecastList == 1) {
                 let obj = JSON.parse(localStorage.selectedForecastForGraph);
                 this.selectedCity = obj.city;

@@ -1021,10 +1021,14 @@ PrincipalPage = __decorate([
      * the user's current location in latitude and longitude (raw format) and the user's approximate address.
      */
     ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_forecastService__["a" /* ForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_forecastService__["a" /* ForecastService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__["a" /* GeolocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__["a" /* GeolocationService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* ModalController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__["a" /* UsersInfoService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__["a" /* UsersInfoService */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_forecastService__["a" /* ForecastService */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__["a" /* GeolocationService */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__["a" /* UsersInfoService */]])
 ], PrincipalPage);
 
-var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=principal.js.map
 
 /***/ }),
@@ -1573,7 +1577,7 @@ var GraphsPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("baseChart"),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__["BaseChartDirective"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__["BaseChartDirective"]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__["BaseChartDirective"])
 ], GraphsPage.prototype, "chart", void 0);
 GraphsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -1585,10 +1589,12 @@ GraphsPage = __decorate([
      * retrieved from the forecasts service and the state of the form's components for frequent usage.
      */
     ,
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_citiesService__["b" /* MyCitiesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_citiesService__["b" /* MyCitiesService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_myForecastService__["b" /* MyForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_myForecastService__["b" /* MyForecastService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["i" /* ToastController */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */],
+        __WEBPACK_IMPORTED_MODULE_2__services_citiesService__["b" /* MyCitiesService */],
+        __WEBPACK_IMPORTED_MODULE_3__services_myForecastService__["b" /* MyForecastService */],
+        __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["i" /* ToastController */]])
 ], GraphsPage);
 
-var _a, _b, _c, _d, _e;
 //# sourceMappingURL=graficas.js.map
 
 /***/ }),
@@ -1600,6 +1606,8 @@ var _a, _b, _c, _d, _e;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatbotPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1611,21 +1619,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var ChatbotPage = (function () {
     function ChatbotPage(chatbotService) {
         var _this = this;
         this.chatbotService = chatbotService;
-        chatbotService.retrieveConversation().then(function (data) { return _this.conversation = data; });
+        this.mockIsBot = false;
+        chatbotService.retrieveUserConversation(localStorage.id_usuario).then(function (data) {
+            console.log(data);
+            _this.conversation = data;
+        });
+        setTimeout(function () {
+            var conversationContainer = __WEBPACK_IMPORTED_MODULE_2_jquery__(".contenedor_conversacion");
+            conversationContainer.scrollTop(conversationContainer.prop('scrollHeight'));
+        }, 500);
     }
+    ChatbotPage.prototype.changeMockIsBot = function () {
+        this.mockIsBot = !this.mockIsBot;
+        console.log(this.mockIsBot);
+    };
+    ChatbotPage.prototype.sendMessage = function (event) {
+        this.conversation.push(new __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__["b" /* Message */](this.mockIsBot, (new Date().getTime()).toString(), this.userInput));
+        var messageObject = {
+            contenido: this.userInput,
+            id_usuario: localStorage.id_usuario,
+            esbot: this.mockIsBot
+        };
+        this.userInput = "";
+        this.chatbotService.saveMessage(messageObject).then(function (data) {
+            console.log(data);
+        });
+        setTimeout(function () {
+            var conversationContainer = __WEBPACK_IMPORTED_MODULE_2_jquery__(".contenedor_conversacion");
+            conversationContainer.scrollTop(conversationContainer.prop('scrollHeight'));
+        }, 100);
+    };
     return ChatbotPage;
 }());
 ChatbotPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'bot',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/'<!--Chatbot User Tab Component HTML Structure-->\n\n<ion-header>\n    <ion-navbar>\n        <ion-title>Botcast</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding class="yo">\n    <div class="contenedor_conversacion">\n        <ion-grid>\n            <ion-row *ngFor="let message of conversation; let i = index">\n                <ion-row *ngIf="i%2==0" col-12>\n                    <ion-col col-1>\n                        <ion-icon name="ios-contact-outline" class="icon-user-chatbot"></ion-icon>\n                    </ion-col>\n                    <ion-col class="user-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-4></ion-col>\n                </ion-row>\n                <ion-row *ngIf="i%2!=0" col-12>\n                    <ion-col col-4></ion-col>\n                    <ion-col class="bot-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-1>\n                        <ion-icon name="ios-ionitron-outline"></ion-icon>\n                    </ion-col>\n                </ion-row>\n            </ion-row>\n        </ion-grid>\n    </div>\n</ion-content>\n\n<ion-input placeholder="Say something..." class="mensaje-caja-texto" type="text"></ion-input>\n<button ion-button class="boton-enviar-mensaje">Send</button>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/
+        selector: 'bot',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/'<!--Chatbot User Tab Component HTML Structure-->\n\n<ion-header>\n    <ion-navbar>\n        <ion-title>Botcast</ion-title>\n        <button ion-button="" (click)="changeMockIsBot()">MockBot</button>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding class="yo">\n    <div class="contenedor_conversacion">\n        <ion-grid>\n            <ion-row *ngFor="let message of conversation; let i = index">\n                <ion-row *ngIf="message.isBotMessage == false" col-12>\n                    <ion-col col-1>\n                        <ion-icon name="ios-contact-outline" class="icon-user-chatbot"></ion-icon>\n                    </ion-col>\n                    <ion-col class="user-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-4></ion-col>\n                </ion-row>\n                <ion-row *ngIf="message.isBotMessage == true" col-12>\n                    <ion-col col-4></ion-col>\n                    <ion-col class="bot-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-1>\n                        <ion-icon name="ios-ionitron-outline"></ion-icon>\n                    </ion-col>\n                </ion-row>\n            </ion-row>\n        </ion-grid>\n    </div>\n</ion-content>\n\n<ion-input placeholder="Say something..." class="mensaje-caja-texto" [(ngModel)] = "userInput" type="text"></ion-input>\n<button ion-button class="boton-enviar-mensaje" (click)="sendMessage($event)">Send</button>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_chatbotService__["a" /* ChatbotService */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__["a" /* ChatbotService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__["a" /* ChatbotService */]) === "function" && _a || Object])
 ], ChatbotPage);
 
+var _a;
 //# sourceMappingURL=chatbot.js.map
 
 /***/ }),
@@ -1634,7 +1672,7 @@ ChatbotPage = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export Message */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Message; });
 /* unused harmony export Conversation */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatbotService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
@@ -1708,29 +1746,47 @@ var Conversation = (function () {
 var ChatbotService = (function () {
     function ChatbotService(http) {
         this.http = http;
-        //Currently a dummy call to a local json
-        /**
-         * Backend REST endpoint URL to retrieve the conversation between a user and the chatbot
-         */
-        this.apiRoot = '../assets/json/chatbot/conversation.json';
     }
-    // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
+    ChatbotService.prototype.saveMessage = function (mensaje) {
+        var _this = this;
+        var apiURL = 'http://localhost:3000/api/Mensajes';
+        var params = {
+            contenido: mensaje["contenido"],
+            id_usuario: mensaje["id_usuario"],
+            timestamp: new Date().getTime(),
+            esbot: mensaje["esbot"]
+        };
+        var promise = new Promise(function (resolve, reject) {
+            _this.http.post(apiURL, params)
+                .toPromise()
+                .then(function (res) {
+                var message = res.json();
+                console.log(message);
+                resolve(new Message(message.esbot, message.timestamp, message.contenido));
+            }, function (msg) {
+                reject(msg);
+            });
+        });
+        return promise;
+    };
     /**
      * Function that performs a REST call to the backend and retrieves a user's conversation with the chatbot in an array of messages
      * @returns {Promise<T>}: promise that resolves to a user-chatbot conversation in the appropriate DTO
      */
-    ChatbotService.prototype.retrieveConversation = function () {
+    ChatbotService.prototype.retrieveUserConversation = function (id_usuario) {
         var _this = this;
-        var apiURL = "" + this.apiRoot;
+        var apiURL = 'http://localhost:3000/api/Mensajes';
+        var params = {
+            id_usuario: id_usuario
+        };
         var promise = new Promise(function (resolve, reject) {
-            _this.http.get(apiURL)
+            _this.http.get(apiURL, params)
                 .toPromise()
                 .then(function (res) {
                 var messages = [];
                 var messagesJson = __WEBPACK_IMPORTED_MODULE_8_jquery__["map"](res.json(), function (e) { return e; });
-                console.log(messagesJson);
                 __WEBPACK_IMPORTED_MODULE_8_jquery__["each"](messagesJson, function (i, message) {
-                    messages.push(new Message(message.isBotMessage, message.timestamp, message.content));
+                    messages.push(new Message(message.esbot, message.timestamp, message.contenido));
                 });
                 resolve(messages);
             }, function (msg) {
@@ -1743,9 +1799,10 @@ var ChatbotService = (function () {
 }());
 ChatbotService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
 ], ChatbotService);
 
+var _a;
 //# sourceMappingURL=chatbotService.js.map
 
 /***/ }),
@@ -1843,10 +1900,12 @@ MyForecastsPage = __decorate([
      * Component that contains the user's saved forecasts
      */
     ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__["b" /* MyForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__["b" /* MyForecastService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__["b" /* MyForecastService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* ModalController */]])
 ], MyForecastsPage);
 
-var _a, _b, _c, _d;
 //# sourceMappingURL=myforecasts.js.map
 
 /***/ }),
@@ -1928,10 +1987,11 @@ ForecastDetail = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'forecastDetail',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/myforecasts/forecastDetail/forecastDetail.html"*/'<ion-content>\n    <ion-header>\n        <ion-navbar>\n            <ion-title>Forecast detail</ion-title>\n            <button ion-button small color="danger" (click)="dismiss()">\n                Close\n            </button>\n        </ion-navbar>\n    </ion-header>\n\n    <ion-grid class="grid-forecast-detail">\n        <ion-row>\n            <ion-col ><b>Date</b></ion-col>\n            <ion-col ><b>Condition</b></ion-col>\n            <ion-col class="temp"><b>Max T</b></ion-col>\n            <ion-col class="temp"><b>Min T</b></ion-col>\n        </ion-row>\n        <ion-row *ngFor="let day of forecasts" class="row-forecasts">\n            <ion-col class="col-day-of-week-forecasts">{{day.dayOfWeek}}</ion-col>\n            <ion-col><ion-icon name={{day.condition}} class="icon-forecasts"></ion-icon></ion-col>\n            <ion-col>{{day.tempMax}} <span class="centigrade-symbol">°C</span></ion-col>\n            <ion-col>{{day.tempMin}} <span class="centigrade-symbol">°C</span></ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col>\n                <button ion-button outline class="show-graph" (click)="showGraph()">Show graph</button>\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/myforecasts/forecastDetail/forecastDetail.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ViewController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */]])
 ], ForecastDetail);
 
-var _a, _b, _c;
 //# sourceMappingURL=forecastDetail.js.map
 
 /***/ }),

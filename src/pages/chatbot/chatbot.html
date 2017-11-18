@@ -3,6 +3,7 @@
 <ion-header>
     <ion-navbar>
         <ion-title>Botcast</ion-title>
+        <button ion-button="" (click)="changeMockIsBot()">MockBot</button>
     </ion-navbar>
 </ion-header>
 
@@ -10,7 +11,7 @@
     <div class="contenedor_conversacion">
         <ion-grid>
             <ion-row *ngFor="let message of conversation; let i = index">
-                <ion-row *ngIf="i%2==0" col-12>
+                <ion-row *ngIf="message.isBotMessage == false" col-12>
                     <ion-col col-1>
                         <ion-icon name="ios-contact-outline" class="icon-user-chatbot"></ion-icon>
                     </ion-col>
@@ -19,7 +20,7 @@
                     </ion-col>
                     <ion-col col-4></ion-col>
                 </ion-row>
-                <ion-row *ngIf="i%2!=0" col-12>
+                <ion-row *ngIf="message.isBotMessage == true" col-12>
                     <ion-col col-4></ion-col>
                     <ion-col class="bot-message-content">
                         {{message.content}}
@@ -33,5 +34,5 @@
     </div>
 </ion-content>
 
-<ion-input placeholder="Say something..." class="mensaje-caja-texto" type="text"></ion-input>
-<button ion-button class="boton-enviar-mensaje">Send</button>
+<ion-input placeholder="Say something..." class="mensaje-caja-texto" [(ngModel)] = "userInput" type="text"></ion-input>
+<button ion-button class="boton-enviar-mensaje" (click)="sendMessage($event)">Send</button>

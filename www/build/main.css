@@ -25785,6 +25785,17 @@ ion-icon {
   z-index: -200;
 }
 
+.contenedor_conversacion {
+  position: relative;
+  height: 90%;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+ion-content {
+  overflow: hidden;
+}
+
 .selectBox-cities {
   background-color: red;
 }

@@ -46,33 +46,56 @@ export class ChatbotService {
     constructor(private http: Http) {
     }
 
-    //Currently a dummy call to a local json
-    /**
-     * Backend REST endpoint URL to retrieve the conversation between a user and the chatbot
-     */
-    apiRoot:string = '../assets/json/chatbot/conversation.json';
-    // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
+    public saveMessage(mensaje): Promise<Message>{
+        let apiURL:string = 'http://localhost:3000/api/Mensajes';
+        let params = {
+            contenido: mensaje["contenido"],
+            id_usuario:mensaje["id_usuario"],
+            timestamp: new Date().getTime(),
+            esbot: mensaje["esbot"]
+        }
+        let promise = new Promise((resolve, reject) => {
+            this.http.post(apiURL, params)
+                .toPromise()
+                .then(
+                    res => {
+                        let message = res.json();
+                        console.log(message)
+                        resolve(new Message(
+                            message.esbot,
+                            message.timestamp,
+                            message.contenido
+                        ));
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                );
+        });
+        return promise;
+    }
 
     /**
      * Function that performs a REST call to the backend and retrieves a user's conversation with the chatbot in an array of messages
      * @returns {Promise<T>}: promise that resolves to a user-chatbot conversation in the appropriate DTO
      */
-    public retrieveConversation():Promise<Conversation>{
-        let apiURL = `${this.apiRoot}`;
-
+    public retrieveUserConversation(id_usuario): Promise<Message[]>{
+        let apiURL:string = 'http://localhost:3000/api/Mensajes';
+        let params = {
+            id_usuario: id_usuario
+        }
         let promise = new Promise((resolve, reject) => {
-            this.http.get(apiURL)
+            this.http.get(apiURL, params)
                 .toPromise()
                 .then(
                     res => {
                         let messages:Message[] =[]
                         let messagesJson = $.map(res.json(), function(e){return e});
-                        console.log(messagesJson)
                         $.each(messagesJson, function(i,message){
                             messages.push(new Message(
-                                message.isBotMessage,
+                                message.esbot,
                                 message.timestamp,
-                                message.content)
+                                message.contenido)
                             )
                         });
                         resolve(messages);
@@ -82,8 +105,6 @@ export class ChatbotService {
                     }
                 );
         });
-
         return promise;
     }
-
 }
