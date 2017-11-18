@@ -7,6 +7,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/do';
+import {ActiveCity} from "./cityManagerService";
 
 export class MyForecast{
     constructor(
@@ -22,9 +23,6 @@ export class MyForecastService {
 
 
     apiRoot:string = '../assets/json/forecast/myforecasts.json';
-
-
-    // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
 
     constructor(private http: Http) {
     }
@@ -86,5 +84,37 @@ export class MyForecastService {
         return promise;
     }
 
+    public saveForecast(forecastObj): Promise<ActiveCity>{
+
+        let apiURL:string = 'http://localhost:3000/api/Pronosticos';
+        let params = {
+            ciudad: forecastObj["nombre"],
+            fecha_inicial: forecastObj["fecha_inicial"],
+            fecha_final: forecastObj["fecha_final"],
+            condicion: forecastObj["condicion"],
+            id_usuario: forecastObj["id_usuario"],
+        }
+
+
+        let promise = new Promise((resolve, reject) => {
+            this.http.post(apiURL, params)
+                .toPromise()
+                .then(
+                    res => {
+                        let pronostico = res.json();
+                        resolve(new MyForecast(
+                            pronostico.ciudad,
+                            pronostico.condicion,
+                            pronostico.fecha_inicial,
+                            pronostico.fecha_final
+                        ));
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                );
+        });
+        return promise;
+    }
 
 }

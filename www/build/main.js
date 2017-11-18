@@ -787,8 +787,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-//TODO: fix hour change bug based on location, should take 10 mins...
-//TODO: background gif changes as a function of weather
 var PrincipalPage = (function () {
     /**
      *
@@ -813,14 +811,13 @@ var PrincipalPage = (function () {
         this.todayForecast = [];
         this.todayHourlyForecast = [];
         this.nextDaysForecast = [];
-        this.activeCitiesCurrentUser = [];
         this.todaysDate = this.getTodaysDate();
         this.makeApiCalls("");
-        console.log(this.navParams.data);
         usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(function (res) {
             _this.currentUser = res;
         });
-        this.navParams.data = { a: "sheller" };
+        //TODO: connect with real user login id
+        localStorage.id_usuario = "xxxxxxxxxx01";
     }
     PrincipalPage.prototype.presentAddCityModal = function () {
         var _this = this;
@@ -1173,8 +1170,10 @@ AddCityModal = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_forecastService__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_citiesService__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__ = __webpack_require__(223);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_myForecastService__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(14);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1188,6 +1187,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 //TODO: fix initial graph pop bug
 //TODO: fix initial date bug
 var GraphsPage = (function () {
@@ -1197,10 +1198,12 @@ var GraphsPage = (function () {
      * @param forecastService: retrieves weather data from the services
      * @param myCitiesService: retrieves currently saved cities by users
      */
-    function GraphsPage(forecastService, myCitiesService) {
+    function GraphsPage(forecastService, myCitiesService, myForecastService, navController) {
         var _this = this;
         this.forecastService = forecastService;
         this.myCitiesService = myCitiesService;
+        this.myForecastService = myForecastService;
+        this.navController = navController;
         this.ciudades = [];
         this.maxDaysApiRequest = 7;
         this.currentDataBufferForGraph = [{ data: [0, 0, 0, 0, 0], label: 'Series A' }];
@@ -1244,6 +1247,9 @@ var GraphsPage = (function () {
         this.currentCity = localStorage.currentCity;
         this.selectedCity = this.currentCity;
         this.forecastService.weatherNextDays(this.currentCity).then(function (data) {
+            var conditions = data.map(function (forecast) { return forecast.condition; });
+            //TODO: put this icon somewhere visible
+            _this.mostFrequentCondition = _this.calculateMostFrequentCondition(conditions);
             _this.lineChartData = [{ data: _this.getMaxTemps(data), label: _this.currentCity }];
             _this.lineChartLabels = _this.buildLabelArray(data);
             _this.reloadChart();
@@ -1257,7 +1263,6 @@ var GraphsPage = (function () {
         this.selectedFinalDate = this.maxFutureDate;
     }
     GraphsPage.prototype.ngAfterContentChecked = function () {
-        console.log(this.currentCity + " " + localStorage.currentCity);
         if (JSON.stringify(this.ciudades) != localStorage.userCities) {
             this.ciudades = JSON.parse(localStorage.userCities);
         }
@@ -1292,6 +1297,8 @@ var GraphsPage = (function () {
         var _this = this;
         if (forecastDays === void 0) { forecastDays = 0; }
         this.forecastService.weatherNextDays(this.selectedCity, forecastDays).then(function (data) {
+            var conditions = data.map(function (forecast) { return forecast.condition; });
+            _this.mostFrequentCondition = _this.calculateMostFrequentCondition(conditions);
             _this.nextDaysForecastsForGraph = data;
             _this.populateGraph();
         });
@@ -1416,15 +1423,55 @@ var GraphsPage = (function () {
         var dayDifference = Math.ceil(timeDifferenceEpoch / (1000 * 3600 * 24));
         return dayDifference + 1;
     };
+    /**
+     * Add a forecast to the user's list of saved forecasts
+     */
+    GraphsPage.prototype.saveForecast = function () {
+        var forecastToSave = {
+            nombre: this.selectedCity,
+            fecha_inicial: this.selectedInitDate,
+            fecha_final: this.selectedFinalDate,
+            id_usuario: localStorage.id_usuario,
+            condicion: this.mostFrequentCondition
+        };
+        this.myForecastService.saveForecast(forecastToSave).then(function (data) {
+            console.log(data);
+        });
+    };
+    /**
+     * Determine the most frequent weather condition in the required forecast days
+     * @param conditions
+     * @returns {string}
+     */
+    GraphsPage.prototype.calculateMostFrequentCondition = function (conditions) {
+        var arr = [];
+        for (var i = 0; i < conditions.length; i++) {
+            if (!arr[conditions[i]]) {
+                arr[conditions[i]] = 1;
+            }
+            else {
+                arr[conditions[i]]++;
+            }
+        }
+        var max = 0;
+        var maxVal = "";
+        for (var x in arr) {
+            if (arr[x] > max) {
+                max = arr[x];
+                maxVal = x;
+            }
+        }
+        return maxVal;
+    };
     return GraphsPage;
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("baseChart"),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__["BaseChartDirective"])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__["BaseChartDirective"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__["BaseChartDirective"]) === "function" && _a || Object)
 ], GraphsPage.prototype, "chart", void 0);
 GraphsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'graphs',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/graficas/graficas.html"*/'<!--Graphs User Tab Component HTML Structure-->\n<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Forecasts graph</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n    <ion-row >\n        <ion-col col-12>\n            <ion-item>\n                <ion-label>Select temp</ion-label>\n                <ion-select [(ngModel)]="selectedTempOption" multiple="false" (ngModelChange)="optionChanged($event)">\n                    <ion-option value="max">Max temperatures </ion-option>\n                    <ion-option value="min">Min temperatures </ion-option>\n                    <ion-option value="avg">Average temperatures </ion-option>\n                </ion-select>\n            </ion-item>\n        </ion-col>\n    </ion-row>\n\n    <ion-row class="container-graph">\n        <ion-col>\n            <div>\n                <canvas baseChart width="350" height="250"  #baseChart="base-chart"\n                        [datasets]="lineChartData"\n                        [labels]="lineChartLabels"\n                        [options]="lineChartOptions"\n                        [colors]="lineChartColors"\n                        [legend]="lineChartLegend"\n                        [chartType]="lineChartType"\n                        (chartHover)="chartHovered($event)"\n                        (chartClick)="chartClicked($event)"></canvas>\n            </div>\n        </ion-col>\n    </ion-row>\n\n    <ion-row style="margin-bottom: 10px">\n        <ion-col col-12>\n            <ion-item>\n                <ion-label>Select city</ion-label>\n                <ion-select [(ngModel)]="selectedCity" multiple="false" (ngModelChange)="changeCity($event)">\n                    <ion-option *ngFor="let c of ciudades"\n                                [selected]="c.name == currentCity ? true : null"> {{c.name}} </ion-option>\n                </ion-select>\n            </ion-item>\n        </ion-col>\n    </ion-row>\n\n    <ion-row>\n        <ion-item>\n            <ion-label>Initial date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{todaysDate}} [(ngModel)]="selectedInitDate"></ion-datetime>\n        </ion-item>\n    </ion-row>\n    <ion-row>\n        <ion-item>\n            <ion-label>Final date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{maxFutureDate}} [(ngModel)]="selectedFinalDate" (ngModelChange)="triggerChartUpdateOnFinalDateChange($event)"></ion-datetime>\n        </ion-item>\n    </ion-row>\n    <ion-row>\n        <ion-col>\n            <button ion-button outline class="save-forecast">Save this forecast</button>\n        </ion-col>\n    </ion-row>\n\n\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/graficas/graficas.html"*/
+        selector: 'graphs',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/graficas/graficas.html"*/'<!--Graphs User Tab Component HTML Structure-->\n<ion-header>\n    <ion-navbar>\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Forecasts graph</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n    <ion-row >\n        <ion-col col-12>\n            <ion-item>\n                <ion-label>Select temp</ion-label>\n                <ion-select [(ngModel)]="selectedTempOption" multiple="false" (ngModelChange)="optionChanged($event)">\n                    <ion-option value="max">Max temperatures </ion-option>\n                    <ion-option value="min">Min temperatures </ion-option>\n                    <ion-option value="avg">Average temperatures </ion-option>\n                </ion-select>\n            </ion-item>\n        </ion-col>\n    </ion-row>\n\n    <ion-row class="container-graph">\n        <ion-col>\n            <div>\n                <canvas baseChart width="350" height="250"  #baseChart="base-chart"\n                        [datasets]="lineChartData"\n                        [labels]="lineChartLabels"\n                        [options]="lineChartOptions"\n                        [colors]="lineChartColors"\n                        [legend]="lineChartLegend"\n                        [chartType]="lineChartType"\n                        (chartHover)="chartHovered($event)"\n                        (chartClick)="chartClicked($event)"></canvas>\n            </div>\n        </ion-col>\n    </ion-row>\n\n    <ion-row style="margin-bottom: 10px">\n        <ion-col col-12>\n            <ion-item>\n                <ion-label>Select city</ion-label>\n                <ion-select [(ngModel)]="selectedCity" multiple="false" (ngModelChange)="changeCity($event)">\n                    <ion-option *ngFor="let c of ciudades"\n                                [selected]="c.name == currentCity ? true : null"> {{c.name}} </ion-option>\n                </ion-select>\n            </ion-item>\n        </ion-col>\n    </ion-row>\n\n    <ion-row>\n        <ion-item>\n            <ion-label>Initial date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{todaysDate}} [(ngModel)]="selectedInitDate"></ion-datetime>\n        </ion-item>\n    </ion-row>\n    <ion-row>\n        <ion-item>\n            <ion-label>Final date</ion-label>\n            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{maxFutureDate}} [(ngModel)]="selectedFinalDate" (ngModelChange)="triggerChartUpdateOnFinalDateChange($event)"></ion-datetime>\n        </ion-item>\n    </ion-row>\n    <ion-row>\n        <ion-col>\n            <button ion-button outline class="save-forecast" (click)="saveForecast()">Save this forecast</button>\n        </ion-col>\n    </ion-row>\n\n\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/graficas/graficas.html"*/
     })
     /**
      * User graph componennt, controlls the user interaction between the different fields, the API calls and the corresponding UI updates
@@ -1432,10 +1479,10 @@ GraphsPage = __decorate([
      * retrieved from the forecasts service and the state of the form's components for frequent usage.
      */
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */],
-        __WEBPACK_IMPORTED_MODULE_2__services_citiesService__["b" /* MyCitiesService */]])
+    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_citiesService__["b" /* MyCitiesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_citiesService__["b" /* MyCitiesService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_myForecastService__["a" /* MyForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_myForecastService__["a" /* MyForecastService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["f" /* NavController */]) === "function" && _e || Object])
 ], GraphsPage);
 
+var _a, _b, _c, _d, _e;
 //# sourceMappingURL=graficas.js.map
 
 /***/ }),
@@ -1628,14 +1675,11 @@ var MyForecastsPage = (function () {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.myForecastService = myForecastService;
-        // constructor(
-        //     public cityName: string,
-        //     public condition: string,
-        //     public startDate:string,
-        //     public endDate:string
-        // ){}
         this.forecasts = [];
         this.myForecastService.retrieveMyForecasts().then(function (data) { return _this.forecasts = data; });
+        this.userId = localStorage.id_usuario;
+        //AutoSelectTab
+        // this.navController.parent.select(1);
     }
     return MyForecastsPage;
 }());
@@ -1647,11 +1691,10 @@ MyForecastsPage = __decorate([
      * Component that contains the user's saved forecasts
      */
     ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__["a" /* MyForecastService */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__["a" /* MyForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__["a" /* MyForecastService */]) === "function" && _c || Object])
 ], MyForecastsPage);
 
+var _a, _b, _c;
 //# sourceMappingURL=myforecasts.js.map
 
 /***/ }),
@@ -1707,7 +1750,6 @@ var MyForecast = (function () {
 }());
 
 var MyForecastService = (function () {
-    // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
     function MyForecastService(http) {
         this.http = http;
         this.apiRoot = '../assets/json/forecast/myforecasts.json';
@@ -1756,13 +1798,36 @@ var MyForecastService = (function () {
         });
         return promise;
     };
+    MyForecastService.prototype.saveForecast = function (forecastObj) {
+        var _this = this;
+        var apiURL = 'http://localhost:3000/api/Pronosticos';
+        var params = {
+            ciudad: forecastObj["nombre"],
+            fecha_inicial: forecastObj["fecha_inicial"],
+            fecha_final: forecastObj["fecha_final"],
+            condicion: forecastObj["condicion"],
+            id_usuario: forecastObj["id_usuario"],
+        };
+        var promise = new Promise(function (resolve, reject) {
+            _this.http.post(apiURL, params)
+                .toPromise()
+                .then(function (res) {
+                var pronostico = res.json();
+                resolve(new MyForecast(pronostico.ciudad, pronostico.condicion, pronostico.fecha_inicial, pronostico.fecha_final));
+            }, function (msg) {
+                reject(msg);
+            });
+        });
+        return promise;
+    };
     return MyForecastService;
 }());
 MyForecastService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
 ], MyForecastService);
 
+var _a;
 //# sourceMappingURL=myForecastService.js.map
 
 /***/ }),
@@ -2873,7 +2938,6 @@ var ActiveCity = (function () {
 var CityManagerService = (function () {
     function CityManagerService(http) {
         this.http = http;
-        //Currently a dummy call to a local json
         /**
          * Backend REST endpoint URL to retrieve the user info from JSON
          */
@@ -2881,9 +2945,11 @@ var CityManagerService = (function () {
         this.apiRoot2 = 'http://localhost:3000/api/CiudadesCatalogo';
         this.apiCiudadesActivas = 'http://localhost:3000/api/CiudadesActivas';
     }
+    /**
+     * Look up a city by its name or the name of its country, admin operation
+     */
     CityManagerService.prototype.retrieveSearchedCityInfo = function (cityToSearch) {
         var _this = this;
-        console.log(cityToSearch);
         var query = {
             where: {
                 or: [
@@ -2905,11 +2971,9 @@ var CityManagerService = (function () {
                 .then(function (res) {
                 var cities = [];
                 var citiesJson = __WEBPACK_IMPORTED_MODULE_8_jquery__["map"](res.json(), function (e) { return e; });
-                console.log(citiesJson);
                 __WEBPACK_IMPORTED_MODULE_8_jquery__["each"](citiesJson, function (i, city) {
                     cities.push(new Cities(city.city, city.country, city.province));
                 });
-                console.log(cities);
                 resolve(cities);
             }, function (msg) {
                 reject(msg);
@@ -2917,6 +2981,9 @@ var CityManagerService = (function () {
         });
         return promise;
     };
+    /**
+     * Add a city to the list of active cities, admin operation
+     */
     CityManagerService.prototype.addToActiveCitiesService = function (cityName, cityProvince, countryName) {
         var _this = this;
         var apiURL = this.apiCiudadesActivas;
@@ -2938,10 +3005,12 @@ var CityManagerService = (function () {
         });
         return promise;
     };
+    /**
+     * Remove a city from the list of active cities, admin operation
+     */
     CityManagerService.prototype.removeCity = function (id) {
         var _this = this;
         var apiURL2 = this.apiCiudadesActivas + "/" + id;
-        console.log(apiURL2);
         var promise = new Promise(function (resolve, reject) {
             _this.http.delete(apiURL2)
                 .toPromise()
@@ -2953,6 +3022,9 @@ var CityManagerService = (function () {
         });
         return promise;
     };
+    /**
+     * Retrieve the list of active cities, determined by an administrator
+     */
     CityManagerService.prototype.retrieveActiveCities = function () {
         var _this = this;
         var promise = new Promise(function (resolve, reject) {
@@ -2975,9 +3047,10 @@ var CityManagerService = (function () {
 }());
 CityManagerService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
 ], CityManagerService);
 
+var _a;
 //# sourceMappingURL=cityManagerService.js.map
 
 /***/ }),

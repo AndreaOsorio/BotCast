@@ -34,7 +34,6 @@ export class CityManagerService {
     constructor(private http: Http) {
     }
 
-    //Currently a dummy call to a local json
     /**
      * Backend REST endpoint URL to retrieve the user info from JSON
      */
@@ -42,9 +41,10 @@ export class CityManagerService {
     apiRoot2:string = 'http://localhost:3000/api/CiudadesCatalogo';
     apiCiudadesActivas: string = 'http://localhost:3000/api/CiudadesActivas';
 
+    /**
+     * Look up a city by its name or the name of its country, admin operation
+     */
     public retrieveSearchedCityInfo(cityToSearch: string):Promise<Cities[]>{
-        console.log(cityToSearch)
-
         let query = {
             where: {
                 or: [
@@ -69,7 +69,6 @@ export class CityManagerService {
                     res => {
                         let cities:Cities[] =[]
                         let citiesJson = $.map(res.json(), function(e){return e});
-                        console.log(citiesJson)
                         $.each(citiesJson, function(i,city){
                             cities.push(new Cities(
                                 city.city,
@@ -77,7 +76,6 @@ export class CityManagerService {
                                 city.province)
                             )
                         });
-                        console.log(cities);
                         resolve(cities);
                     },
                     msg => {
@@ -88,6 +86,10 @@ export class CityManagerService {
         return promise;
     }
 
+
+    /**
+     * Add a city to the list of active cities, admin operation
+     */
     public addToActiveCitiesService(cityName:string, cityProvince:string, countryName: string): Promise<ActiveCity>{
 
         let apiURL = this.apiCiudadesActivas;
@@ -120,10 +122,12 @@ export class CityManagerService {
         return promise;
     }
 
+    /**
+     * Remove a city from the list of active cities, admin operation
+     */
     public removeCity(id){
 
         let apiURL2 = `${this.apiCiudadesActivas}/${id}`;
-        console.log(apiURL2);
 
         let promise = new Promise((resolve, reject) => {
             this.http.delete(apiURL2)
@@ -143,6 +147,9 @@ export class CityManagerService {
     }
 
 
+    /**
+     * Retrieve the list of active cities, determined by an administrator
+     */
     public retrieveActiveCities():Promise<ActiveCity[]>{
 
         let promise = new Promise((resolve, reject) => {

@@ -12,14 +12,8 @@ import { MyForecastService, MyForecast } from '../../services/myForecastService'
  */
 export class MyForecastsPage {
 
-    // constructor(
-    //     public cityName: string,
-    //     public condition: string,
-    //     public startDate:string,
-    //     public endDate:string
-    // ){}
-
     private forecasts: MyForecast[] = [];
+    private userId:string;
 
     /**
      * Componennt constructor
@@ -32,7 +26,10 @@ export class MyForecastsPage {
                        private myForecastService: MyForecastService) {
 
         this.myForecastService.retrieveMyForecasts().then(data=>this.forecasts=data);
+        this.userId = localStorage.id_usuario
 
+        //AutoSelectTab
+        // this.navController.parent.select(1);
     }
 
 

@@ -3,14 +3,10 @@ import { MyCitiesService, Ciudad } from '../../services/citiesService';
 import { ForecastService, TodayForecast, HourForecast, NextDaysForecast } from '../../services/forecastService';
 import { ModalController, NavController, NavParams} from 'ionic-angular';
 import { GeolocationService, RawLocation, GeolocationAddress} from '../../services/geolocationService';
-import { CityManagerService, Cities, ActiveCity } from '../../services/cityManagerService'
+import { CityManagerService } from '../../services/cityManagerService'
 import { UsersInfoService, Usuario } from '../../services/usersInfoService'
 import { AddCityModal } from './addCity/addCity'
 import * as $ from 'jquery';
-
-
-//TODO: fix hour change bug based on location, should take 10 mins...
-//TODO: background gif changes as a function of weather
 
 @Component({
   selector: 'principal',
@@ -31,7 +27,6 @@ export class PrincipalPage {
     private mycurrentLocationLatLong:RawLocation;
     private myCurrentLocationReverseGeocoded:GeolocationAddress;
     private currentUser:Usuario;
-    private activeCitiesCurrentUser = [];
     private currentCity:String;
 
     /**
@@ -56,14 +51,14 @@ export class PrincipalPage {
 
         this.makeApiCalls("");
 
-        console.log(this.navParams.data)
-
         usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(
             res =>{
                 this.currentUser=  res;
             }
         );
-        this.navParams.data={a:"sheller"};
+
+        //TODO: connect with real user login id
+        localStorage.id_usuario = "xxxxxxxxxx01"
 
   }
 

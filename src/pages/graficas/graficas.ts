@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { ForecastService, NextDaysForecast } from '../../services/forecastService';
 import { MyCitiesService, Ciudad } from '../../services/citiesService';
+import { MyForecastService } from '../../services/myForecastService';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { NavController } from 'ionic-angular';
 
 
 //TODO: fix initial graph pop bug
@@ -39,6 +41,8 @@ export class GraphsPage {
     private selectedFinalDate:string = "";
 
     private currentCity:string;
+
+    private mostFrequentCondition:string;
 
     /**
      *The following objects correspond to the graph configuration arguments, including label format, colors and label display locations, among others.
@@ -81,12 +85,21 @@ export class GraphsPage {
      * @param myCitiesService: retrieves currently saved cities by users
      */
     constructor(private forecastService: ForecastService,
-                private myCitiesService: MyCitiesService) {
+                private myCitiesService: MyCitiesService,
+                private myForecastService: MyForecastService,
+                private navController:NavController) {
 
         this.currentCity = localStorage.currentCity;
         this.selectedCity = this.currentCity;
 
         this.forecastService.weatherNextDays(this.currentCity).then( data => {
+
+
+            var conditions = data.map(forecast=>forecast.condition);
+
+            //TODO: put this icon somewhere visible
+            this.mostFrequentCondition = this.calculateMostFrequentCondition(conditions);
+
             this.lineChartData = [{data: this.getMaxTemps(data), label: this.currentCity}];
             this.lineChartLabels = this.buildLabelArray(data);
             this.reloadChart();
@@ -104,7 +117,6 @@ export class GraphsPage {
     }
 
     ngAfterContentChecked() {
-        console.log(this.currentCity+" "+localStorage.currentCity)
         if(JSON.stringify(this.ciudades) != localStorage.userCities){
             this.ciudades = JSON.parse(localStorage.userCities)
         }
@@ -141,6 +153,8 @@ export class GraphsPage {
      */
     public updateGraph(forecastDays:number = 0){
         this.forecastService.weatherNextDays(this.selectedCity, forecastDays).then( data=>{
+            var conditions = data.map(forecast=>forecast.condition);
+            this.mostFrequentCondition = this.calculateMostFrequentCondition(conditions);
             this.nextDaysForecastsForGraph = data;
             this.populateGraph();
         });
@@ -279,6 +293,52 @@ export class GraphsPage {
         var timeDifferenceEpoch = Math.abs(new Date(this.selectedInitDate).getTime() - new Date(this.selectedFinalDate).getTime());
         var dayDifference = Math.ceil(timeDifferenceEpoch / (1000 * 3600 * 24));
         return dayDifference+1;
+    }
+
+
+    /**
+     * Add a forecast to the user's list of saved forecasts
+     */
+    public saveForecast(){
+        let forecastToSave = {
+            nombre: this.selectedCity,
+            fecha_inicial: this.selectedInitDate,
+            fecha_final: this.selectedFinalDate,
+            id_usuario: localStorage.id_usuario,
+            condicion: this.mostFrequentCondition
+        }
+
+        this.myForecastService.saveForecast(forecastToSave).then(data=>{
+            console.log(data)
+            }
+        );
+
+
+    }
+
+    /**
+     * Determine the most frequent weather condition in the required forecast days
+     * @param conditions
+     * @returns {string}
+     */
+    public calculateMostFrequentCondition(conditions){
+        var arr = [];
+        for(var i=0;i < conditions.length;i++){
+            if(!arr[conditions[i]]){
+                arr[conditions[i]] = 1;
+            }else{
+                arr[conditions[i]]++;
+            }
+        }
+        var max = 0;
+        var maxVal = "";
+        for(var x in arr){
+            if(arr[x]>max){
+                max = arr[x];
+                maxVal = x;
+            }
+        }
+        return maxVal;
     }
 
 
