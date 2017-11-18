@@ -94,7 +94,12 @@ export class ForecastService {
         "Heavy rain":"md-umbrella",
         "Patchy rain possible":"md-rainy",
         "Light snow":"md-snow",
-        "Moderate snow":"md-snow"
+        "Moderate snow":"md-snow",
+        "Blizzard":"md-snow",
+        "Patchy moderate snow":"md-snow",
+        "Blowing snow":"md-snow",
+        "Light drizzle":"md-umbrella",
+        "Light freezing rain":"md-snow"
     }
 
     /**
@@ -205,6 +210,7 @@ export class ForecastService {
                 .toPromise()
                 .then(
                     res => {
+
                         let nextDaysForecasts:NextDaysForecast[] = [];
 
                         let days= res.json().forecast.forecastday
@@ -212,6 +218,8 @@ export class ForecastService {
                         while(i < numberOfDays){
 
                             let dayOfWeekString = (i==0) ?  "Today" : this.dayOfWeekMap[new Date(days[i].date).getDay()];
+
+                            console.log(days[i].day.condition.text)
                             nextDaysForecasts.push(
                                 new NextDaysForecast(
                                     dayOfWeekString,
@@ -224,6 +232,8 @@ export class ForecastService {
                             );
                             i++;
                         }
+
+
                         resolve(nextDaysForecasts);
                     },
                     msg => {

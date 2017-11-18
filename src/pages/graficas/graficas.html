@@ -44,7 +44,8 @@
             <ion-item>
                 <ion-label>Select city</ion-label>
                 <ion-select [(ngModel)]="selectedCity" multiple="false" (ngModelChange)="changeCity($event)">
-                    <ion-option *ngFor="let c of ciudades"> {{c.name}} </ion-option>
+                    <ion-option *ngFor="let c of ciudades"
+                                [selected]="c.name == currentCity ? true : null"> {{c.name}} </ion-option>
                 </ion-select>
             </ion-item>
         </ion-col>

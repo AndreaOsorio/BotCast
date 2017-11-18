@@ -30,10 +30,9 @@ export class PrincipalPage {
     private todaysDate:string;
     private mycurrentLocationLatLong:RawLocation;
     private myCurrentLocationReverseGeocoded:GeolocationAddress;
-
     private currentUser:Usuario;
-
     private activeCitiesCurrentUser = [];
+    private currentCity:String;
 
     /**
      *
@@ -57,7 +56,6 @@ export class PrincipalPage {
 
         this.makeApiCalls("");
 
-        //TODO: through auth token get user info and retrieve preferences, forecasts, etc, when backend is ready
         console.log(this.navParams.data)
 
         usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(
@@ -72,10 +70,13 @@ export class PrincipalPage {
 
   presentAddCityModal() {
       let contactModal = this.modalCtrl.create(AddCityModal, {user: this.currentUser});
-      contactModal .onDidDismiss(usuario => {
-          this.ciudades = usuario.cities;
-          console.log(usuario.cities)
-          console.log(this.ciudades);
+      contactModal .onDidDismiss(ciudad => {
+          if(ciudad!==null && ciudad.length>0){
+              console.log(ciudad)
+              let arreglo_nombres = ciudad.map(c=> new Ciudad(c.name))
+              localStorage.userCities = JSON.stringify(arreglo_nombres);
+              this.ciudades = arreglo_nombres
+          }
       });
       contactModal.present();
   }
@@ -93,9 +94,6 @@ export class PrincipalPage {
           city = "Amsterdam";
       }
 
-      this.myCitiesService.retrieveMyCities().then(data=>{
-          this.ciudades = data
-      } );
 
       this.forecastService.currentWeather(city).then( data=>{
           this.todayForecast = data
@@ -107,6 +105,15 @@ export class PrincipalPage {
           this.nextDaysForecast = data
           console.log(this.nextDaysForecast)
       });
+
+      this.usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(
+          res =>{
+              this.currentUser=  res;
+              let arreglo_nombres = this.currentUser.cities.map(ciudad => new Ciudad(ciudad.name))
+              this.ciudades = arreglo_nombres
+              localStorage.userCities = JSON.stringify(arreglo_nombres);
+          }
+        );
   }
 
     /**
@@ -115,15 +122,16 @@ export class PrincipalPage {
      * to call makeApiCalls() and redraw the view with the current location's weather
      */
   public getMyLocation(){
-      $("#gif-loading-container").removeClass("x");
-      $("#gif-loading-container").addClass("y");
+      var loading_gif = $("#gif-loading-container");
+      loading_gif.removeClass("x");
+      loading_gif.addClass("y");
       this.geolocationService.getMyCurrentLocation().then(data => {
           this.mycurrentLocationLatLong = data;
           this.geolocationService.getMyCurrentAddressBasedOnLatLong(data).then(data => {
               this.myCurrentLocationReverseGeocoded = data;
               this.makeApiCalls(data.city)
-              $("#gif-loading-container").removeClass("y");
-              $("#gif-loading-container").addClass("x");
+              loading_gif.removeClass("y");
+              loading_gif.addClass("x");
           });
       });
   }
@@ -135,7 +143,8 @@ export class PrincipalPage {
      */
   public changeCity(cityName:string) {
       this.makeApiCalls(cityName);
-      //TODO: implement here changes to classes when users selects a particular city
+      this.currentCity = cityName;
+      localStorage.currentCity = this.currentCity
   }
 
   public moveToAddCityWindow() {

@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { ForecastService, TodayForecast, HourForecast, NextDaysForecast } from '../../services/forecastService';
+import { ForecastService, NextDaysForecast } from '../../services/forecastService';
 import { MyCitiesService, Ciudad } from '../../services/citiesService';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
-import { NavParams } from 'ionic-angular';
 
 
 //TODO: fix initial graph pop bug
@@ -24,7 +23,7 @@ export class GraphsPage {
 
     private ciudades: Ciudad[] = [];
 
-    private maxDaysApiRequest:number = 8;
+    private maxDaysApiRequest:number = 7;
 
     currentDataBufferForGraph:Array<any> = [{data:[0,0,0,0,0], label:'Series A'}];
 
@@ -38,6 +37,8 @@ export class GraphsPage {
 
     private selectedInitDate:string = this.todaysDate;
     private selectedFinalDate:string = "";
+
+    private currentCity:string;
 
     /**
      *The following objects correspond to the graph configuration arguments, including label format, colors and label display locations, among others.
@@ -80,22 +81,36 @@ export class GraphsPage {
      * @param myCitiesService: retrieves currently saved cities by users
      */
     constructor(private forecastService: ForecastService,
-                private myCitiesService: MyCitiesService, private navParams: NavParams) {
+                private myCitiesService: MyCitiesService) {
 
-        this.forecastService.weatherNextDays("Mexico City").then( data => {
-            this.lineChartData = [{data: this.getMaxTemps(data), label: "Mexico City"}];
+        this.currentCity = localStorage.currentCity;
+        this.selectedCity = this.currentCity;
+
+        this.forecastService.weatherNextDays(this.currentCity).then( data => {
+            this.lineChartData = [{data: this.getMaxTemps(data), label: this.currentCity}];
             this.lineChartLabels = this.buildLabelArray(data);
             this.reloadChart();
         });
 
         this.myCitiesService.retrieveMyCities().then(data=>{
-            this.ciudades = data
+            this.ciudades = JSON.parse(localStorage.userCities)
         } );
 
         this.setTodayDateTime();
         this.setMaxDateTime();
+        this.selectedInitDate = this.todaysDate;
+        this.selectedFinalDate = this.maxFutureDate;
 
-        this.navParams.get('a');
+    }
+
+    ngAfterContentChecked() {
+        console.log(this.currentCity+" "+localStorage.currentCity)
+        if(JSON.stringify(this.ciudades) != localStorage.userCities){
+            this.ciudades = JSON.parse(localStorage.userCities)
+        }
+        if(this.currentCity != localStorage.currentCity){
+            this.currentCity = localStorage.currentCity;
+        }
     }
 
     /**
@@ -226,7 +241,7 @@ export class GraphsPage {
      * Establish the maximum future date in which the weather forecast service can be queried
      * @param maxDays: maximum amount of days for forecast service query, depends on API restrictions
      */
-    public setMaxDateTime(maxDays = this.maxDaysApiRequest){
+    public setMaxDateTime(maxDays = (this.maxDaysApiRequest-1)){
         let maxDate = new Date((new Date().getTime()) + maxDays*24*60*60*1000);
         this.maxFutureDate= maxDate.getFullYear()+"-"+this.buildCorrectFormatMonth(maxDate)+"-"+ this.buildCorrectFormatDay(maxDate);
     }
@@ -237,7 +252,7 @@ export class GraphsPage {
      * @returns {string|number}: if a day is less than 10 format it as e.g. 01 or 08
      */
     public buildCorrectFormatDay(date){
-        return (date.getDate()+1) < 10 ? "0"+(date.getDate()+1): (date.getDate()+1);
+        return (date.getDate()+1) < 10 ? "0"+(date.getDate()+1): (date.getDate());
     }
 
     /**
@@ -263,8 +278,7 @@ export class GraphsPage {
     public calculateDifferenceInDaysBetweenDates(){
         var timeDifferenceEpoch = Math.abs(new Date(this.selectedInitDate).getTime() - new Date(this.selectedFinalDate).getTime());
         var dayDifference = Math.ceil(timeDifferenceEpoch / (1000 * 3600 * 24));
-        console.log(dayDifference)
-        return dayDifference;
+        return dayDifference+1;
     }
 
 

@@ -17,7 +17,6 @@ export class AddCityModal {
     public cities = [];
     public selectedCities = [];
     public currentUser:Usuario;
-
     public selectedMap = new Map();
     
     public constructor(public params: NavParams,
@@ -30,7 +29,6 @@ export class AddCityModal {
         });
 
         this.currentUser = params.get('user');
-
     }
 
     addRemoveCity(event){
@@ -52,7 +50,7 @@ export class AddCityModal {
     }
 
     dismiss(){
-        this.viewCtrl.dismiss(this.currentUser);
+        this.viewCtrl.dismiss(this.selectedCities);
     }
 
     saveCities(){
@@ -80,8 +78,6 @@ export class AddCityModal {
             usuario: this.currentUser.username,
             ciudades: this.selectedCities
         }
-
-        this.currentUser.cities = this.selectedCities;
 
         this.usersInfoService.updateUserInfo(localStorage.idUsuario, params).then(res=>{
             console.log("Cambios a lista guardados!")
