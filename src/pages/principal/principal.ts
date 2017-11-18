@@ -109,7 +109,7 @@ export class PrincipalPage {
       this.usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(
           res =>{
               this.currentUser=  res;
-              let arreglo_nombres = this.currentUser.cities.map(ciudad => new Ciudad(ciudad.name))
+              let arreglo_nombres = this.currentUser.cities.map(ciudad => new Ciudad(ciudad["name"]))
               this.ciudades = arreglo_nombres
               localStorage.userCities = JSON.stringify(arreglo_nombres);
           }

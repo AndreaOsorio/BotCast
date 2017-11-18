@@ -410,10 +410,9 @@ var ForecastService = (function () {
 }());
 ForecastService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
 ], ForecastService);
 
-var _a;
 //# sourceMappingURL=forecastService.js.map
 
 /***/ }),
@@ -859,7 +858,7 @@ var PrincipalPage = (function () {
         });
         this.usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(function (res) {
             _this.currentUser = res;
-            var arreglo_nombres = _this.currentUser.cities.map(function (ciudad) { return new __WEBPACK_IMPORTED_MODULE_1__services_citiesService__["a" /* Ciudad */](ciudad.name); });
+            var arreglo_nombres = _this.currentUser.cities.map(function (ciudad) { return new __WEBPACK_IMPORTED_MODULE_1__services_citiesService__["a" /* Ciudad */](ciudad["name"]); });
             _this.ciudades = arreglo_nombres;
             localStorage.userCities = JSON.stringify(arreglo_nombres);
         });
@@ -1156,10 +1155,12 @@ AddCityModal = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'addCity',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/addCity/addCity.html"*/'<ion-content padding class="contenido-lista-ciudades-activas">\n\n    <ion-header>\n        <ion-navbar>\n            <ion-title>Available Cities</ion-title>\n            <button ion-button small color="danger" (click)="dismiss()">\n                Close\n            </button>\n        </ion-navbar>\n    </ion-header>\n\n    <ion-grid class="grid-ciudades-activas">\n        <ion-row>\n        </ion-row>\n        <ion-row *ngFor = "let ciudad of cities" class="ciudad-row" (click)="addRemoveCity($event)">\n            <input type="hidden" value={{ciudad.id}} />\n            <ion-col class = "col-city-name">\n                {{ciudad.name}}\n            </ion-col>\n            <ion-col>\n                {{ciudad.country}}\n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <button full ion-button color="secondary" (click)="saveCities()">Regresar</button>\n        </ion-row>\n    </ion-grid>\n\n\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/addCity/addCity.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_cityManagerService__["b" /* CityManagerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_cityManagerService__["b" /* CityManagerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_usersInfoService__["a" /* UsersInfoService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_usersInfoService__["a" /* UsersInfoService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */],
+        __WEBPACK_IMPORTED_MODULE_2__services_cityManagerService__["b" /* CityManagerService */],
+        __WEBPACK_IMPORTED_MODULE_3__services_usersInfoService__["a" /* UsersInfoService */]])
 ], AddCityModal);
 
-var _a, _b, _c, _d;
 //# sourceMappingURL=addCity.js.map
 
 /***/ }),
@@ -1419,7 +1420,7 @@ var GraphsPage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("baseChart"),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__["BaseChartDirective"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__["BaseChartDirective"]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__["BaseChartDirective"])
 ], GraphsPage.prototype, "chart", void 0);
 GraphsPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -1431,10 +1432,10 @@ GraphsPage = __decorate([
      * retrieved from the forecasts service and the state of the form's components for frequent usage.
      */
     ,
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_citiesService__["b" /* MyCitiesService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_citiesService__["b" /* MyCitiesService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_forecastService__["a" /* ForecastService */],
+        __WEBPACK_IMPORTED_MODULE_2__services_citiesService__["b" /* MyCitiesService */]])
 ], GraphsPage);
 
-var _a, _b, _c;
 //# sourceMappingURL=graficas.js.map
 
 /***/ }),
@@ -1759,10 +1760,9 @@ var MyForecastService = (function () {
 }());
 MyForecastService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
 ], MyForecastService);
 
-var _a;
 //# sourceMappingURL=myForecastService.js.map
 
 /***/ }),
