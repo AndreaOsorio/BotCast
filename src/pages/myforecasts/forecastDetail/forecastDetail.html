@@ -1,0 +1,31 @@
+<ion-content>
+    <ion-header>
+        <ion-navbar>
+            <ion-title>Forecast detail</ion-title>
+            <button ion-button small color="danger" (click)="dismiss()">
+                Close
+            </button>
+        </ion-navbar>
+    </ion-header>
+
+    <ion-grid class="grid-forecast-detail">
+        <ion-row>
+            <ion-col ><b>Date</b></ion-col>
+            <ion-col ><b>Condition</b></ion-col>
+            <ion-col class="temp"><b>Max T</b></ion-col>
+            <ion-col class="temp"><b>Min T</b></ion-col>
+        </ion-row>
+        <ion-row *ngFor="let day of forecasts" class="row-forecasts">
+            <ion-col class="col-day-of-week-forecasts">{{day.dayOfWeek}}</ion-col>
+            <ion-col><ion-icon name={{day.condition}} class="icon-forecasts"></ion-icon></ion-col>
+            <ion-col>{{day.tempMax}} <span class="centigrade-symbol">°C</span></ion-col>
+            <ion-col>{{day.tempMin}} <span class="centigrade-symbol">°C</span></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <button ion-button outline class="show-graph" (click)="showGraph()">Show graph</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

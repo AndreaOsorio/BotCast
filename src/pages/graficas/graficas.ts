@@ -3,7 +3,7 @@ import { ForecastService, NextDaysForecast } from '../../services/forecastServic
 import { MyCitiesService, Ciudad } from '../../services/citiesService';
 import { MyForecastService } from '../../services/myForecastService';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 
 
 //TODO: fix initial graph pop bug
@@ -87,7 +87,7 @@ export class GraphsPage {
     constructor(private forecastService: ForecastService,
                 private myCitiesService: MyCitiesService,
                 private myForecastService: MyForecastService,
-                private navController:NavController) {
+                private toastCtrl: ToastController) {
 
         this.currentCity = localStorage.currentCity;
         this.selectedCity = this.currentCity;
@@ -114,6 +114,20 @@ export class GraphsPage {
         this.selectedInitDate = this.todaysDate;
         this.selectedFinalDate = this.maxFutureDate;
 
+        this.checkCitySelectedFromForecastList();
+
+    }
+
+    presentForecastSavedToast() {
+        let toast = this.toastCtrl.create({
+            message: 'Forecast successfully saved!',
+            duration: 1500,
+            position: 'top'
+        });
+        toast.onDidDismiss(() => {
+            console.log("Bye forecast toast!")
+        });
+        toast.present();
     }
 
     ngAfterContentChecked() {
@@ -229,6 +243,18 @@ export class GraphsPage {
     }
 
 
+    public checkCitySelectedFromForecastList(){
+        setInterval(()=>{
+            console.log(localStorage.citySelectedFromForecastList)
+            if (localStorage.citySelectedFromForecastList == 1) {
+                let obj = JSON.parse(localStorage.selectedForecastForGraph);
+                this.selectedCity = obj.city;
+                this.updateGraph(parseInt(obj.days))
+                localStorage.citySelectedFromForecastList = 0;
+            }
+        }, 100);
+    }
+
     /**
      * Takes a date in an YYYY-MM-dd format and pretty-formats it
      * @param date: date in YYYY-MM-dd format
@@ -241,6 +267,8 @@ export class GraphsPage {
         let d = new Date(date)
         return abbreviatedMonthMap[d.getMonth()]+" "+(d.getDate()+1);
     }
+
+
 
     /**
      * Get today's date in timestamp format and set it to YYYY-MM-DD format
@@ -308,12 +336,10 @@ export class GraphsPage {
             condicion: this.mostFrequentCondition
         }
 
-        this.myForecastService.saveForecast(forecastToSave).then(data=>{
-            console.log(data)
-            }
-        );
-
-
+        this.myForecastService.saveForecast(forecastToSave).then( data => {
+            this.presentForecastSavedToast()
+            localStorage.newForecastSaved = 1;
+        });
     }
 
     /**

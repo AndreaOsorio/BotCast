@@ -38,12 +38,11 @@ export class PrincipalPage {
      * @param geolocationService: service that retrieves user's current location in latLong format, then performs an external call
      * to a geocoder to get the exact address
      */
-  public constructor(private myCitiesService: MyCitiesService,
+  public constructor(
                      private forecastService: ForecastService,
                      public navCtrl: NavController,
                      public navParams: NavParams,
                      private geolocationService: GeolocationService,
-                     private cityManagerService: CityManagerService,
                      public modalCtrl: ModalController,
                      public usersInfoService: UsersInfoService) {
 
@@ -59,7 +58,8 @@ export class PrincipalPage {
 
         //TODO: connect with real user login id
         localStorage.id_usuario = "xxxxxxxxxx01"
-
+        localStorage.newForecastSaved = 0;
+        localStorage.citySelectedFromForecastList = 0;
   }
 
 
@@ -145,7 +145,6 @@ export class PrincipalPage {
   public moveToAddCityWindow() {
       console.log("moving window!");
   }
-
 
     /**
      *

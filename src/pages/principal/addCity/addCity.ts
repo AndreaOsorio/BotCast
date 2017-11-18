@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { MyCitiesService, Ciudad } from '../../../services/citiesService';
-import { ForecastService, TodayForecast, HourForecast, NextDaysForecast } from '../../../services/forecastService';
-import { ModalController,ViewController, NavController, NavParams} from 'ionic-angular';
-import { GeolocationService, RawLocation, GeolocationAddress} from '../../../services/geolocationService';
-import { CityManagerService, Cities, ActiveCity } from '../../../services/cityManagerService'
+import { ViewController, NavParams} from 'ionic-angular';
+import { CityManagerService} from '../../../services/cityManagerService'
 import { UsersInfoService, Usuario } from '../../../services/usersInfoService'
 import * as $ from 'jquery';
 
@@ -55,9 +52,7 @@ export class AddCityModal {
 
     saveCities(){
         this.selectedCities.length = 0;
-
         let aux = this.selectedCities;
-
         this.selectedMap.forEach(function(value,key,map) {
             aux.push(
                 {
@@ -67,9 +62,7 @@ export class AddCityModal {
                 }
             );
         });
-
         this.selectedCities = aux;
-
         let params = {
             nombre: this.currentUser.name,
             apellido:this.currentUser.lastname,

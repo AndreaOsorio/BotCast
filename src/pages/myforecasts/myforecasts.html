@@ -2,13 +2,19 @@
 <ion-content>
     <ion-header>
         <ion-navbar>
-            <ion-title>Your saved Forecasts</ion-title>
+            <ion-title>My saved forecasts</ion-title>
         </ion-navbar>
     </ion-header>
 
     <ion-content>
             <ion-grid>
-                <ion-row *ngFor="let forecast of forecasts" class="row-myforecasts">
+                <ion-row>
+                        <ion-col ><b>City</b></ion-col>
+                        <ion-col ><b>Condition</b></ion-col>
+                        <ion-col class="temp"><b>Init date</b></ion-col>
+                        <ion-col class="temp"><b>Final date</b></ion-col>
+                </ion-row>
+                <ion-row *ngFor="let forecast of forecasts" class="row-myforecasts" (click)="showForecastModal($event)">
 
                     <ion-col class="city-forecast">
                         {{forecast.cityName}}

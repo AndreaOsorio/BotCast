@@ -9,6 +9,8 @@ import {HttpModule, Http, Response} from '@angular/http';
 
 import { PrincipalPage } from '../pages/principal/principal';
 import { AddCityModal } from '../pages/principal/addCity/addCity';
+import { ForecastDetail} from '../pages/myforecasts/forecastDetail/forecastDetail'
+
 import { MyCitiesService } from '../services/citiesService';
 import { ForecastService } from '../services/forecastService';
 import { GraphsService } from '../services/graphsService';
@@ -70,6 +72,7 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     AdminUsers,
     AdminMyAccount,
     AdminStats,
+    ForecastDetail
   ],
   imports: [
     BrowserModule,
@@ -94,7 +97,7 @@ import {NativeGeocoder} from '@ionic-native/native-geocoder';
     AdminUsers,
     AdminMyAccount,
     AdminStats,
-
+    ForecastDetail
   ],
   providers: [
     StatusBar,
