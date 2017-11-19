@@ -331,7 +331,7 @@ export class GraphsPage {
             nombre: this.selectedCity,
             fecha_inicial: this.selectedInitDate,
             fecha_final: this.selectedFinalDate,
-            id_usuario: localStorage.id_usuario,
+            id_usuario: localStorage.idUsuario,
             condicion: this.mostFrequentCondition
         }
 

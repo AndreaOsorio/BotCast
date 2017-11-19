@@ -4,14 +4,14 @@
     <list default="true" id="8fc10e0d-aefe-4177-930a-5125517f510e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.sourcemaps/main.js.map" afterPath="$PROJECT_DIR$/.sourcemaps/main.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/chatbot/chatbot.html" afterPath="$PROJECT_DIR$/src/pages/chatbot/chatbot.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/chatbot/chatbot.scss" afterPath="$PROJECT_DIR$/src/pages/chatbot/chatbot.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/chatbot/chatbot.ts" afterPath="$PROJECT_DIR$/src/pages/chatbot/chatbot.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/graficas/graficas.ts" afterPath="$PROJECT_DIR$/src/pages/graficas/graficas.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.ts" afterPath="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/principal/principal.ts" afterPath="$PROJECT_DIR$/src/pages/principal/principal.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/services/chatbotService.ts" afterPath="$PROJECT_DIR$/src/services/chatbotService.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/main.css" afterPath="$PROJECT_DIR$/www/build/main.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/main.js" afterPath="$PROJECT_DIR$/www/build/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/main.js.map" afterPath="$PROJECT_DIR$/www/build/main.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/vendor.js" afterPath="$PROJECT_DIR$/www/build/vendor.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/build/vendor.js.map" afterPath="$PROJECT_DIR$/www/build/vendor.js.map" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,8 +30,8 @@
       <file leaf-file-name="chatbot.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/chatbot/chatbot.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="32" column="35" lean-forward="true" selection-start-line="32" selection-start-column="35" selection-end-line="32" selection-end-column="35" />
+            <state relative-caret-position="235">
+              <caret line="42" column="53" lean-forward="true" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
@@ -39,41 +39,53 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="principal.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/principal/principal.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="49" lean-forward="false" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="49" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="chatbotService.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/services/chatbotService.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="79" column="78" lean-forward="false" selection-start-line="79" selection-start-column="78" selection-end-line="79" selection-end-column="78" />
+            <state relative-caret-position="630">
+              <caret line="215" column="80" lean-forward="false" selection-start-line="215" selection-start-column="80" selection-end-line="215" selection-end-column="80" />
+              <folding>
+                <element signature="e#0#43#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cityManagerService.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/services/cityManagerService.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="46" column="35" lean-forward="false" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chatbot.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/chatbot/chatbot.html">
+      <file leaf-file-name="myforecasts.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/myforecasts/myforecasts.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" column="84" lean-forward="true" selection-start-line="36" selection-start-column="84" selection-end-line="36" selection-end-column="93" />
+            <state relative-caret-position="250">
+              <caret line="29" column="44" lean-forward="false" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chatbot.scss" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/chatbot/chatbot.scss">
+      <file leaf-file-name="addCity.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/principal/addCity/addCity.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="51" column="10" lean-forward="false" selection-start-line="51" selection-start-column="10" selection-end-line="51" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="principal.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/principal/principal.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="28" />
+            <state relative-caret-position="464">
+              <caret line="65" column="8" lean-forward="false" selection-start-line="65" selection-start-column="8" selection-end-line="72" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -82,9 +94,44 @@
       <file leaf-file-name="graficas.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/graficas/graficas.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="253" column="16" lean-forward="true" selection-start-line="253" selection-start-column="16" selection-end-line="253" selection-end-column="16" />
+            <state relative-caret-position="1908">
+              <caret line="332" column="46" lean-forward="false" selection-start-line="332" selection-start-column="46" selection-end-line="332" selection-end-column="46" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="principal.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/principal/principal.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="449">
+              <caret line="80" column="25" lean-forward="true" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+                <marker date="1511056650000" expanded="true" signature="2943:3674" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/login/login/login.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="30" column="47" lean-forward="false" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="authService.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/services/authService.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="364">
+              <caret line="71" column="1" lean-forward="false" selection-start-line="71" selection-start-column="1" selection-end-line="71" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -102,36 +149,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>event.</find>
-      <find>even</find>
-      <find>e</find>
-      <find>t</find>
-      <find>targ</find>
-      <find>target</find>
-      <find>addToActiveCitiesService</find>
-      <find>p</find>
-      <find>post</find>
-      <find>localStorage.id_usuario</find>
-      <find>i</find>
-      <find>ion-b</find>
-      <find>ion-butt</find>
-      <find>contenedor_conversacion</find>
-      <find>ngmode</find>
-      <find>n</find>
-      <find>ng</find>
-      <find>ngmodel</find>
-      <find>co</find>
-      <find>console.lo</find>
-      <find>console.log</find>
-      <find>l</find>
-      <find>localS</find>
-      <find>localStoriage</find>
-      <find>localStoriag</find>
-      <find>localStoria</find>
-      <find>localStori</find>
       <find>localStor</find>
       <find>localStorag</find>
       <find>localStorage</find>
+      <find>console.log</find>
+      <find>Usuario</find>
+      <find>xxxxxxxxxx01</find>
+      <find>localStorage.id_usua</find>
+      <find>localStorage.u</find>
+      <find>localStorage.</find>
+      <find>localStorage.id</find>
+      <find>localStorage.idUsu</find>
+      <find>localStorage.idsuario</find>
+      <find>localStorage.id_suario</find>
+      <find>idUsuario</find>
+      <find>localStorage.i</find>
+      <find>localStorage.id_</find>
+      <find>localStorage.id_u</find>
+      <find>localStorage.id_us</find>
+      <find>localStorage.id_usu</find>
+      <find>localStorage.id_usuari</find>
+      <find>localStorage.id_usuario</find>
+      <find>message</find>
+      <find>localStorage.idUsuario</find>
+      <find>updateUserInfo</find>
+      <find>params</find>
+      <find>localStorage.citySelectedFromForecastList</find>
+      <find>changeCity</find>
+      <find>ciudades</find>
+      <find>authorizeUser</find>
+      <find>callBotAPI</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src</dir>
@@ -191,13 +238,13 @@
         <option value="$PROJECT_DIR$/src/pages/myforecasts/forecastDetail/forecastDetail.html" />
         <option value="$PROJECT_DIR$/src/pages/myforecasts/forecastDetail/forecastDetail.scss" />
         <option value="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.html" />
-        <option value="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.ts" />
-        <option value="$PROJECT_DIR$/src/pages/principal/principal.ts" />
         <option value="$PROJECT_DIR$/src/pages/myforecasts/forecastDetail/forecastDetail.ts" />
-        <option value="$PROJECT_DIR$/src/pages/graficas/graficas.ts" />
         <option value="$PROJECT_DIR$/src/pages/chatbot/chatbot.scss" />
         <option value="$PROJECT_DIR$/src/pages/chatbot/chatbot.html" />
+        <option value="$PROJECT_DIR$/src/pages/myforecasts/myforecasts.ts" />
+        <option value="$PROJECT_DIR$/src/pages/graficas/graficas.ts" />
         <option value="$PROJECT_DIR$/src/pages/chatbot/chatbot.ts" />
+        <option value="$PROJECT_DIR$/src/pages/principal/principal.ts" />
         <option value="$PROJECT_DIR$/src/services/chatbotService.ts" />
       </list>
     </option>
@@ -1304,12 +1351,12 @@
       <workItem from="1509153308673" duration="428000" />
       <workItem from="1509201631240" duration="11234000" />
       <workItem from="1510633510572" duration="32862000" />
-      <workItem from="1510956703936" duration="25723000" />
+      <workItem from="1510956703936" duration="38275000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="163268000" />
+    <option name="totallyTimeSpent" value="175820000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1403" height="873" extended-state="0" />
@@ -1403,14 +1450,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/authService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="41" lean-forward="false" selection-start-line="0" selection-start-column="41" selection-end-line="0" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/admin/cities/cities.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="500">
@@ -1432,16 +1471,6 @@
         <state relative-caret-position="285">
           <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/login/login/login.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="18" column="36" lean-forward="false" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1499,14 +1528,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="12" lean-forward="false" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/usersInfoService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1665">
-          <caret line="119" column="39" lean-forward="false" selection-start-line="119" selection-start-column="39" selection-end-line="119" selection-end-column="39" />
           <folding />
         </state>
       </provider>
@@ -1585,30 +1606,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/cityManagerService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="40" column="4" lean-forward="false" selection-start-line="40" selection-start-column="4" selection-end-line="40" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/app.module.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="302">
           <caret line="99" column="18" lean-forward="true" selection-start-line="99" selection-start-column="18" selection-end-line="99" selection-end-column="18" />
           <folding>
             <element signature="e#190#239#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/principal/addCity/addCity.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="48" column="4" lean-forward="false" selection-start-line="48" selection-start-column="4" selection-end-line="50" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1685,14 +1688,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/principal/principal.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="83" column="4" lean-forward="false" selection-start-line="83" selection-start-column="4" selection-end-line="88" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/myforecasts/myforecasts.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1714,16 +1709,6 @@
         <state relative-caret-position="603">
           <caret line="64" column="31" lean-forward="false" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/myforecasts/myforecasts.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="75" column="31" lean-forward="false" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="31" />
-          <folding>
             <element signature="e#0#42#0" expanded="false" />
           </folding>
         </state>
@@ -1737,29 +1722,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/chatbot/chatbot.ts">
+    <entry file="file://$PROJECT_DIR$/src/pages/chatbot/chatbot.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="32" column="35" lean-forward="true" selection-start-line="32" selection-start-column="35" selection-end-line="32" selection-end-column="35" />
+        <state relative-caret-position="540">
+          <caret line="36" column="84" lean-forward="false" selection-start-line="36" selection-start-column="84" selection-end-line="36" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/usersInfoService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-121">
+          <caret line="45" column="29" lean-forward="false" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="29" />
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/graficas/graficas.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="253" column="16" lean-forward="true" selection-start-line="253" selection-start-column="16" selection-end-line="253" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/principal/principal.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1771,19 +1748,92 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/chatbot/chatbot.html">
+    <entry file="file://$PROJECT_DIR$/src/services/authService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="84" lean-forward="true" selection-start-line="36" selection-start-column="84" selection-end-line="36" selection-end-column="93" />
+        <state relative-caret-position="364">
+          <caret line="71" column="1" lean-forward="false" selection-start-line="71" selection-start-column="1" selection-end-line="71" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/chatbot/chatbot.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="42" column="53" lean-forward="true" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/principal/principal.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="49" lean-forward="false" selection-start-line="16" selection-start-column="41" selection-end-line="16" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/login/login/login.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="30" column="47" lean-forward="false" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/principal/principal.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="80" column="25" lean-forward="true" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+            <marker date="1511056650000" expanded="true" signature="2943:3674" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/myforecasts/myforecasts.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="29" column="44" lean-forward="false" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/principal/addCity/addCity.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="464">
+          <caret line="65" column="8" lean-forward="false" selection-start-line="65" selection-start-column="8" selection-end-line="72" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/graficas/graficas.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1908">
+          <caret line="332" column="46" lean-forward="false" selection-start-line="332" selection-start-column="46" selection-end-line="332" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/services/cityManagerService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="46" column="35" lean-forward="false" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/services/chatbotService.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="79" column="78" lean-forward="false" selection-start-line="79" selection-start-column="78" selection-end-line="79" selection-end-column="78" />
-          <folding />
+        <state relative-caret-position="630">
+          <caret line="215" column="80" lean-forward="false" selection-start-line="215" selection-start-column="80" selection-end-line="215" selection-end-column="80" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

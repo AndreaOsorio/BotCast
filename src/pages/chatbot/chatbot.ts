@@ -16,15 +16,12 @@ export class ChatbotPage {
     public userInput:string;
 
     constructor(private chatbotService: ChatbotService) {
-        chatbotService.retrieveUserConversation(localStorage.id_usuario).then(data=>{
+        chatbotService.retrieveUserConversation(localStorage.idUsuario).then(data=>{
             console.log(data)
             this.conversation=data
         });
 
-        setTimeout(function(){
-            var conversationContainer= $(".contenedor_conversacion");
-            conversationContainer.scrollTop(conversationContainer.prop('scrollHeight'));
-        }, 500)
+        this.scrollConversation(500);
 
     }
 
@@ -35,24 +32,45 @@ export class ChatbotPage {
 
     public sendMessage(event){
 
-        this.conversation.push(new Message(this.mockIsBot, (new Date().getTime()).toString(),this.userInput))
-
+        let textoUsuario = this.userInput;
         let messageObject = {
-            contenido: this.userInput,
-            id_usuario: localStorage.id_usuario,
-            esbot: this.mockIsBot
+            contenido: textoUsuario,
+            id_usuario: localStorage.idUsuario,
+            esbot: false
         }
 
-        this.userInput = "";
-
         this.chatbotService.saveMessage(messageObject).then(data => {
+            this.conversation.push(new Message(false,
+                (new Date().getTime()).toString(),
+                textoUsuario))
             console.log(data)
-        })
+        });
 
+        this.chatbotService.callBotAPI(this.userInput, localStorage.idUsuario).then(response=> {
+            let textResponse = response.toString()
+            let messageObject = {
+                contenido: textResponse,
+                id_usuario: localStorage.idUsuario,
+                esbot: true
+            }
+            this.chatbotService.saveMessage(messageObject).then(data => {
+                this.conversation.push(new Message(true,
+                    (new Date().getTime()).toString(),
+                    textResponse))
+                this.scrollConversation(500);
+            });
+        });
+
+        this.userInput = "";
+        this.scrollConversation(100);
+
+    }
+
+    public scrollConversation(time){
         setTimeout(function(){
             var conversationContainer= $(".contenedor_conversacion");
             conversationContainer.scrollTop(conversationContainer.prop('scrollHeight'));
-        }, 100)
+        }, time)
     }
 
 }

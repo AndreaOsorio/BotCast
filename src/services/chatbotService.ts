@@ -1,5 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { UsersInfoService } from './usersInfoService'
+import { CityManagerService } from './cityManagerService'
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -43,7 +46,9 @@ export class Conversation{
 @Injectable()
 export class ChatbotService {
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+                private usersInfoService: UsersInfoService,
+                private cityManagerService:CityManagerService) {
     }
 
     public saveMessage(mensaje): Promise<Message>{
@@ -60,7 +65,6 @@ export class ChatbotService {
                 .then(
                     res => {
                         let message = res.json();
-                        console.log(message)
                         resolve(new Message(
                             message.esbot,
                             message.timestamp,
@@ -107,4 +111,126 @@ export class ChatbotService {
         });
         return promise;
     }
+
+    public callBotAPI(message:string, id_usuario:string){
+
+        let token ="TFJ52Y4QJQFUMIOTLVGMYNI2TAXQYFSY"
+        let apiURL:string = 'https://api.wit.ai/message?v=20171118&q='+message
+
+        let headers = new Headers({'Authorization': 'Bearer '+token });
+        let options = new RequestOptions({ headers: headers });
+
+        let promise = new Promise((resolve, reject) => {
+            this.http.get(apiURL, options)
+                .toPromise()
+                .then(
+                    res => {
+                        console.log(res.json())
+                        let entities= res.json().entities;
+
+                        let response;
+                        if (entities.intent) {
+                            let intent = entities.intent[0].value;
+                            response = this.intentDispatcher(intent, entities, id_usuario);
+                        } else {
+                            response = "Sorry couldn't catch that!"
+                        }
+                        resolve(response);
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                );
+        });
+
+        return promise;
+    }
+
+    /**
+     * Manages the bot API response according to intent
+     */
+    public intentDispatcher(intent:string, entities, id_usuario:string){
+
+        if(intent == "add_city" || intent == "remove_city"){
+           return this.botAddRemoveCityHandler(intent,entities, id_usuario)
+        }
+
+    }
+
+    /**
+     * Handles a user's bot request to add or remove a city from the favorites list
+     * @param intent: what the user pretends to do (add or remove)
+     * @param entities: contains the city that wants to be removed
+     * @param id_usuario: what user is making the request?
+     * @returns {Promise<TResult2|any|any|any|string>}
+     */
+    public botAddRemoveCityHandler(intent:string, entities, id_usuario:string){
+        let textResponse = "";
+        let location = "";
+        if(entities.location){
+            location = entities.location[0].value
+            return this.usersInfoService.retrieveUserInfoById(id_usuario).then(data => {
+                let userData = data;
+                let locationToAdd = data.cities.find(c=> c["name"] == location);
+
+                let evalClause = (intent == "add_city")? locationToAdd: !locationToAdd
+
+                if (evalClause){
+                    textResponse = (intent == "add_city")?
+                        "You already have that city!!":
+                        "Can't find that city in your preferences";
+                } else{
+                    return this.cityManagerService.retrieveActiveCities().then(activeCities => {
+                        locationToAdd = activeCities.find(city=> city["name"] == location);
+                        if(locationToAdd){
+                            return this.cityManagerService.retrieveSearchedCityInfo(locationToAdd["name"]).then(cityRes=>{
+                                let arrAux = [];
+
+                                if (intent == "add_city") {
+                                    userData.cities.push({id:locationToAdd["id"],
+                                        name: locationToAdd["name"],
+                                        country:locationToAdd["country"] })
+                                    arrAux = userData.cities
+                                } else {
+                                    arrAux = userData.cities.filter(ciudad=>ciudad["name"]!=locationToAdd["name"])
+                                }
+
+                                let params = {
+                                    nombre: userData.name,
+                                    apellido:userData.lastname,
+                                    email:userData.email,
+                                    password: userData.password,
+                                    usuario: userData.username,
+                                    ciudades: arrAux
+                                }
+                                return this.usersInfoService.updateUserInfo(id_usuario, params).then(usuarioActualizado=>{
+                                    textResponse = (intent == "add_city")?
+                                        (locationToAdd["name"]+" was added to your favorite cities!"):
+                                        (locationToAdd["name"]+" was removed from your list of cities.");
+
+                                    if(intent == "add_city"){
+                                        localStorage.cityAddedToFavoritesObj = JSON.stringify({city:locationToAdd["name"]})
+                                        localStorage.cityAddedToFavorites = 1;
+
+                                    }else{
+                                        localStorage.cityRemovedFromFavoritesObj = JSON.stringify({city:locationToAdd["name"]})
+                                        localStorage.cityRemovedFromFavorites = 1;
+                                    }
+
+
+                                    return textResponse;
+                                })
+                            })
+                        } else{
+                            return "That place is not in active cities! Please contact an admin to add it!";
+                        }
+                    })
+                }
+                return textResponse;
+            });
+        }
+    }
+
+
+
 }
