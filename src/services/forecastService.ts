@@ -65,7 +65,9 @@ export class NextDaysForecast{
       public tempMin:number,
       public tempAvg:number,
       public condition: string,
-      public date:string
+      public date:string,
+      public forecasts:[object],
+      public conditionString:string
     ){}
 }
 
@@ -131,12 +133,18 @@ export class ForecastService {
      * @param ciudad: city whose weather forecast wants to be known
      * @returns {Promise<T>}: promise that resolves to the appropriate data object format
      */
-    public currentWeather(ciudad: string): Promise<TodayForecast[]>{
+    public currentWeather(ciudad: string, days:number = 1): Promise<TodayForecast[]>{
 
         let apiURL = `${this.apiRoot}?key=${this.apiKey}&q=${ciudad}`;
         let currentHour = new Date().getHours();
 
-        if((currentHour+5) > 23) apiURL+="&days=2";
+        if(days==1){
+            if((currentHour+5) > 23) days = 2;
+        }
+
+        console.log()
+
+        apiURL+="&days="+days
 
         let promise = new Promise((resolve, reject) => {
             this.http.get(apiURL)
@@ -213,7 +221,10 @@ export class ForecastService {
 
                         let nextDaysForecasts:NextDaysForecast[] = [];
 
-                        let days= res.json().forecast.forecastday
+                        console.log("Weather NExt Days")
+                        console.log(res.json())
+
+                        let days = res.json().forecast.forecastday
                         let i = 0;
                         while(i < numberOfDays){
 
@@ -227,7 +238,9 @@ export class ForecastService {
                                     days[i].day.mintemp_c,
                                     days[i].day.avgtemp_c,
                                     this.iconMap[days[i].day.condition.text],
-                                    days[i].date
+                                    days[i].date,
+                                    days,
+                                    days[i].day.condition.text
                                 )
                             );
                             i++;

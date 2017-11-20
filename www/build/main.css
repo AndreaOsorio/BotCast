@@ -25766,7 +25766,7 @@ ion-icon {
 
 .mensaje-caja-texto {
   position: relative;
-  width: 90%;
+  width: 70%;
   left: 5%;
   top: 80%;
   z-index: 10000;
@@ -25775,10 +25775,12 @@ ion-icon {
 
 .boton-enviar-mensaje {
   position: relative;
+  height: 7.5%;
   width: 19%;
-  left: 74%;
-  top: 482px;
+  left: 76%;
+  top: 480px;
   z-index: 10000;
+  border-radius: 0px;
 }
 
 .yo {

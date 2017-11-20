@@ -67,6 +67,7 @@ export class PrincipalPage {
         localStorage.citySelectedFromForecastList = 0;
         localStorage.cityAddedToFavorites = 0;
         localStorage.cityRemovedFromFavorites = 0;
+        localStorage.currentCity = "";
 
         this.checkCityAddedToFavorites();
         this.checkCityRemovedFromFavorites();
@@ -155,6 +156,7 @@ export class PrincipalPage {
             this.mycurrentLocationLatLong = data;
             this.geolocationService.getMyCurrentAddressBasedOnLatLong(data).then(data => {
                 this.myCurrentLocationReverseGeocoded = data;
+                localStorage.currentCity = data.city;
                 this.makeApiCalls(data.city)
                 loading_gif.removeClass("y");
                 loading_gif.addClass("x");

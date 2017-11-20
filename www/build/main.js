@@ -7,7 +7,7 @@ webpackJsonp([0],{
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrincipalPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_citiesService__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_forecastService__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_forecastService__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__ = __webpack_require__(219);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__ = __webpack_require__(47);
@@ -67,6 +67,7 @@ var PrincipalPage = (function () {
         localStorage.citySelectedFromForecastList = 0;
         localStorage.cityAddedToFavorites = 0;
         localStorage.cityRemovedFromFavorites = 0;
+        localStorage.currentCity = "";
         this.checkCityAddedToFavorites();
         this.checkCityRemovedFromFavorites();
     }
@@ -145,6 +146,7 @@ var PrincipalPage = (function () {
             _this.mycurrentLocationLatLong = data;
             _this.geolocationService.getMyCurrentAddressBasedOnLatLong(data).then(function (data) {
                 _this.myCurrentLocationReverseGeocoded = data;
+                localStorage.currentCity = data.city;
                 _this.makeApiCalls(data.city);
                 loading_gif.removeClass("y");
                 loading_gif.addClass("x");
@@ -212,10 +214,14 @@ PrincipalPage = __decorate([
      * the user's current location in latitude and longitude (raw format) and the user's approximate address.
      */
     ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__services_forecastService__["a" /* ForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_forecastService__["a" /* ForecastService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__["a" /* GeolocationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__["a" /* GeolocationService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* ModalController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__["a" /* UsersInfoService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__["a" /* UsersInfoService */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_forecastService__["a" /* ForecastService */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__["a" /* GeolocationService */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__["a" /* UsersInfoService */]])
 ], PrincipalPage);
 
-var _a, _b, _c, _d, _e, _f;
 //# sourceMappingURL=principal.js.map
 
 /***/ }),
@@ -468,10 +474,9 @@ var MyForecastService = (function () {
 }());
 MyForecastService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
 ], MyForecastService);
 
-var _a;
 //# sourceMappingURL=myForecastService.js.map
 
 /***/ }),
@@ -1105,7 +1110,7 @@ AddCityModal = __decorate([
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GraphsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_forecastService__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_forecastService__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_citiesService__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_myForecastService__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__ = __webpack_require__(224);
@@ -1526,12 +1531,11 @@ var ChatbotPage = (function () {
 }());
 ChatbotPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'bot',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/'<!--Chatbot User Tab Component HTML Structure-->\n\n<ion-header>\n    <ion-navbar>\n        <ion-title>Botcast</ion-title>\n        <button ion-button="" (click)="changeMockIsBot()">MockBot</button>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding class="yo">\n    <div class="contenedor_conversacion">\n        <ion-grid>\n            <ion-row *ngFor="let message of conversation; let i = index">\n                <ion-row *ngIf="message.isBotMessage == false" col-12>\n                    <ion-col col-1>\n                        <ion-icon name="ios-contact-outline" class="icon-user-chatbot"></ion-icon>\n                    </ion-col>\n                    <ion-col class="user-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-4></ion-col>\n                </ion-row>\n                <ion-row *ngIf="message.isBotMessage == true" col-12>\n                    <ion-col col-4></ion-col>\n                    <ion-col class="bot-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-1>\n                        <ion-icon name="ios-ionitron-outline"></ion-icon>\n                    </ion-col>\n                </ion-row>\n            </ion-row>\n        </ion-grid>\n    </div>\n</ion-content>\n\n<ion-input placeholder="Say something..." class="mensaje-caja-texto" [(ngModel)] = "userInput" type="text"></ion-input>\n<button ion-button class="boton-enviar-mensaje" (click)="sendMessage($event)">Send</button>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/
+        selector: 'bot',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/'<!--Chatbot User Tab Component HTML Structure-->\n\n<ion-header>\n    <ion-navbar>\n        <ion-title>Botcast</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding class="yo">\n    <div class="contenedor_conversacion">\n        <ion-grid>\n            <ion-row *ngFor="let message of conversation; let i = index">\n                <ion-row *ngIf="message.isBotMessage == false" col-12>\n                    <ion-col col-1>\n                        <ion-icon name="ios-contact-outline" class="icon-user-chatbot"></ion-icon>\n                    </ion-col>\n                    <ion-col class="user-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-4></ion-col>\n                </ion-row>\n                <ion-row *ngIf="message.isBotMessage == true" col-12>\n                    <ion-col col-4></ion-col>\n                    <ion-col class="bot-message-content">\n                        {{message.content}}\n                    </ion-col>\n                    <ion-col col-1>\n                        <ion-icon name="ios-ionitron-outline"></ion-icon>\n                    </ion-col>\n                </ion-row>\n            </ion-row>\n        </ion-grid>\n    </div>\n</ion-content>\n\n<ion-input placeholder="Say something..." class="mensaje-caja-texto" [(ngModel)] = "userInput" type="text"></ion-input>\n<button ion-button class="boton-enviar-mensaje" (click)="sendMessage($event)">Send</button>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/chatbot/chatbot.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__["a" /* ChatbotService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__["a" /* ChatbotService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__services_chatbotService__["a" /* ChatbotService */]])
 ], ChatbotPage);
 
-var _a;
 //# sourceMappingURL=chatbot.js.map
 
 /***/ }),
@@ -1547,20 +1551,21 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__usersInfoService__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__cityManagerService__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_debounceTime__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_debounceTime___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_debounceTime__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_distinctUntilChanged__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_distinctUntilChanged___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_distinctUntilChanged__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_switchMap__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_switchMap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_toPromise__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_toPromise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_operator_do__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rxjs_add_operator_do__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_jquery__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__forecastService__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_debounceTime__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_debounceTime___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_rxjs_add_operator_debounceTime__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_distinctUntilChanged__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_distinctUntilChanged___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rxjs_add_operator_distinctUntilChanged__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_switchMap__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_rxjs_add_operator_switchMap__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_operator_toPromise__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_rxjs_add_operator_toPromise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_add_operator_do__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_add_operator_do___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_rxjs_add_operator_do__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_jquery__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1570,6 +1575,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -1616,10 +1622,11 @@ var Conversation = (function () {
 }());
 
 var ChatbotService = (function () {
-    function ChatbotService(http, usersInfoService, cityManagerService) {
+    function ChatbotService(http, usersInfoService, cityManagerService, forecastService) {
         this.http = http;
         this.usersInfoService = usersInfoService;
         this.cityManagerService = cityManagerService;
+        this.forecastService = forecastService;
     }
     ChatbotService.prototype.saveMessage = function (mensaje) {
         var _this = this;
@@ -1664,8 +1671,8 @@ var ChatbotService = (function () {
                 .toPromise()
                 .then(function (res) {
                 var messages = [];
-                var messagesJson = __WEBPACK_IMPORTED_MODULE_10_jquery__["map"](res.json(), function (e) { return e; });
-                __WEBPACK_IMPORTED_MODULE_10_jquery__["each"](messagesJson, function (i, message) {
+                var messagesJson = __WEBPACK_IMPORTED_MODULE_11_jquery__["map"](res.json(), function (e) { return e; });
+                __WEBPACK_IMPORTED_MODULE_11_jquery__["each"](messagesJson, function (i, message) {
                     messages.push(new Message(message.esbot, message.timestamp, message.contenido));
                 });
                 resolve(messages);
@@ -1693,7 +1700,7 @@ var ChatbotService = (function () {
                     response = _this.intentDispatcher(intent, entities, id_usuario);
                 }
                 else {
-                    response = "Sorry couldn't catch that!";
+                    response = _this.buildSorryString();
                 }
                 resolve(response);
             }, function (msg) {
@@ -1702,6 +1709,22 @@ var ChatbotService = (function () {
         });
         return promise;
     };
+    ChatbotService.prototype.buildSorryString = function () {
+        var n = this.random(1, 3);
+        var mes = "";
+        switch (n) {
+            case 1:
+                mes = "Sorry, couldn't catch that!";
+                break;
+            case 2:
+                mes = "Sorry, could you rephrase that?";
+                break;
+            case 3:
+                mes = "Ummm... please say again?";
+                break;
+        }
+        return mes;
+    };
     /**
      * Manages the bot API response according to intent
      */
@@ -1709,6 +1732,147 @@ var ChatbotService = (function () {
         if (intent == "add_city" || intent == "remove_city") {
             return this.botAddRemoveCityHandler(intent, entities, id_usuario);
         }
+        if (intent == "query_weather") {
+            return this.botWeatherQueriesHandler(intent, entities, id_usuario);
+        }
+    };
+    ChatbotService.prototype.todayToString = function () {
+        var x = new Date();
+        return x.getFullYear() + "-" + (x.getMonth() + 1) + "-" + x.getDate() + "T00:00:00.000-06:00";
+    };
+    ChatbotService.prototype.calculateDifferenceInDaysBetweenDates = function (initDate, finalDate) {
+        var timeDifferenceEpoch = Math.abs(new Date(initDate).getTime() - new Date(finalDate).getTime());
+        var dayDifference = Math.ceil(timeDifferenceEpoch / (1000 * 3600 * 24));
+        return dayDifference + 1;
+    };
+    ChatbotService.prototype.buildAbbreviatedDate = function (date) {
+        var abbreviatedMonthMap = {
+            0: "Jan", 1: "Feb", 2: "Mar", 3: "Apr", 4: "May", 5: "Jun", 6: "Jul", 7: "Aug", 8: "Sep", 9: "Oct", 10: "Nov", 11: "Dec"
+        };
+        var d = new Date(date);
+        return abbreviatedMonthMap[d.getMonth()] + " " + (d.getDate() + 1) + ", " + d.getFullYear();
+    };
+    ChatbotService.prototype.botWeatherQueriesHandler = function (intent, entities, id_usuario) {
+        var _this = this;
+        console.log(entities);
+        var min_temp = (entities.min_temp != undefined);
+        var max_temp = (entities.max_temp != undefined);
+        var location = "";
+        var datetime = { grain: "", value: "" };
+        if (entities.datetime != undefined) {
+            datetime = entities.datetime[0];
+        }
+        else {
+            datetime.grain = "day";
+            datetime.value = this.todayToString();
+        }
+        var ent_location = entities.location[0];
+        if (ent_location) {
+            location = ent_location.value;
+        }
+        else {
+            if (localStorage.currentLocation != "") {
+                location = localStorage.currentLocation;
+            }
+            else {
+                return "Sorry could not determine your current location! (Click 'My Location' in the main panel)";
+            }
+        }
+        var diff = this.calculateDifferenceInDaysBetweenDates(this.todayToString().split("T")[0], datetime.value.split("T")[0]);
+        if (diff > 7) {
+            return "Sorry that date is out of range!";
+        }
+        return this.forecastService.weatherNextDays(location, diff).then(function (res) {
+            console.log("SHELLER");
+            console.log(res);
+            var forecast = res[res.length - 1];
+            if (datetime.grain == "day") {
+                if (min_temp || max_temp) {
+                    if (min_temp) {
+                        return _this.buildDayForecastMinTemp(forecast, location);
+                    }
+                    else {
+                        return _this.buildDayForecastMaxTemp(forecast, location);
+                    }
+                }
+                else {
+                    return _this.buildDayForecastString(forecast, location);
+                }
+            }
+            else {
+                var hour = parseInt(datetime.value.split("T")[1].substring(0, 2));
+                return _this.buildHourForecastString(forecast, location, hour);
+            }
+        });
+    };
+    ChatbotService.prototype.random = function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    ChatbotService.prototype.buildDayForecastMaxTemp = function (forecast, loc) {
+        var dayAux = (forecast.dayOfWeek == "Today") ? "" : "on";
+        return "A max temperature of " + forecast.tempMax + "C° is expected in " + loc + ", " + dayAux + forecast.dayOfWeek + ", " +
+            this.buildAbbreviatedDate(forecast.date);
+    };
+    ChatbotService.prototype.buildDayForecastMinTemp = function (forecast, loc) {
+        var dayAux = (forecast.dayOfWeek == "Today") ? "" : "on";
+        return "A min temperature of " + forecast.tempMin + "C° is expected in " + loc + ", " + dayAux + forecast.dayOfWeek + ", " +
+            this.buildAbbreviatedDate(forecast.date);
+    };
+    ChatbotService.prototype.buildDayForecastString = function (forecast, loc) {
+        var n = this.random(1, 3);
+        var message = "";
+        var dayAux = (forecast.dayOfWeek == "Today") ? "" : "On";
+        switch (n) {
+            case 1:
+                message = forecast.dayOfWeek + ", " +
+                    this.buildAbbreviatedDate(forecast.date) + ", will be " +
+                    forecast.tempAvg + "C°, with a high of " + forecast.tempMax +
+                    "C° and a low of " + forecast.tempMin + "C° in " + loc + ". " + this.formatCondition(forecast.conditionString);
+                break;
+            case 2:
+                message = dayAux + forecast.dayOfWeek + ", " +
+                    this.buildAbbreviatedDate(forecast.date) + ", " + loc + " will be " +
+                    forecast.tempAvg + "C° on average, with a high of " + forecast.tempMax +
+                    "C° and a low of " + forecast.tempMin + "C°" + ". " + this.formatCondition(forecast.conditionString);
+                break;
+            case 3:
+                message = loc + " will be " +
+                    forecast.tempAvg + "C°, with a high of " + forecast.tempMax +
+                    "C° and a low of " + forecast.tempMin + "C° on " + this.buildAbbreviatedDate(forecast.date) + ", " + forecast.dayOfWeek
+                    + ". " + this.formatCondition(forecast.conditionString);
+                break;
+        }
+        return message;
+    };
+    // For emojis
+    ChatbotService.prototype.formatCondition = function (condition) {
+        var emojiMap = {
+            "Partly cloudy": 0x26C5,
+            "Overcast": 0x2601,
+            "Light rain": 0x2614,
+            "Sunny": 0x2600,
+            "Mist": 0x2601,
+            "Cloudy": 0x2601,
+            "Fog": 0x2601,
+            "Clear": 0x2600,
+            "Light rain shower": 0x2614,
+            "Moderate rain at times": 0x2614,
+            "Heavy snow": 0x2744,
+            "Heavy rain": 0x2614,
+            "Patchy rain possible": 0x2614,
+            "Light snow": 0x2744,
+            "Moderate snow": 0x2744
+        };
+        var symbol = String.fromCodePoint(emojiMap[condition]);
+        return "\nCondition: " + condition + " " + symbol + symbol + symbol;
+    };
+    ChatbotService.prototype.buildHourForecastString = function (forecast, loc, hour) {
+        var hourData = forecast.forecasts[forecast.forecasts.length - 1].hour[hour];
+        var temp = hourData.temp_c;
+        var h = (hour < 12) ? "AM" : "PM";
+        return forecast.dayOfWeek + ", " +
+            this.buildAbbreviatedDate(forecast.date) + " " + hour + ":00 " + h + ", will be " +
+            temp + "C° on average in " + loc;
     };
     /**
      * Handles a user's bot request to add or remove a city from the favorites list
@@ -1784,10 +1948,10 @@ var ChatbotService = (function () {
 }());
 ChatbotService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__usersInfoService__["a" /* UsersInfoService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__usersInfoService__["a" /* UsersInfoService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__cityManagerService__["b" /* CityManagerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__cityManagerService__["b" /* CityManagerService */]) === "function" && _c || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__usersInfoService__["a" /* UsersInfoService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__usersInfoService__["a" /* UsersInfoService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__cityManagerService__["b" /* CityManagerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__cityManagerService__["b" /* CityManagerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__forecastService__["a" /* ForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__forecastService__["a" /* ForecastService */]) === "function" && _d || Object])
 ], ChatbotService);
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 //# sourceMappingURL=chatbotService.js.map
 
 /***/ }),
@@ -1886,10 +2050,12 @@ MyForecastsPage = __decorate([
      * Component that contains the user's saved forecasts
      */
     ,
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__["b" /* MyForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__["b" /* MyForecastService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__["b" /* MyForecastService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* ModalController */]])
 ], MyForecastsPage);
 
-var _a, _b, _c, _d;
 //# sourceMappingURL=myforecasts.js.map
 
 /***/ }),
@@ -1900,7 +2066,7 @@ var _a, _b, _c, _d;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ForecastDetail; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_forecastService__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_forecastService__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2142,10 +2308,13 @@ RegisterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'register',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/register/register.html"*/'<!--Register Componente HTML Structure-->\n<ion-content>\n    <ion-list no-lines>\n        <ion-grid>\n\n            <ion-row>\n                <ion-col col-12 class="titulo_bot_cast">\n                    <b>Botcast</b>\n                </ion-col>\n            </ion-row>\n\n            <ion-row>\n                <ion-col col-12 class="botcast_icon">\n                    <img src="../assets/imgs/bot_icon.png" height="100" width="100"/>\n                </ion-col>\n            </ion-row>\n\n            <ion-row>\n\n                <ion-col col-12>\n                    <form>\n                        <ion-item>\n                            <ion-input [(ngModel)]="name" name="name" placeholder="Name(s)" type="text"></ion-input>\n                        </ion-item>\n                        <ion-item>\n                            <ion-input [(ngModel)]="lastname" name="lastname" placeholder="Lastname(s)" type="text"></ion-input>\n                        </ion-item>\n                        <ion-item>\n                            <ion-input [(ngModel)]="email" name="email" placeholder="E-mail" type="text"></ion-input>\n                        </ion-item>\n\n                        <ion-item>\n                            <ion-input [(ngModel)]="username" name="username" placeholder="Username" type="text"></ion-input>\n                        </ion-item>\n\n                        <ion-item>\n                            <ion-input [(ngModel)]="password" name="password" placeholder="Password" type="password"></ion-input>\n                        </ion-item>\n                        <ion-item>\n                            <ion-input [(ngModel)]="confirmpassword"  name="confirmpassword" placeholder="Confirm password"type="password"></ion-input>\n                        </ion-item>\n                    </form>\n\n                    <button ion-button class="botonRegistrarse" full color="primary" (click)="register()">Create Account!</button>\n                </ion-col>\n            </ion-row>\n        </ion-grid>\n\n    </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/register/register.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_authService__["a" /* AuthorizationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_authService__["a" /* AuthorizationService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_usersInfoService__["a" /* UsersInfoService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_usersInfoService__["a" /* UsersInfoService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ToastController */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_2__services_authService__["a" /* AuthorizationService */],
+        __WEBPACK_IMPORTED_MODULE_3__services_usersInfoService__["a" /* UsersInfoService */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ToastController */]])
 ], RegisterPage);
 
-var _a, _b, _c, _d, _e;
 //# sourceMappingURL=register.js.map
 
 /***/ }),
@@ -2506,7 +2675,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_principal_addCity_addCity__ = __webpack_require__(222);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_myforecasts_forecastDetail_forecastDetail__ = __webpack_require__(349);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_citiesService__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_forecastService__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_forecastService__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_graphsService__ = __webpack_require__(483);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_chatbotService__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_authService__ = __webpack_require__(72);
@@ -3159,10 +3328,9 @@ var UsersInfoService = (function () {
 }());
 UsersInfoService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
 ], UsersInfoService);
 
-var _a;
 //# sourceMappingURL=usersInfoService.js.map
 
 /***/ }),
@@ -3337,7 +3505,7 @@ NavBar = __decorate([
 
 /***/ }),
 
-/***/ 69:
+/***/ 55:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3430,13 +3598,15 @@ var NextDaysForecast = (function () {
      * @param condition: description of that day's weather conditions e.g. Heavy Thunderstorms or Sunny
      * @param date: that day's date in a YYYY-MM-DD format
      */
-    function NextDaysForecast(dayOfWeek, tempMax, tempMin, tempAvg, condition, date) {
+    function NextDaysForecast(dayOfWeek, tempMax, tempMin, tempAvg, condition, date, forecasts, conditionString) {
         this.dayOfWeek = dayOfWeek;
         this.tempMax = tempMax;
         this.tempMin = tempMin;
         this.tempAvg = tempAvg;
         this.condition = condition;
         this.date = date;
+        this.forecasts = forecasts;
+        this.conditionString = conditionString;
     }
     return NextDaysForecast;
 }());
@@ -3498,12 +3668,17 @@ var ForecastService = (function () {
      * @param ciudad: city whose weather forecast wants to be known
      * @returns {Promise<T>}: promise that resolves to the appropriate data object format
      */
-    ForecastService.prototype.currentWeather = function (ciudad) {
+    ForecastService.prototype.currentWeather = function (ciudad, days) {
         var _this = this;
+        if (days === void 0) { days = 1; }
         var apiURL = this.apiRoot + "?key=" + this.apiKey + "&q=" + ciudad;
         var currentHour = new Date().getHours();
-        if ((currentHour + 5) > 23)
-            apiURL += "&days=2";
+        if (days == 1) {
+            if ((currentHour + 5) > 23)
+                days = 2;
+        }
+        console.log();
+        apiURL += "&days=" + days;
         var promise = new Promise(function (resolve, reject) {
             _this.http.get(apiURL)
                 .toPromise()
@@ -3560,12 +3735,14 @@ var ForecastService = (function () {
                 .toPromise()
                 .then(function (res) {
                 var nextDaysForecasts = [];
+                console.log("Weather NExt Days");
+                console.log(res.json());
                 var days = res.json().forecast.forecastday;
                 var i = 0;
                 while (i < numberOfDays) {
                     var dayOfWeekString = (i == 0) ? "Today" : _this.dayOfWeekMap[new Date(days[i].date).getDay()];
                     console.log(days[i].day.condition.text);
-                    nextDaysForecasts.push(new NextDaysForecast(dayOfWeekString, days[i].day.maxtemp_c, days[i].day.mintemp_c, days[i].day.avgtemp_c, _this.iconMap[days[i].day.condition.text], days[i].date));
+                    nextDaysForecasts.push(new NextDaysForecast(dayOfWeekString, days[i].day.maxtemp_c, days[i].day.mintemp_c, days[i].day.avgtemp_c, _this.iconMap[days[i].day.condition.text], days[i].date, days, days[i].day.condition.text));
                     i++;
                 }
                 resolve(nextDaysForecasts);
@@ -3579,9 +3756,10 @@ var ForecastService = (function () {
 }());
 ForecastService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
 ], ForecastService);
 
+var _a;
 //# sourceMappingURL=forecastService.js.map
 
 /***/ }),
