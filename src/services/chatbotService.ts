@@ -84,7 +84,15 @@ export class ChatbotService {
      * @returns {Promise<T>}: promise that resolves to a user-chatbot conversation in the appropriate DTO
      */
     public retrieveUserConversation(id_usuario): Promise<Message[]>{
-        let apiURL:string = 'http://localhost:3000/api/Mensajes';
+        let query = {
+            where: {
+                id_usuario:{
+                    like:id_usuario
+                }
+            }
+        }
+
+        let apiURL:string = 'http://localhost:3000/api/Mensajes?filter='+JSON.stringify(query);
         let params = {
             id_usuario: id_usuario
         }
@@ -142,19 +150,16 @@ export class ChatbotService {
                     }
                 );
         });
-
         return promise;
     }
 
     /**
      * Manages the bot API response according to intent
      */
-    public intentDispatcher(intent:string, entities, id_usuario:string){
-
+    public intentDispatcher (intent:string, entities, id_usuario:string) {
         if(intent == "add_city" || intent == "remove_city"){
            return this.botAddRemoveCityHandler(intent,entities, id_usuario)
         }
-
     }
 
     /**
@@ -164,7 +169,7 @@ export class ChatbotService {
      * @param id_usuario: what user is making the request?
      * @returns {Promise<TResult2|any|any|any|string>}
      */
-    public botAddRemoveCityHandler(intent:string, entities, id_usuario:string){
+    public botAddRemoveCityHandler (intent:string, entities, id_usuario:string) {
         let textResponse = "";
         let location = "";
         if(entities.location){

@@ -118,8 +118,15 @@ export class MyForecastService {
     }
 
     public getForecastList(id_usuario:string): Promise<MyForecast[]>{
+        let query = {
+            id_usuario:{
+                like:id_usuario
+            }
+        }
 
-        let apiURL:string = 'http://localhost:3000/api/Pronosticos?id_usuario='+id_usuario;
+        let apiURL:string = 'http://localhost:3000/api/Pronosticos?filter='+JSON.stringify(query);
+        console.log(apiURL)
+        console.log(apiURL);
         let promise = new Promise((resolve, reject) => {
             this.http.get(apiURL)
                 .toPromise()
@@ -127,13 +134,15 @@ export class MyForecastService {
                     res => {
                         let arr = [];
                         let pronosticos = res.json();
-                        for(var i=0;i<pronosticos.length;i++){
-                            arr.push(new MyForecast(
-                                pronosticos[i]["ciudad"],
-                                pronosticos[i]["condicion"],
-                                pronosticos[i]["fecha_inicial"],
-                                pronosticos[i]["fecha_final"]
-                            ))
+                        if(pronosticos.length>0){
+                            for(var i=0;i<pronosticos.length;i++){
+                                arr.push(new MyForecast(
+                                    pronosticos[i]["ciudad"],
+                                    pronosticos[i]["condicion"],
+                                    pronosticos[i]["fecha_inicial"],
+                                    pronosticos[i]["fecha_final"]
+                                ))
+                            }
                         }
                         resolve(arr);
                     },

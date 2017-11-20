@@ -28,6 +28,7 @@ export class MyForecastsPage {
                        public modalCtrl: ModalController,) {
 
         this.userId = localStorage.idUsuario
+        console.log(this.userId);
         this.buildForecastList();
         this.checkSavedForecastChanges();
     }

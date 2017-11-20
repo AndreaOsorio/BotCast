@@ -49,6 +49,9 @@ export class PrincipalPage {
         this.todaysDate = this.getTodaysDate();
 
         this.makeApiCalls("");
+        // localStorage.idUsuario = "5a0b9f287a1a680d8bdeb0e5";
+        localStorage.idUsuario = "5a1280b7f266795bde5ec74f";
+
 
         //TODO: connect with real user login id
         usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(
@@ -56,6 +59,9 @@ export class PrincipalPage {
                 this.currentUser =  res;
             }
         );
+
+        console.log("IDUSUARIO IN LOCALSTORAGE")
+        console.log(localStorage.idUsuario);
 
         localStorage.newForecastSaved = 0;
         localStorage.citySelectedFromForecastList = 0;

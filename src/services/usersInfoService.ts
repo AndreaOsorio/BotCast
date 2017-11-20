@@ -31,6 +31,15 @@ export class Information{
 }
 
 export class Usuario{
+    /**
+     * Utility class for standard user information transmission
+     * @param name
+     * @param lastname
+     * @param username
+     * @param email
+     * @param password
+     * @param cities
+     */
     constructor(
         public name:string,
         public lastname:string,
@@ -41,6 +50,14 @@ export class Usuario{
     ){}
 }
 
+export class UsuarioLogin{
+    constructor(
+        public name:string,
+        public email: string,
+        public id:string
+    ){}
+}
+
 
 @Injectable()
 export class UsersInfoService {
@@ -48,7 +65,6 @@ export class UsersInfoService {
     constructor(private http: Http) {
     }
 
-    //Currently a dummy call to a local json
     /**
      * Backend REST endpoint URL to retrieve the user info from JSON
      */
@@ -82,7 +98,10 @@ export class UsersInfoService {
         return promise;
     }
 
-
+    /**
+     * Retrieve user information for admin stat analysis
+     * @returns {Promise<T>}
+     */
     public retrieveInfo():Promise<Information[]>{
         let apiURL = `${this.apiRoot}`;
 
@@ -116,7 +135,50 @@ export class UsersInfoService {
         return promise;
     }
 
+    /**
+     * Register a new user
+     * @param usuario
+     * @returns {Promise<T>}
+     */
+    public createNewUser(usuario:Usuario): Promise<UsuarioLogin>{
 
+        let apiURL = `${this.apiRootUsuario}`;
+        console.log(usuario)
+        let params = {
+            nombre: usuario.name,
+            apellido: usuario.lastname,
+            email: usuario.email,
+            password: usuario.password,
+            usuario: usuario.username
+        }
+        console.log(params)
+        let promise = new Promise((resolve, reject) => {
+            this.http.post(apiURL, params)
+                .toPromise()
+                .then(
+                    res=>{
+                        console.log(res)
+                        let user = res.json()
+                        resolve(new UsuarioLogin(
+                            user.nombre,
+                            user.email,
+                            user.id
+                        ))
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                )
+        });
+        return promise;
+    }
+
+    /**
+     * Update a user's info
+     * @param idUsuario
+     * @param params
+     * @returns {Promise<T>}
+     */
     public updateUserInfo(idUsuario:string, params):Promise<Usuario>{
         let apiURL = `${this.apiRootUsuario}/${idUsuario}`;
         console.log(apiURL)

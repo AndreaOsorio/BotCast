@@ -18,24 +18,26 @@
             <ion-row>
 
                 <ion-col col-12>
-                    <form [formGroup]="slideOneForm">
-
+                    <form>
                         <ion-item>
-                            <ion-input formControlName="name" placeholder="Name" type="text"></ion-input>
+                            <ion-input [(ngModel)]="name" name="name" placeholder="Name(s)" type="text"></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-input formControlName="email" placeholder="E-mail" type="text"></ion-input>
+                            <ion-input [(ngModel)]="lastname" name="lastname" placeholder="Lastname(s)" type="text"></ion-input>
                         </ion-item>
-
                         <ion-item>
-                            <ion-input formControlName="username" placeholder="Username" type="number"></ion-input>
+                            <ion-input [(ngModel)]="email" name="email" placeholder="E-mail" type="text"></ion-input>
                         </ion-item>
 
                         <ion-item>
-                            <ion-input formControlName="password" placeholder="Password" type="password"></ion-input>
+                            <ion-input [(ngModel)]="username" name="username" placeholder="Username" type="text"></ion-input>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-input [(ngModel)]="password" name="password" placeholder="Password" type="password"></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-input formControlName="confirmpassword"  placeholder="Confirm password"type="password"></ion-input>
+                            <ion-input [(ngModel)]="confirmpassword"  name="confirmpassword" placeholder="Confirm password"type="password"></ion-input>
                         </ion-item>
                     </form>
 

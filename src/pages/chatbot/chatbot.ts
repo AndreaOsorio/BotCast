@@ -16,6 +16,8 @@ export class ChatbotPage {
     public userInput:string;
 
     constructor(private chatbotService: ChatbotService) {
+        console.log(localStorage.idUsuario)
+        console.log(localStorage.idUsuario == "5a1280b7f266795bde5ec74f")
         chatbotService.retrieveUserConversation(localStorage.idUsuario).then(data=>{
             console.log(data)
             this.conversation=data
