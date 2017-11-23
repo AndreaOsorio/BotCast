@@ -346,7 +346,7 @@ export class ChatbotService {
         let location = "";
         if(entities.location){
             location = entities.location[0].value
-            return this.usersInfoService.retrieveUserInfoById(id_usuario).then(data => {
+            return this.usersInfoService.retrieveUserInfoById(id_usuario, localStorage.authToken).then(data => {
                 let userData = data;
                 let locationToAdd = data.cities.find(c=> c["name"] == location);
 
@@ -380,7 +380,7 @@ export class ChatbotService {
                                     usuario: userData.username,
                                     ciudades: arrAux
                                 }
-                                return this.usersInfoService.updateUserInfo(id_usuario, params).then(usuarioActualizado=>{
+                                return this.usersInfoService.updateUserInfo(id_usuario, params, localStorage.authToken).then(usuarioActualizado=>{
                                     textResponse = (intent == "add_city")?
                                         (locationToAdd["name"]+" was added to your favorite cities!"):
                                         (locationToAdd["name"]+" was removed from your list of cities.");

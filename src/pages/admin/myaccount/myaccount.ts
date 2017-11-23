@@ -15,7 +15,9 @@ export class AdminMyAccount {
     private info: UserLogin[] = [];
 
     public constructor(private myInfo: AuthorizationService, public navCtrl: NavController) {
+
         myInfo.retrieveUserInfo().then(data=>this.info=data);
+
     }
 
 }

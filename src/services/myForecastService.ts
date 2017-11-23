@@ -29,7 +29,7 @@ export class MyForecastService {
 
     retrieveMyForecasts(): Promise<MyForecast[]>{
 
-    let iconMap ={
+    let iconMap = {
             "Partly cloudy": "md-partly-sunny",
             "Overcast": "md-cloudy",
             "Light rain":"md-umbrella",
@@ -44,8 +44,15 @@ export class MyForecastService {
             "Heavy rain":"md-umbrella",
             "Patchy rain possible":"md-rainy",
             "Light snow":"md-snow",
-            "Moderate snow":"md-snow"
-        };
+            "Moderate snow":"md-snow",
+            "Blizzard":"md-snow",
+            "Patchy moderate snow":"md-snow",
+            "Blowing snow":"md-snow",
+            "Light drizzle":"md-umbrella",
+            "Light freezing rain":"md-snow",
+            "Moderate or heavy rain shower": "md-umbrella",
+            "Heavy rain at times":"md-umbrella"
+        }
 
 
         let apiURL = `${this.apiRoot}`;
@@ -118,9 +125,12 @@ export class MyForecastService {
     }
 
     public getForecastList(id_usuario:string): Promise<MyForecast[]>{
+
         let query = {
-            id_usuario:{
-                like:id_usuario
+            where:{
+                id_usuario:{
+                    like:id_usuario
+                }
             }
         }
 

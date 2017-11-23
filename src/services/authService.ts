@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, RequestOptions, Headers, Request, RequestMethod} from '@angular/http';
 import * as $ from 'jquery';
+import { Observable } from 'rxjs/Observable';
 
 
 /**
@@ -46,9 +47,74 @@ export class AuthorizationToken{
 export class AuthorizationService {
 
     constructor(private http: Http) {
+
     }
 
-    //Currently a dummy call to a local json
+    public login(email: string, password:string){
+        let apiUsuariosLogin:string = 'http://localhost:3000/api/UsuariosApp/login';
+        let params ={
+            email: email,
+            password: password
+        }
+
+        let promise = new Promise((resolve, reject) => {
+            this.http.post(apiUsuariosLogin, params)
+                .toPromise()
+                .then(
+                    res=>{
+                        let params = {
+                            id: res.json().id,
+                            userId: res.json().userId
+                        }
+                        resolve(params);
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                )
+            }).catch(e=>{
+                console.log(e)
+            });
+
+        return promise;
+    }
+
+    private createHeaders(authToken:string): RequestOptions{
+        let headers = new Headers();
+        headers.append('Authorization', authToken);
+        return new RequestOptions({ headers: headers });
+    }
+
+    public logout(authToken:string){
+        let apiUsuariosLogin:string = 'http://localhost:3000/api/UsuariosApp/logout?access_token='+authToken;
+        let params ={
+            access_token: authToken,
+        }
+        let promise = new Promise((resolve, reject) => {
+            this.http.post(apiUsuariosLogin, params, this.createHeaders(authToken))
+                .toPromise()
+                .then(
+                    res=>{
+                        console.log(res.json())
+                        let params = {
+                            message: "logging out",
+                        }
+                        resolve(params);
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                )
+        }).catch(e=>{
+            console.log(e)
+        });
+
+        return promise;
+    }
+
+
+
+
     /**
      * Backend REST endpoint URL to retrieve the conversation between a user and the chatbot
      */

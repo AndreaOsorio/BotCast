@@ -25993,6 +25993,12 @@ ion-content {
   width: 100%;
 }
 
+.logout-button {
+  position: relative;
+  top: -10px;
+  width: 100%;
+}
+
 .add-city-button {
   position: relative;
   top: -10px;
@@ -26062,5 +26068,12 @@ ion-content {
 }
 
 .active-city {
-  background-color: lightgreen;
+  background-color: dodgerblue;
+  color: white;
+  padding-top: 2px;
+  border-radius: 4px;
+}
+
+.active-city .col-city-name {
+  color: white;
 }

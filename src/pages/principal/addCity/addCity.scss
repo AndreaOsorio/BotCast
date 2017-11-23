@@ -23,5 +23,11 @@ $colorEsquema: dodgerblue;
 }
 
 .active-city{
-  background-color: lightgreen;
+  background-color: $colorEsquema;
+  color:white;
+  .col-city-name{
+    color:white;
+  }
+  padding-top: 2px;
+  border-radius: 4px;
 }

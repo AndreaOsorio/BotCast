@@ -4,16 +4,12 @@ webpackJsonp([0],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrincipalPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_citiesService__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_forecastService__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__ = __webpack_require__(219);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__addCity_addCity__ = __webpack_require__(222);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jquery__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_tabs_tabs__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register_register__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_authService__ = __webpack_require__(56);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -28,201 +24,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-
-
-var PrincipalPage = (function () {
-    /**
-     *
-     * @param myCitiesService: service that retrieves a user's saved cities
-     * @param forecastService: service that retrieves today's and next week's weather forecasts
-     * @param navCtrl: application navigation controller
-     * @param navParams: parameters to be passed between different screens
-     * @param geolocationService: service that retrieves user's current location in latLong format, then performs an external call
-     * to a geocoder to get the exact address
-     */
-    function PrincipalPage(forecastService, navCtrl, navParams, geolocationService, modalCtrl, usersInfoService) {
-        var _this = this;
-        this.forecastService = forecastService;
+var LoginPage = (function () {
+    function LoginPage(navCtrl, authorizationService) {
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.geolocationService = geolocationService;
-        this.modalCtrl = modalCtrl;
-        this.usersInfoService = usersInfoService;
-        this.ciudades = [];
-        this.todayForecast = [];
-        this.todayHourlyForecast = [];
-        this.nextDaysForecast = [];
-        this.todaysDate = this.getTodaysDate();
-        this.makeApiCalls("");
-        // localStorage.idUsuario = "5a0b9f287a1a680d8bdeb0e5";
-        localStorage.idUsuario = "5a1280b7f266795bde5ec74f";
-        //TODO: connect with real user login id
-        usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(function (res) {
-            _this.currentUser = res;
-        });
-        console.log("IDUSUARIO IN LOCALSTORAGE");
-        console.log(localStorage.idUsuario);
-        localStorage.newForecastSaved = 0;
-        localStorage.citySelectedFromForecastList = 0;
-        localStorage.cityAddedToFavorites = 0;
-        localStorage.cityRemovedFromFavorites = 0;
-        localStorage.currentCity = "";
-        this.checkCityAddedToFavorites();
-        this.checkCityRemovedFromFavorites();
+        this.authorizationService = authorizationService;
+        this.email = "";
+        this.password = "";
+        this.user = new __WEBPACK_IMPORTED_MODULE_4__services_authService__["b" /* UserLogin */]("x", "123", "", ""); //testing user
     }
-    PrincipalPage.prototype.checkCityAddedToFavorites = function () {
+    /**
+     * Makes a call to authorize users according to their credentials
+     * Currently, only 2 types of users exist: administrators and common users
+     * Administrators are redirected to the admin dashboard, while common users are directed to the main mobile
+     * page with current a list of currently registered cities.
+     * An authorization token is provided to every user which specifies his/her privileges and expiration time
+     */
+    LoginPage.prototype.login = function () {
         var _this = this;
-        setInterval(function () {
-            if (localStorage.cityAddedToFavorites == 1) {
-                var obj = JSON.parse(localStorage.cityAddedToFavoritesObj);
-                _this.ciudades.push(new __WEBPACK_IMPORTED_MODULE_1__services_citiesService__["a" /* Ciudad */](obj.city));
-                localStorage.cityAddedToFavorites = 0;
+        this.authorizationService.login(this.email, this.password).then(function (loginData) {
+            console.log(loginData);
+            try {
+                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__pages_tabs_tabs__["a" /* TabsPage */], {
+                    tokenId: loginData["id"],
+                    userId: loginData["userId"]
+                });
             }
-        }, 1000);
-    };
-    PrincipalPage.prototype.checkCityRemovedFromFavorites = function () {
-        var _this = this;
-        setInterval(function () {
-            if (localStorage.cityRemovedFromFavorites == 1) {
-                var obj_1 = JSON.parse(localStorage.cityRemovedFromFavoritesObj);
-                _this.ciudades = _this.ciudades.filter(function (c) { return c.name != obj_1.city; });
-                localStorage.cityRemovedFromFavorites = 0;
-            }
-        }, 1000);
-    };
-    PrincipalPage.prototype.presentAddCityModal = function () {
-        var _this = this;
-        var contactModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_6__addCity_addCity__["a" /* AddCityModal */], { user: this.currentUser });
-        contactModal.onDidDismiss(function (ciudad) {
-            if (ciudad !== null && ciudad.length > 0) {
-                console.log(ciudad);
-                var arreglo_nombres = ciudad.map(function (c) { return new __WEBPACK_IMPORTED_MODULE_1__services_citiesService__["a" /* Ciudad */](c.name); });
-                localStorage.userCities = JSON.stringify(arreglo_nombres);
-                _this.ciudades = arreglo_nombres;
+            catch (e) {
+                console.log(e);
+                console.log("Oh no there was an error!!!");
             }
         });
-        contactModal.present();
     };
-    /**
-     * @param city: city whose current and future weather wants to be known
-     * This method calls all the different services to retrieve the selected city's weather and then redraws
-     * the whole view with the retrieved data in the appropriate format
-     */
-    PrincipalPage.prototype.makeApiCalls = function (city) {
-        var _this = this;
-        if (city == undefined || city == "") {
-            //TODO: uncomment in prod
-            // this.getMyLocation();
-            city = "Amsterdam";
-        }
-        this.forecastService.currentWeather(city).then(function (data) {
-            _this.todayForecast = data;
-            _this.todayHourlyForecast = _this.todayForecast[0].hourlyForecast;
-            console.log(_this.todayForecast);
-        });
-        this.forecastService.weatherNextDays(city).then(function (data) {
-            _this.nextDaysForecast = data;
-            console.log(_this.nextDaysForecast);
-        });
-        this.usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(function (res) {
-            _this.currentUser = res;
-            var arreglo_nombres = _this.currentUser.cities.map(function (ciudad) { return new __WEBPACK_IMPORTED_MODULE_1__services_citiesService__["a" /* Ciudad */](ciudad["name"]); });
-            _this.ciudades = arreglo_nombres;
-            localStorage.userCities = JSON.stringify(arreglo_nombres);
-        });
+    LoginPage.prototype.register = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__register_register__["a" /* RegisterPage */]);
     };
-    /**
-     * First acquires user's longitude and latitude with cordova's native hardware interaction API,
-     * then performs an external call to retrieve the user's approximate address but, most importantly, his/her current city
-     * to call makeApiCalls() and redraw the view with the current location's weather
-     */
-    PrincipalPage.prototype.getMyLocation = function () {
-        var _this = this;
-        var loading_gif = __WEBPACK_IMPORTED_MODULE_7_jquery__("#gif-loading-container");
-        loading_gif.removeClass("x");
-        loading_gif.addClass("y");
-        this.geolocationService.getMyCurrentLocation().then(function (data) {
-            _this.mycurrentLocationLatLong = data;
-            _this.geolocationService.getMyCurrentAddressBasedOnLatLong(data).then(function (data) {
-                _this.myCurrentLocationReverseGeocoded = data;
-                localStorage.currentCity = data.city;
-                _this.makeApiCalls(data.city);
-                loading_gif.removeClass("y");
-                loading_gif.addClass("x");
-            });
-        });
-    };
-    /**
-     *
-     * @param cityName: city parameter used in templates to know which city has been selected from the slider
-     * Event binding function to retrieve users current location and update screen
-     */
-    PrincipalPage.prototype.changeCity = function (cityName) {
-        this.makeApiCalls(cityName);
-        this.currentCity = cityName;
-        localStorage.currentCity = this.currentCity;
-    };
-    PrincipalPage.prototype.moveToAddCityWindow = function () {
-        console.log("moving window!");
-    };
-    /**
-     *
-     * @returns {string} returns today's date in a pretty format (DayOfWeek, MonthName DayOfMonth, CurrentYear e.g. Thursday, January 20, 2099)
-     * Auxiliary method for date formatting
-     */
-    PrincipalPage.prototype.getTodaysDate = function () {
-        var dayOfWeekMap = {
-            0: "Sunday",
-            1: "Monday",
-            2: "Tuesday",
-            3: "Wednesday",
-            4: "Thursday",
-            5: "Friday",
-            6: "Saturday",
-        };
-        var monthMap = {
-            0: "January",
-            1: "February",
-            2: "March",
-            3: "April",
-            4: "May",
-            5: "June",
-            6: "July",
-            7: "August",
-            8: "September",
-            9: "October",
-            10: "November",
-            11: "December",
-        };
-        var today = new Date();
-        var dayOfweek = dayOfWeekMap[today.getDay()];
-        var dayOfMonth = today.getDate();
-        var monthString = monthMap[today.getMonth()];
-        return dayOfweek + ", " + monthString + " " + dayOfMonth + ", " + today.getFullYear();
-    };
-    return PrincipalPage;
+    return LoginPage;
 }());
-PrincipalPage = __decorate([
+LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'principal',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/principal.html"*/'<!--User Main Tab Component HTML Structure-->\n<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Your locations</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <ion-slides class="cities-slider">\n    <ion-slide>\n      <ion-grid>\n        <ion-row>\n          <ion-col *ngFor="let ciudad of ciudades" class="my-cities-element" (click)="changeCity(ciudad.name)">\n            {{ciudad.name}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-slide>\n    <ion-slide>\n      <ion-grid>\n        <ion-row>\n          <ion-col >\n            <button ion-button color="primary" class="my-location-button" (click)="getMyLocation()">My location</button>\n          </ion-col>\n          <ion-col >\n            <button ion-button color="secondary" class="add-city-button" (click)="presentAddCityModal()">Manage cities</button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-slide>\n  </ion-slides>\n\n  <div id="gif-loading-container">\n    <img src="../../assets/imgs/loading.gif" id="gif-loading"/>\n    <div id="message">Retrieving your location...</div>\n  </div>\n\n  <ion-grid class="ion_grid_forecasts">\n    <ion-row>\n      <ion-col *ngFor="let today of todayForecast">\n        <img src="../../assets/imgs/rainy.gif"/>\n\n        <div class="location-content">\n          <div class="location-city-name">\n            {{today.cityName}}\n          </div>\n\n          <div class="location-avg-temp">\n            {{today.avgTemp}}<span class="centigrade-symbol">°C</span>\n          </div>\n\n          <div class="location-max-min-temps">\n            High:<b>{{today.tempMax}}</b><span class="centigrade-symbol">°C</span>\n            Low:<b>{{today.tempMin}}</b><span class="centigrade-symbol">°C</span>\n          </div>\n\n          <div class="location-todays-data">\n            {{this.todaysDate}}\n          </div>\n        </div>\n\n      </ion-col>\n    </ion-row>\n\n    <ion-row class="row-container-hourly-forecasts">\n      <ion-col *ngFor="let hourForecast of todayHourlyForecast" class="col-hourly-forecasts">\n        <ion-row class="row-hourly-forecast">\n          {{hourForecast.time}}\n        </ion-row>\n        <ion-row class="row-hourly-forecast">\n          <ion-icon name={{hourForecast.condition}}></ion-icon>\n        </ion-row>\n        <ion-row class="row-hourly-forecast">\n          {{hourForecast.temp}} <span class="centigrade-symbol">°C</span>\n        </ion-row>\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row *ngFor="let day of nextDaysForecast" class="row-forecasts">\n      <ion-col class="col-day-of-week-forecasts">{{day.dayOfWeek}}</ion-col>\n      <ion-col><ion-icon name={{day.condition}} class="icon-forecasts"></ion-icon></ion-col>\n      <ion-col>{{day.tempMax}} <span class="centigrade-symbol">°C</span></ion-col>\n      <ion-col>{{day.tempMin}} <span class="centigrade-symbol">°C</span></ion-col>\n    </ion-row>\n\n  </ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/principal.html"*/
-    })
-    /**
-     * Component for user main interface, user can add cities, select cities, select current location and
-     * today's weather along withnext week's forecasts will be displayed.
-     * This component's state contains the user's currently saved cities, today's and next week's weather, today's date,
-     * the user's current location in latitude and longitude (raw format) and the user's approximate address.
-     */
-    ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_forecastService__["a" /* ForecastService */],
-        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__["a" /* GeolocationService */],
-        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* ModalController */],
-        __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__["a" /* UsersInfoService */]])
-], PrincipalPage);
+        selector: 'login',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/login/login.html"*/'<!--Login Componente HTML Structure-->\n<ion-content has-header="true" padding="true" class="contenido_login">\n    <ion-grid>\n    <ion-row></ion-row>\n\n\n    <ion-row>\n        <ion-col col-12 class="titulo_bot_cast">\n            <b>Botcast</b>\n        </ion-col>\n    </ion-row>\n\n    <ion-row>\n        <ion-col col-12 class="botcast_icon">\n            <img src="../assets/imgs/bot_icon.png" height="100" width="100"/>\n        </ion-col>\n    </ion-row>\n\n\n    <ion-row>\n        <ion-col>\n            <ion-list inset class="contenedorCamposLogin">\n                <ion-item>\n                    <ion-input type="text" placeholder="Email" name="username" [(ngModel)]="email" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="password" required></ion-input>\n                </ion-item>\n\n            </ion-list>\n        </ion-col>\n\n    </ion-row>\n\n\n        <ion-row>\n            <ion-col class="signup-col">\n                <button ion-button class="submit-btn" full (click)="login()" type="submit" >Login</button>\n                <button ion-button class="register-btn" block clear (click)="register()">Sign up</button>\n            </ion-col>\n        </ion-row>\n\n\n    </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/login/login.html"*/
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__services_authService__["a" /* AuthorizationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_authService__["a" /* AuthorizationService */]) === "function" && _b || Object])
+], LoginPage);
 
-//# sourceMappingURL=principal.js.map
+var _a, _b;
+//# sourceMappingURL=login.js.map
 
 /***/ }),
 
@@ -393,7 +239,14 @@ var MyForecastService = (function () {
             "Heavy rain": "md-umbrella",
             "Patchy rain possible": "md-rainy",
             "Light snow": "md-snow",
-            "Moderate snow": "md-snow"
+            "Moderate snow": "md-snow",
+            "Blizzard": "md-snow",
+            "Patchy moderate snow": "md-snow",
+            "Blowing snow": "md-snow",
+            "Light drizzle": "md-umbrella",
+            "Light freezing rain": "md-snow",
+            "Moderate or heavy rain shower": "md-umbrella",
+            "Heavy rain at times": "md-umbrella"
         };
         var apiURL = "" + this.apiRoot;
         var promise = new Promise(function (resolve, reject) {
@@ -445,8 +298,10 @@ var MyForecastService = (function () {
     MyForecastService.prototype.getForecastList = function (id_usuario) {
         var _this = this;
         var query = {
-            id_usuario: {
-                like: id_usuario
+            where: {
+                id_usuario: {
+                    like: id_usuario
+                }
             }
         };
         var apiURL = 'http://localhost:3000/api/Pronosticos?filter=' + JSON.stringify(query);
@@ -482,126 +337,6 @@ MyForecastService = __decorate([
 /***/ }),
 
 /***/ 123:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminDashboard; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_dashboardService__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__ = __webpack_require__(224);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var AdminDashboard = (function () {
-    function AdminDashboard(visitorService, seachedService, navCtrl) {
-        var _this = this;
-        this.visitorService = visitorService;
-        this.seachedService = seachedService;
-        this.navCtrl = navCtrl;
-        this.lineChartData = [{ data: [0, 0, 0, 0, 0, 0], label: 'Series A' }];
-        this.lineChartLabels = ['0', '0', '0', '0', '0', '0'];
-        /**
-         *The following objects correspond to the graph configuration arguments, including label format, colors and label display locations, among others.
-         */
-        this.lineChartOptions = {
-            responsive: true,
-            scales: {
-                yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: '# of visits'
-                        },
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-            }
-        };
-        this.lineChartColors = [
-            {
-                backgroundColor: 'rgba(30,144,255,0.2)',
-                borderColor: 'rgba(148,159,177,1)',
-                pointBackgroundColor: 'rgba(148,159,177,1)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-            }
-        ];
-        this.lineChartLegend = true;
-        this.lineChartType = 'line';
-        this.tops = [];
-        this.visitors = [];
-        seachedService.retrieveInfo().then(function (data) { return _this.tops = data; });
-        //visitorService.retrieveInfo().then(data=>this.visitors=data);
-        visitorService.retrieveInfo().then(function (data) {
-            _this.lineChartData = [{ data: _this.getVisits(data), label: "Monthly visits" }];
-            _this.lineChartLabels = _this.buildLabelArray(data);
-            _this.reloadChart();
-        });
-    }
-    /**
-     * Makes a graph full state refresh whenever it's needed
-     * This includes the data buffer and axes labels
-     */
-    AdminDashboard.prototype.reloadChart = function () {
-        if (this.chart !== undefined) {
-            this.chart.chart.destroy();
-            this.chart.chart = 0;
-            this.chart.labels = this.lineChartLabels;
-            this.chart.datasets = this.lineChartData;
-            this.chart.ngOnInit();
-        }
-    };
-    /**
-     * Auxiliary function for filling data buffers in the correct format
-     * @param visitors: takes in a Visitors array and maps it it to a typical JS array
-     * @returns {number,number,number,number,number]}: array of number of visits according to Json data
-     */
-    AdminDashboard.prototype.getVisits = function (visitors) {
-        return visitors.map(function (e) { return e.visits; });
-    };
-    /**
-     * Auxiliary function for filling the label buffers in the correct format
-     * @param visitors: takes in a Visitors array, takes its months and build the label data buffer
-     * @returns {[string,string,string,string,string]}: array of months as strings in a correct format
-     */
-    AdminDashboard.prototype.buildLabelArray = function (visitors) {
-        return visitors.map(function (e) { return e.month; });
-    };
-    return AdminDashboard;
-}());
-__decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("baseChart"),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__["BaseChartDirective"])
-], AdminDashboard.prototype, "chart", void 0);
-AdminDashboard = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'dashboard',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/dashboard/dashboard.html"*/'<!--Administrator Dashoboard Tab Component HTML Structure-->\n<ion-content >\n  <navbar></navbar>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n          <div>\n            <h2>Top Searched Cities</h2>\n            <ion-grid>\n              <ion-row >\n                <ion-col><h4>City</h4></ion-col>\n                <ion-col><h4>Visits</h4></ion-col>\n              </ion-row>\n              <ion-row *ngFor="let top of tops" class="row-visits">\n                <ion-col>{{top.name}}</ion-col>\n                <ion-col>{{top.searches}}</ion-col>\n              </ion-row>\n            </ion-grid>\n          </div>\n\n        </ion-col>\n        <ion-col>\n\n          <h2>Monthly Visitors</h2>\n          <div class="container-graph">\n            <canvas baseChart width="350" height="250"  #baseChart="base-chart"\n              [datasets]="lineChartData"\n              [labels]="lineChartLabels"\n              [options]="lineChartOptions"\n              [colors]="lineChartColors"\n              [legend]="lineChartLegend"\n              [chartType]="lineChartType"\n              (chartHover)="chartHovered($event)"\n              (chartClick)="chartClicked($event)"></canvas>\n          </div>\n\n        </ion-col>\n      </ion-row>\n    </ion-grid>  \n </ion-content> \n\n      \n  \n<!-- Monthly visitors grid\n  <div>\n    <h2>Monthly Visitors</h2>\n    <ion-grid>\n      <ion-row>\n        <ion-col><h4>Month</h4></ion-col>\n        <ion-col><h4>Visits</h4></ion-col>\n      </ion-row>\n      <ion-row *ngFor="let visit of visitors">\n        <ion-col>{{visit.month}}</ion-col>\n        <ion-col>{{visit.visits}}</ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n-->\n  \n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/dashboard/dashboard.html"*/
-    })
-    /**
-     * Admin main dashboard tab constructor
-     */
-    ,
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_dashboardService__["b" /* VisitorService */], __WEBPACK_IMPORTED_MODULE_2__services_dashboardService__["a" /* SearchedService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]])
-], AdminDashboard);
-
-//# sourceMappingURL=dashboard.js.map
-
-/***/ }),
-
-/***/ 124:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -737,7 +472,7 @@ SearchedService = __decorate([
 
 /***/ }),
 
-/***/ 132:
+/***/ 131:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -750,11 +485,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 132;
+webpackEmptyAsyncContext.id = 131;
 
 /***/ }),
 
-/***/ 174:
+/***/ 173:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -767,93 +502,21 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 174;
+webpackEmptyAsyncContext.id = 173;
 
 /***/ }),
 
-/***/ 217:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_tabs_tabs__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register_register__ = __webpack_require__(350);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_authService__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_admin_dashboard_dashboard__ = __webpack_require__(123);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var LoginPage = (function () {
-    function LoginPage(navCtrl, authorizationService) {
-        this.navCtrl = navCtrl;
-        this.authorizationService = authorizationService;
-        this.user = new __WEBPACK_IMPORTED_MODULE_4__services_authService__["b" /* UserLogin */]("x", "123", "", ""); //testing user
-    }
-    /**
-     * Makes a call to authorize users according to their credentials
-     * Currently, only 2 types of users exist: administrators and common users
-     * Administrators are redirected to the admin dashboard, while common users are directed to the main mobile
-     * page with current a list of currently registered cities.
-     * An authorization token is provided to every user which specifies his/her privileges and expiration time
-     */
-    LoginPage.prototype.login = function () {
-        var _this = this;
-        console.log(this.user);
-        this.authorizationService.authorizeUser(this.user).then(function (data) {
-            if (data.authorized) {
-                if (data.privileges == "admin") {
-                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__pages_admin_dashboard_dashboard__["a" /* AdminDashboard */], {
-                        authToken: data
-                    });
-                }
-                else {
-                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__pages_tabs_tabs__["a" /* TabsPage */], {
-                        authToken: data
-                    });
-                }
-            }
-        });
-    };
-    LoginPage.prototype.register = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__register_register__["a" /* RegisterPage */]);
-    };
-    return LoginPage;
-}());
-LoginPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'login',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/login/login.html"*/'<!--Login Componente HTML Structure-->\n<ion-content has-header="true" padding="true" class="contenido_login">\n    <ion-grid>\n    <ion-row></ion-row>\n\n\n    <ion-row>\n        <ion-col col-12 class="titulo_bot_cast">\n            <b>Botcast</b>\n        </ion-col>\n    </ion-row>\n\n    <ion-row>\n        <ion-col col-12 class="botcast_icon">\n            <img src="../assets/imgs/bot_icon.png" height="100" width="100"/>\n        </ion-col>\n    </ion-row>\n\n\n    <ion-row>\n        <ion-col>\n            <ion-list inset class="contenedorCamposLogin">\n                <ion-item>\n                    <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="user.username" required></ion-input>\n                </ion-item>\n\n                <ion-item>\n                    <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="user.password" required></ion-input>\n                </ion-item>\n\n            </ion-list>\n        </ion-col>\n\n    </ion-row>\n\n\n        <ion-row>\n            <ion-col class="signup-col">\n                <button ion-button class="submit-btn" full (click)="login()" type="submit" >Login</button>\n                <button ion-button class="register-btn" block clear (click)="register()">Sign up</button>\n            </ion-col>\n        </ion-row>\n\n\n    </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/login/login/login.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__services_authService__["a" /* AuthorizationService */]])
-], LoginPage);
-
-//# sourceMappingURL=login.js.map
-
-/***/ }),
-
-/***/ 218:
+/***/ 216:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__principal_principal__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graficas_graficas__ = __webpack_require__(223);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__chatbot_chatbot__ = __webpack_require__(346);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__myforecasts_myforecasts__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__principal_principal__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__graficas_graficas__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__chatbot_chatbot__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__myforecasts_myforecasts__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -863,17 +526,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
 
 
 var TabsPage = (function () {
-    function TabsPage() {
+    function TabsPage(navParams, navController) {
+        this.navParams = navParams;
+        this.navController = navController;
         this.tab1Root = __WEBPACK_IMPORTED_MODULE_1__principal_principal__["a" /* PrincipalPage */];
         this.tab2Root = __WEBPACK_IMPORTED_MODULE_2__graficas_graficas__["a" /* GraphsPage */];
         this.tab3Root = __WEBPACK_IMPORTED_MODULE_3__chatbot_chatbot__["a" /* ChatbotPage */];
         this.tab4Root = __WEBPACK_IMPORTED_MODULE_4__myforecasts_myforecasts__["a" /* MyForecastsPage */];
+        localStorage.authToken = navParams.get('tokenId');
+        localStorage.idUsuario = navParams.get('userId');
     }
     return TabsPage;
 }());
@@ -884,14 +552,253 @@ TabsPage = __decorate([
      * Tabs Root Component Class: declare here any additional tabs for user main mobile view, then map to appropriate HTML ionic tags in template
      */
     ,
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["h" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["g" /* NavController */]])
 ], TabsPage);
 
 //# sourceMappingURL=tabs.js.map
 
 /***/ }),
 
-/***/ 219:
+/***/ 217:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PrincipalPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_citiesService__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_forecastService__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_authService__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__addCity_addCity__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_jquery__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_jquery__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__login_login_login__ = __webpack_require__(120);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+var PrincipalPage = (function () {
+    /**
+     *
+     * @param myCitiesService: service that retrieves a user's saved cities
+     * @param forecastService: service that retrieves today's and next week's weather forecasts
+     * @param navCtrl: application navigation controller
+     * @param navParams: parameters to be passed between different screens
+     * @param geolocationService: service that retrieves user's current location in latLong format, then performs an external call
+     * to a geocoder to get the exact address
+     */
+    function PrincipalPage(forecastService, navCtrl, navParams, geolocationService, modalCtrl, usersInfoService, authorizationService) {
+        var _this = this;
+        this.forecastService = forecastService;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.geolocationService = geolocationService;
+        this.modalCtrl = modalCtrl;
+        this.usersInfoService = usersInfoService;
+        this.authorizationService = authorizationService;
+        this.ciudades = [];
+        this.todayForecast = [];
+        this.todayHourlyForecast = [];
+        this.nextDaysForecast = [];
+        this.todaysDate = this.getTodaysDate();
+        this.makeApiCalls("");
+        console.log("AUTHTOKEN");
+        console.log(localStorage.authToken);
+        console.log(navParams.get('tokenId'));
+        usersInfoService.retrieveUserInfoById(localStorage.idUsuario, localStorage.authToken).then(function (res) {
+            _this.currentUser = res;
+            console.log(_this.currentUser);
+        });
+        console.log("IDUSUARIO IN LOCALSTORAGE");
+        console.log(localStorage.idUsuario);
+        localStorage.newForecastSaved = 0;
+        localStorage.citySelectedFromForecastList = 0;
+        localStorage.cityAddedToFavorites = 0;
+        localStorage.cityRemovedFromFavorites = 0;
+        localStorage.currentCity = "";
+        this.checkCityAddedToFavorites();
+        this.checkCityRemovedFromFavorites();
+    }
+    PrincipalPage.prototype.logout = function () {
+        this.authorizationService.logout(localStorage.authToken);
+        localStorage.authToken = "";
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_9__login_login_login__["a" /* LoginPage */]);
+    };
+    PrincipalPage.prototype.checkCityAddedToFavorites = function () {
+        var _this = this;
+        setInterval(function () {
+            if (localStorage.cityAddedToFavorites == 1) {
+                var obj = JSON.parse(localStorage.cityAddedToFavoritesObj);
+                _this.ciudades.push(new __WEBPACK_IMPORTED_MODULE_1__services_citiesService__["a" /* Ciudad */](obj.city));
+                localStorage.cityAddedToFavorites = 0;
+            }
+        }, 1000);
+    };
+    PrincipalPage.prototype.checkCityRemovedFromFavorites = function () {
+        var _this = this;
+        setInterval(function () {
+            if (localStorage.cityRemovedFromFavorites == 1) {
+                var obj_1 = JSON.parse(localStorage.cityRemovedFromFavoritesObj);
+                _this.ciudades = _this.ciudades.filter(function (c) { return c.name != obj_1.city; });
+                localStorage.cityRemovedFromFavorites = 0;
+            }
+        }, 1000);
+    };
+    PrincipalPage.prototype.presentAddCityModal = function () {
+        var _this = this;
+        var contactModal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_7__addCity_addCity__["a" /* AddCityModal */], { user: this.currentUser });
+        contactModal.onDidDismiss(function (ciudad) {
+            if (ciudad !== null && ciudad.length > 0) {
+                console.log(ciudad);
+                var arreglo_nombres = ciudad.map(function (c) { return new __WEBPACK_IMPORTED_MODULE_1__services_citiesService__["a" /* Ciudad */](c.name); });
+                localStorage.userCities = JSON.stringify(arreglo_nombres);
+                _this.ciudades = arreglo_nombres;
+            }
+        });
+        contactModal.present();
+    };
+    /**
+     * @param city: city whose current and future weather wants to be known
+     * This method calls all the different services to retrieve the selected city's weather and then redraws
+     * the whole view with the retrieved data in the appropriate format
+     */
+    PrincipalPage.prototype.makeApiCalls = function (city) {
+        var _this = this;
+        if (city == undefined || city == "") {
+            //TODO: uncomment in prod
+            // this.getMyLocation();
+            city = "Amsterdam";
+        }
+        this.forecastService.currentWeather(city).then(function (data) {
+            _this.todayForecast = data;
+            _this.todayHourlyForecast = _this.todayForecast[0].hourlyForecast;
+            console.log(_this.todayForecast);
+        });
+        this.forecastService.weatherNextDays(city).then(function (data) {
+            _this.nextDaysForecast = data;
+            console.log(_this.nextDaysForecast);
+        });
+        this.usersInfoService.retrieveUserInfoById(localStorage.idUsuario, localStorage.authToken).then(function (res) {
+            _this.currentUser = res;
+            var arreglo_nombres = _this.currentUser.cities.map(function (ciudad) { return new __WEBPACK_IMPORTED_MODULE_1__services_citiesService__["a" /* Ciudad */](ciudad["name"]); });
+            _this.ciudades = arreglo_nombres;
+            localStorage.userCities = JSON.stringify(arreglo_nombres);
+        });
+    };
+    /**
+     * First acquires user's longitude and latitude with cordova's native hardware interaction API,
+     * then performs an external call to retrieve the user's approximate address but, most importantly, his/her current city
+     * to call makeApiCalls() and redraw the view with the current location's weather
+     */
+    PrincipalPage.prototype.getMyLocation = function () {
+        var _this = this;
+        var loading_gif = __WEBPACK_IMPORTED_MODULE_8_jquery__("#gif-loading-container");
+        loading_gif.removeClass("x");
+        loading_gif.addClass("y");
+        this.geolocationService.getMyCurrentLocation().then(function (data) {
+            _this.mycurrentLocationLatLong = data;
+            _this.geolocationService.getMyCurrentAddressBasedOnLatLong(data).then(function (data) {
+                _this.myCurrentLocationReverseGeocoded = data;
+                localStorage.currentCity = data.city;
+                _this.makeApiCalls(data.city);
+                loading_gif.removeClass("y");
+                loading_gif.addClass("x");
+            });
+        });
+    };
+    /**
+     *
+     * @param cityName: city parameter used in templates to know which city has been selected from the slider
+     * Event binding function to retrieve users current location and update screen
+     */
+    PrincipalPage.prototype.changeCity = function (cityName) {
+        this.makeApiCalls(cityName);
+        this.currentCity = cityName;
+        localStorage.currentCity = this.currentCity;
+    };
+    PrincipalPage.prototype.moveToAddCityWindow = function () {
+        console.log("moving window!");
+    };
+    /**
+     *
+     * @returns {string} returns today's date in a pretty format (DayOfWeek, MonthName DayOfMonth, CurrentYear e.g. Thursday, January 20, 2099)
+     * Auxiliary method for date formatting
+     */
+    PrincipalPage.prototype.getTodaysDate = function () {
+        var dayOfWeekMap = {
+            0: "Sunday",
+            1: "Monday",
+            2: "Tuesday",
+            3: "Wednesday",
+            4: "Thursday",
+            5: "Friday",
+            6: "Saturday",
+        };
+        var monthMap = {
+            0: "January",
+            1: "February",
+            2: "March",
+            3: "April",
+            4: "May",
+            5: "June",
+            6: "July",
+            7: "August",
+            8: "September",
+            9: "October",
+            10: "November",
+            11: "December",
+        };
+        var today = new Date();
+        var dayOfweek = dayOfWeekMap[today.getDay()];
+        var dayOfMonth = today.getDate();
+        var monthString = monthMap[today.getMonth()];
+        return dayOfweek + ", " + monthString + " " + dayOfMonth + ", " + today.getFullYear();
+    };
+    return PrincipalPage;
+}());
+PrincipalPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'principal',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/principal.html"*/'<!--User Main Tab Component HTML Structure-->\n<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Your locations</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <ion-slides class="cities-slider">\n    <ion-slide>\n      <ion-grid>\n        <ion-row>\n          <ion-col *ngFor="let ciudad of ciudades" class="my-cities-element" (click)="changeCity(ciudad.name)">\n            {{ciudad.name}}\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-slide>\n    <ion-slide>\n      <ion-grid>\n        <ion-row>\n          <ion-col >\n            <button ion-button color="primary" class="my-location-button" (click)="getMyLocation()">My location</button>\n          </ion-col>\n          <ion-col >\n            <button ion-button color="secondary" class="add-city-button" (click)="presentAddCityModal()">Manage cities</button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-slide>\n    <ion-slide>\n      <ion-grid>\n        <ion-row>\n          <ion-col >\n            <button ion-button color="danger" class="logout-button" (click)="logout()">Log out</button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-slide>\n  </ion-slides>\n\n  <div id="gif-loading-container">\n    <img src="../../assets/imgs/loading.gif" id="gif-loading"/>\n    <div id="message">Retrieving your location...</div>\n  </div>\n\n  <ion-grid class="ion_grid_forecasts">\n    <ion-row>\n      <ion-col *ngFor="let today of todayForecast">\n        <img src="../../assets/imgs/rainy.gif"/>\n\n        <div class="location-content">\n          <div class="location-city-name">\n            {{today.cityName}}\n          </div>\n\n          <div class="location-avg-temp">\n            {{today.avgTemp}}<span class="centigrade-symbol">°C</span>\n          </div>\n\n          <div class="location-max-min-temps">\n            High:<b>{{today.tempMax}}</b><span class="centigrade-symbol">°C</span>\n            Low:<b>{{today.tempMin}}</b><span class="centigrade-symbol">°C</span>\n          </div>\n\n          <div class="location-todays-data">\n            {{this.todaysDate}}\n          </div>\n        </div>\n\n      </ion-col>\n    </ion-row>\n\n    <ion-row class="row-container-hourly-forecasts">\n      <ion-col *ngFor="let hourForecast of todayHourlyForecast" class="col-hourly-forecasts">\n        <ion-row class="row-hourly-forecast">\n          {{hourForecast.time}}\n        </ion-row>\n        <ion-row class="row-hourly-forecast">\n          <ion-icon name={{hourForecast.condition}}></ion-icon>\n        </ion-row>\n        <ion-row class="row-hourly-forecast">\n          {{hourForecast.temp}} <span class="centigrade-symbol">°C</span>\n        </ion-row>\n      </ion-col>\n\n    </ion-row>\n\n    <ion-row *ngFor="let day of nextDaysForecast" class="row-forecasts">\n      <ion-col class="col-day-of-week-forecasts">{{day.dayOfWeek}}</ion-col>\n      <ion-col><ion-icon name={{day.condition}} class="icon-forecasts"></ion-icon></ion-col>\n      <ion-col>{{day.tempMax}} <span class="centigrade-symbol">°C</span></ion-col>\n      <ion-col>{{day.tempMin}} <span class="centigrade-symbol">°C</span></ion-col>\n    </ion-row>\n\n  </ion-grid>\n\n</ion-content>\n\n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/principal.html"*/
+    })
+    /**
+     * Component for user main interface, user can add cities, select cities, select current location and
+     * today's weather along withnext week's forecasts will be displayed.
+     * This component's state contains the user's currently saved cities, today's and next week's weather, today's date,
+     * the user's current location in latitude and longitude (raw format) and the user's approximate address.
+     */
+    ,
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_forecastService__["a" /* ForecastService */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_4__services_geolocationService__["a" /* GeolocationService */],
+        __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["f" /* ModalController */],
+        __WEBPACK_IMPORTED_MODULE_5__services_usersInfoService__["a" /* UsersInfoService */],
+        __WEBPACK_IMPORTED_MODULE_6__services_authService__["a" /* AuthorizationService */]])
+], PrincipalPage);
+
+//# sourceMappingURL=principal.js.map
+
+/***/ }),
+
+/***/ 218:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -900,8 +807,8 @@ TabsPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GeolocationService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_geocoder__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_geolocation__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_native_geocoder__ = __webpack_require__(220);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1005,14 +912,14 @@ GeolocationService = __decorate([
 
 /***/ }),
 
-/***/ 222:
+/***/ 221:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddCityModal; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_cityManagerService__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_cityManagerService__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_usersInfoService__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_jquery__);
@@ -1043,6 +950,7 @@ var AddCityModal = (function () {
         cityManagerService.retrieveActiveCities().then(function (res) {
             _this.cities = res;
         });
+        console.log(params.get('user'));
         this.currentUser = params.get('user');
     }
     AddCityModal.prototype.addRemoveCity = function (event) {
@@ -1065,6 +973,7 @@ var AddCityModal = (function () {
         this.viewCtrl.dismiss(this.selectedCities);
     };
     AddCityModal.prototype.saveCities = function () {
+        var _this = this;
         this.selectedCities.length = 0;
         var aux = this.selectedCities;
         this.selectedMap.forEach(function (value, key, map) {
@@ -1075,24 +984,25 @@ var AddCityModal = (function () {
             });
         });
         this.selectedCities = aux;
+        console.log(this.currentUser);
         var params = {
             nombre: this.currentUser.name,
             apellido: this.currentUser.lastname,
             email: this.currentUser.email,
-            password: this.currentUser.password,
             usuario: this.currentUser.username,
             ciudades: this.selectedCities
         };
-        this.usersInfoService.updateUserInfo(localStorage.idUsuario, params).then(function (res) {
+        this.usersInfoService.updateUserInfo(localStorage.idUsuario, params, localStorage.authToken).then(function (res) {
             console.log("Cambios a lista guardados!");
             console.log(res);
+            _this.viewCtrl.dismiss(_this.selectedCities);
         });
     };
     return AddCityModal;
 }());
 AddCityModal = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'addCity',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/addCity/addCity.html"*/'<ion-content padding class="contenido-lista-ciudades-activas">\n\n    <ion-header>\n        <ion-navbar>\n            <ion-title>Available Cities</ion-title>\n            <button ion-button small color="danger" (click)="dismiss()">\n                Close\n            </button>\n        </ion-navbar>\n    </ion-header>\n\n    <ion-grid class="grid-ciudades-activas">\n        <ion-row>\n        </ion-row>\n        <ion-row *ngFor = "let ciudad of cities" class="ciudad-row" (click)="addRemoveCity($event)">\n            <input type="hidden" value={{ciudad.id}} />\n            <ion-col class = "col-city-name">\n                {{ciudad.name}}\n            </ion-col>\n            <ion-col>\n                {{ciudad.country}}\n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <button full ion-button color="secondary" (click)="saveCities()">Regresar</button>\n        </ion-row>\n    </ion-grid>\n\n\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/addCity/addCity.html"*/
+        selector: 'addCity',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/addCity/addCity.html"*/'<ion-content padding class="contenido-lista-ciudades-activas">\n\n    <ion-header>\n        <ion-navbar>\n            <ion-title>Available Cities</ion-title>\n            <button ion-button small color="danger" (click)="dismiss()">\n                Close\n            </button>\n        </ion-navbar>\n    </ion-header>\n\n    <ion-grid class="grid-ciudades-activas">\n        <ion-row>\n        </ion-row>\n        <ion-row *ngFor = "let ciudad of cities" class="ciudad-row" (click)="addRemoveCity($event)">\n            <input type="hidden" value={{ciudad.id}} />\n            <ion-col class = "col-city-name">\n                {{ciudad.name}}\n            </ion-col>\n            <ion-col>\n                {{ciudad.country}}\n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <button full ion-button color="secondary" (click)="saveCities()">Save cities</button>\n        </ion-row>\n    </ion-grid>\n\n\n</ion-content>'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/principal/addCity/addCity.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */],
@@ -1104,7 +1014,7 @@ AddCityModal = __decorate([
 
 /***/ }),
 
-/***/ 223:
+/***/ 222:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1113,7 +1023,7 @@ AddCityModal = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_forecastService__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_citiesService__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_myForecastService__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__ = __webpack_require__(223);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng2_charts_ng2_charts__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(13);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1456,13 +1366,13 @@ GraphsPage = __decorate([
 
 /***/ }),
 
-/***/ 346:
+/***/ 345:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatbotPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_chatbotService__ = __webpack_require__(346);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1540,7 +1450,7 @@ ChatbotPage = __decorate([
 
 /***/ }),
 
-/***/ 347:
+/***/ 346:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1550,7 +1460,7 @@ ChatbotPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__usersInfoService__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__cityManagerService__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__cityManagerService__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__forecastService__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_map__);
@@ -1887,7 +1797,7 @@ var ChatbotService = (function () {
         var location = "";
         if (entities.location) {
             location = entities.location[0].value;
-            return this.usersInfoService.retrieveUserInfoById(id_usuario).then(function (data) {
+            return this.usersInfoService.retrieveUserInfoById(id_usuario, localStorage.authToken).then(function (data) {
                 var userData = data;
                 var locationToAdd = data.cities.find(function (c) { return c["name"] == location; });
                 var evalClause = (intent == "add_city") ? locationToAdd : !locationToAdd;
@@ -1919,7 +1829,7 @@ var ChatbotService = (function () {
                                     usuario: userData.username,
                                     ciudades: arrAux
                                 };
-                                return _this.usersInfoService.updateUserInfo(id_usuario, params).then(function (usuarioActualizado) {
+                                return _this.usersInfoService.updateUserInfo(id_usuario, params, localStorage.authToken).then(function (usuarioActualizado) {
                                     textResponse = (intent == "add_city") ?
                                         (locationToAdd["name"] + " was added to your favorite cities!") :
                                         (locationToAdd["name"] + " was removed from your list of cities.");
@@ -1948,15 +1858,17 @@ var ChatbotService = (function () {
 }());
 ChatbotService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__usersInfoService__["a" /* UsersInfoService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__usersInfoService__["a" /* UsersInfoService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__cityManagerService__["b" /* CityManagerService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__cityManagerService__["b" /* CityManagerService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__forecastService__["a" /* ForecastService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__forecastService__["a" /* ForecastService */]) === "function" && _d || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */],
+        __WEBPACK_IMPORTED_MODULE_2__usersInfoService__["a" /* UsersInfoService */],
+        __WEBPACK_IMPORTED_MODULE_3__cityManagerService__["b" /* CityManagerService */],
+        __WEBPACK_IMPORTED_MODULE_4__forecastService__["a" /* ForecastService */]])
 ], ChatbotService);
 
-var _a, _b, _c, _d;
 //# sourceMappingURL=chatbotService.js.map
 
 /***/ }),
 
-/***/ 348:
+/***/ 347:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1964,7 +1876,7 @@ var _a, _b, _c, _d;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_myForecastService__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forecastDetail_forecastDetail__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__forecastDetail_forecastDetail__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_jquery__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2060,7 +1972,7 @@ MyForecastsPage = __decorate([
 
 /***/ }),
 
-/***/ 349:
+/***/ 348:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2146,16 +2058,15 @@ ForecastDetail = __decorate([
 
 /***/ }),
 
-/***/ 350:
+/***/ 349:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RegisterPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_authService__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_authService__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_usersInfoService__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_principal_principal__ = __webpack_require__(120);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2165,7 +2076,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -2195,14 +2105,13 @@ var RegisterPage = (function () {
     RegisterPage.prototype.presentAlert = function () {
         var _this = this;
         var alert = this.alertCtrl.create({
-            title: 'Thanks for registering! You will now be taken to the site.',
+            title: 'Thanks for registering! You can now log in.',
             buttons: [{
                     text: 'Ok',
                     handler: function () {
                         var navTransition = alert.dismiss();
                         navTransition.then(function () {
                             _this.navCtrl.pop();
-                            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__pages_principal_principal__["a" /* PrincipalPage */]);
                         });
                         return false;
                     }
@@ -2319,7 +2228,7 @@ RegisterPage = __decorate([
 
 /***/ }),
 
-/***/ 351:
+/***/ 350:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2406,6 +2315,126 @@ StatService = __decorate([
 
 /***/ }),
 
+/***/ 351:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminDashboard; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_dashboardService__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var AdminDashboard = (function () {
+    function AdminDashboard(visitorService, seachedService, navCtrl) {
+        var _this = this;
+        this.visitorService = visitorService;
+        this.seachedService = seachedService;
+        this.navCtrl = navCtrl;
+        this.lineChartData = [{ data: [0, 0, 0, 0, 0, 0], label: 'Series A' }];
+        this.lineChartLabels = ['0', '0', '0', '0', '0', '0'];
+        /**
+         *The following objects correspond to the graph configuration arguments, including label format, colors and label display locations, among others.
+         */
+        this.lineChartOptions = {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: '# of visits'
+                        },
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+            }
+        };
+        this.lineChartColors = [
+            {
+                backgroundColor: 'rgba(30,144,255,0.2)',
+                borderColor: 'rgba(148,159,177,1)',
+                pointBackgroundColor: 'rgba(148,159,177,1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+            }
+        ];
+        this.lineChartLegend = true;
+        this.lineChartType = 'line';
+        this.tops = [];
+        this.visitors = [];
+        seachedService.retrieveInfo().then(function (data) { return _this.tops = data; });
+        //visitorService.retrieveInfo().then(data=>this.visitors=data);
+        visitorService.retrieveInfo().then(function (data) {
+            _this.lineChartData = [{ data: _this.getVisits(data), label: "Monthly visits" }];
+            _this.lineChartLabels = _this.buildLabelArray(data);
+            _this.reloadChart();
+        });
+    }
+    /**
+     * Makes a graph full state refresh whenever it's needed
+     * This includes the data buffer and axes labels
+     */
+    AdminDashboard.prototype.reloadChart = function () {
+        if (this.chart !== undefined) {
+            this.chart.chart.destroy();
+            this.chart.chart = 0;
+            this.chart.labels = this.lineChartLabels;
+            this.chart.datasets = this.lineChartData;
+            this.chart.ngOnInit();
+        }
+    };
+    /**
+     * Auxiliary function for filling data buffers in the correct format
+     * @param visitors: takes in a Visitors array and maps it it to a typical JS array
+     * @returns {number,number,number,number,number]}: array of number of visits according to Json data
+     */
+    AdminDashboard.prototype.getVisits = function (visitors) {
+        return visitors.map(function (e) { return e.visits; });
+    };
+    /**
+     * Auxiliary function for filling the label buffers in the correct format
+     * @param visitors: takes in a Visitors array, takes its months and build the label data buffer
+     * @returns {[string,string,string,string,string]}: array of months as strings in a correct format
+     */
+    AdminDashboard.prototype.buildLabelArray = function (visitors) {
+        return visitors.map(function (e) { return e.month; });
+    };
+    return AdminDashboard;
+}());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])("baseChart"),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ng2_charts_ng2_charts__["BaseChartDirective"])
+], AdminDashboard.prototype, "chart", void 0);
+AdminDashboard = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'dashboard',template:/*ion-inline-start:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/dashboard/dashboard.html"*/'<!--Administrator Dashoboard Tab Component HTML Structure-->\n<ion-content >\n  <navbar></navbar>\n    <ion-grid>\n      <ion-row>\n        <ion-col>\n          <div>\n            <h2>Top Searched Cities</h2>\n            <ion-grid>\n              <ion-row >\n                <ion-col><h4>City</h4></ion-col>\n                <ion-col><h4>Visits</h4></ion-col>\n              </ion-row>\n              <ion-row *ngFor="let top of tops" class="row-visits">\n                <ion-col>{{top.name}}</ion-col>\n                <ion-col>{{top.searches}}</ion-col>\n              </ion-row>\n            </ion-grid>\n          </div>\n\n        </ion-col>\n        <ion-col>\n\n          <h2>Monthly Visitors</h2>\n          <div class="container-graph">\n            <canvas baseChart width="350" height="250"  #baseChart="base-chart"\n              [datasets]="lineChartData"\n              [labels]="lineChartLabels"\n              [options]="lineChartOptions"\n              [colors]="lineChartColors"\n              [legend]="lineChartLegend"\n              [chartType]="lineChartType"\n              (chartHover)="chartHovered($event)"\n              (chartClick)="chartClicked($event)"></canvas>\n          </div>\n\n        </ion-col>\n      </ion-row>\n    </ion-grid>  \n </ion-content> \n\n      \n  \n<!-- Monthly visitors grid\n  <div>\n    <h2>Monthly Visitors</h2>\n    <ion-grid>\n      <ion-row>\n        <ion-col><h4>Month</h4></ion-col>\n        <ion-col><h4>Visits</h4></ion-col>\n      </ion-row>\n      <ion-row *ngFor="let visit of visitors">\n        <ion-col>{{visit.month}}</ion-col>\n        <ion-col>{{visit.visits}}</ion-col>\n      </ion-row>\n    </ion-grid>\n  </div>\n-->\n  \n'/*ion-inline-end:"/Users/Versatran/Desktop/ITESM/9 Noveno Semestre/Dev Apps Web/ProyectoTabs/src/pages/admin/dashboard/dashboard.html"*/
+    })
+    /**
+     * Admin main dashboard tab constructor
+     */
+    ,
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__services_dashboardService__["b" /* VisitorService */], __WEBPACK_IMPORTED_MODULE_2__services_dashboardService__["a" /* SearchedService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]])
+], AdminDashboard);
+
+//# sourceMappingURL=dashboard.js.map
+
+/***/ }),
+
 /***/ 352:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2413,7 +2442,7 @@ StatService = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminCities; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_cityManagerService__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_cityManagerService__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_debounceTime__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_debounceTime___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_debounceTime__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Subject__ = __webpack_require__(45);
@@ -2510,7 +2539,7 @@ AdminCities = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminMyAccount; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_authService__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_authService__ = __webpack_require__(56);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2551,7 +2580,7 @@ AdminMyAccount = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminStats; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_statsService__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_statsService__ = __webpack_require__(350);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2671,38 +2700,38 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(415);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_principal_principal__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_principal_addCity_addCity__ = __webpack_require__(222);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_myforecasts_forecastDetail_forecastDetail__ = __webpack_require__(349);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_principal_principal__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_principal_addCity_addCity__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_myforecasts_forecastDetail_forecastDetail__ = __webpack_require__(348);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_citiesService__ = __webpack_require__(121);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_forecastService__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_graphsService__ = __webpack_require__(483);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_chatbotService__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_authService__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_geolocationService__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_chatbotService__ = __webpack_require__(346);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_authService__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_geolocationService__ = __webpack_require__(218);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_usersInfoService__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_cityManagerService__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_dashboardService__ = __webpack_require__(124);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_cityManagerService__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_dashboardService__ = __webpack_require__(123);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_myForecastService__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_statsService__ = __webpack_require__(351);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_graficas_graficas__ = __webpack_require__(223);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ng2_charts__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_statsService__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_graficas_graficas__ = __webpack_require__(222);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ng2_charts__ = __webpack_require__(224);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21_ng2_charts__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_tabs_tabs__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_chatbot_chatbot__ = __webpack_require__(346);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_myforecasts_myforecasts__ = __webpack_require__(348);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__login_login_login__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__login_register_register__ = __webpack_require__(350);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_tabs_tabs__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_chatbot_chatbot__ = __webpack_require__(345);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_myforecasts_myforecasts__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__login_login_login__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__login_register_register__ = __webpack_require__(349);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_admin_navbar_navbar__ = __webpack_require__(484);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_admin_dashboard_dashboard__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_admin_dashboard_dashboard__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_admin_cities_cities__ = __webpack_require__(352);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_admin_myaccount_myaccount__ = __webpack_require__(353);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_admin_stats_stats__ = __webpack_require__(354);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_admin_users_users__ = __webpack_require__(355);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__ionic_native_status_bar__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__ionic_native_splash_screen__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__ionic_native_geolocation__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__ionic_native_native_geocoder__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__ionic_native_status_bar__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__ionic_native_splash_screen__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__ionic_native_geolocation__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__ionic_native_native_geocoder__ = __webpack_require__(220);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2836,9 +2865,9 @@ AppModule = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BotCast; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login_login__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login_login__ = __webpack_require__(120);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2881,236 +2910,236 @@ BotCast = __decorate([
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 231,
-	"./af.js": 231,
-	"./ar": 232,
-	"./ar-dz": 233,
-	"./ar-dz.js": 233,
-	"./ar-kw": 234,
-	"./ar-kw.js": 234,
-	"./ar-ly": 235,
-	"./ar-ly.js": 235,
-	"./ar-ma": 236,
-	"./ar-ma.js": 236,
-	"./ar-sa": 237,
-	"./ar-sa.js": 237,
-	"./ar-tn": 238,
-	"./ar-tn.js": 238,
-	"./ar.js": 232,
-	"./az": 239,
-	"./az.js": 239,
-	"./be": 240,
-	"./be.js": 240,
-	"./bg": 241,
-	"./bg.js": 241,
-	"./bn": 242,
-	"./bn.js": 242,
-	"./bo": 243,
-	"./bo.js": 243,
-	"./br": 244,
-	"./br.js": 244,
-	"./bs": 245,
-	"./bs.js": 245,
-	"./ca": 246,
-	"./ca.js": 246,
-	"./cs": 247,
-	"./cs.js": 247,
-	"./cv": 248,
-	"./cv.js": 248,
-	"./cy": 249,
-	"./cy.js": 249,
-	"./da": 250,
-	"./da.js": 250,
-	"./de": 251,
-	"./de-at": 252,
-	"./de-at.js": 252,
-	"./de-ch": 253,
-	"./de-ch.js": 253,
-	"./de.js": 251,
-	"./dv": 254,
-	"./dv.js": 254,
-	"./el": 255,
-	"./el.js": 255,
-	"./en-au": 256,
-	"./en-au.js": 256,
-	"./en-ca": 257,
-	"./en-ca.js": 257,
-	"./en-gb": 258,
-	"./en-gb.js": 258,
-	"./en-ie": 259,
-	"./en-ie.js": 259,
-	"./en-nz": 260,
-	"./en-nz.js": 260,
-	"./eo": 261,
-	"./eo.js": 261,
-	"./es": 262,
-	"./es-do": 263,
-	"./es-do.js": 263,
-	"./es.js": 262,
-	"./et": 264,
-	"./et.js": 264,
-	"./eu": 265,
-	"./eu.js": 265,
-	"./fa": 266,
-	"./fa.js": 266,
-	"./fi": 267,
-	"./fi.js": 267,
-	"./fo": 268,
-	"./fo.js": 268,
-	"./fr": 269,
-	"./fr-ca": 270,
-	"./fr-ca.js": 270,
-	"./fr-ch": 271,
-	"./fr-ch.js": 271,
-	"./fr.js": 269,
-	"./fy": 272,
-	"./fy.js": 272,
-	"./gd": 273,
-	"./gd.js": 273,
-	"./gl": 274,
-	"./gl.js": 274,
-	"./gom-latn": 275,
-	"./gom-latn.js": 275,
-	"./he": 276,
-	"./he.js": 276,
-	"./hi": 277,
-	"./hi.js": 277,
-	"./hr": 278,
-	"./hr.js": 278,
-	"./hu": 279,
-	"./hu.js": 279,
-	"./hy-am": 280,
-	"./hy-am.js": 280,
-	"./id": 281,
-	"./id.js": 281,
-	"./is": 282,
-	"./is.js": 282,
-	"./it": 283,
-	"./it.js": 283,
-	"./ja": 284,
-	"./ja.js": 284,
-	"./jv": 285,
-	"./jv.js": 285,
-	"./ka": 286,
-	"./ka.js": 286,
-	"./kk": 287,
-	"./kk.js": 287,
-	"./km": 288,
-	"./km.js": 288,
-	"./kn": 289,
-	"./kn.js": 289,
-	"./ko": 290,
-	"./ko.js": 290,
-	"./ky": 291,
-	"./ky.js": 291,
-	"./lb": 292,
-	"./lb.js": 292,
-	"./lo": 293,
-	"./lo.js": 293,
-	"./lt": 294,
-	"./lt.js": 294,
-	"./lv": 295,
-	"./lv.js": 295,
-	"./me": 296,
-	"./me.js": 296,
-	"./mi": 297,
-	"./mi.js": 297,
-	"./mk": 298,
-	"./mk.js": 298,
-	"./ml": 299,
-	"./ml.js": 299,
-	"./mr": 300,
-	"./mr.js": 300,
-	"./ms": 301,
-	"./ms-my": 302,
-	"./ms-my.js": 302,
-	"./ms.js": 301,
-	"./my": 303,
-	"./my.js": 303,
-	"./nb": 304,
-	"./nb.js": 304,
-	"./ne": 305,
-	"./ne.js": 305,
-	"./nl": 306,
-	"./nl-be": 307,
-	"./nl-be.js": 307,
-	"./nl.js": 306,
-	"./nn": 308,
-	"./nn.js": 308,
-	"./pa-in": 309,
-	"./pa-in.js": 309,
-	"./pl": 310,
-	"./pl.js": 310,
-	"./pt": 311,
-	"./pt-br": 312,
-	"./pt-br.js": 312,
-	"./pt.js": 311,
-	"./ro": 313,
-	"./ro.js": 313,
-	"./ru": 314,
-	"./ru.js": 314,
-	"./sd": 315,
-	"./sd.js": 315,
-	"./se": 316,
-	"./se.js": 316,
-	"./si": 317,
-	"./si.js": 317,
-	"./sk": 318,
-	"./sk.js": 318,
-	"./sl": 319,
-	"./sl.js": 319,
-	"./sq": 320,
-	"./sq.js": 320,
-	"./sr": 321,
-	"./sr-cyrl": 322,
-	"./sr-cyrl.js": 322,
-	"./sr.js": 321,
-	"./ss": 323,
-	"./ss.js": 323,
-	"./sv": 324,
-	"./sv.js": 324,
-	"./sw": 325,
-	"./sw.js": 325,
-	"./ta": 326,
-	"./ta.js": 326,
-	"./te": 327,
-	"./te.js": 327,
-	"./tet": 328,
-	"./tet.js": 328,
-	"./th": 329,
-	"./th.js": 329,
-	"./tl-ph": 330,
-	"./tl-ph.js": 330,
-	"./tlh": 331,
-	"./tlh.js": 331,
-	"./tr": 332,
-	"./tr.js": 332,
-	"./tzl": 333,
-	"./tzl.js": 333,
-	"./tzm": 334,
-	"./tzm-latn": 335,
-	"./tzm-latn.js": 335,
-	"./tzm.js": 334,
-	"./uk": 336,
-	"./uk.js": 336,
-	"./ur": 337,
-	"./ur.js": 337,
-	"./uz": 338,
-	"./uz-latn": 339,
-	"./uz-latn.js": 339,
-	"./uz.js": 338,
-	"./vi": 340,
-	"./vi.js": 340,
-	"./x-pseudo": 341,
-	"./x-pseudo.js": 341,
-	"./yo": 342,
-	"./yo.js": 342,
-	"./zh-cn": 343,
-	"./zh-cn.js": 343,
-	"./zh-hk": 344,
-	"./zh-hk.js": 344,
-	"./zh-tw": 345,
-	"./zh-tw.js": 345
+	"./af": 230,
+	"./af.js": 230,
+	"./ar": 231,
+	"./ar-dz": 232,
+	"./ar-dz.js": 232,
+	"./ar-kw": 233,
+	"./ar-kw.js": 233,
+	"./ar-ly": 234,
+	"./ar-ly.js": 234,
+	"./ar-ma": 235,
+	"./ar-ma.js": 235,
+	"./ar-sa": 236,
+	"./ar-sa.js": 236,
+	"./ar-tn": 237,
+	"./ar-tn.js": 237,
+	"./ar.js": 231,
+	"./az": 238,
+	"./az.js": 238,
+	"./be": 239,
+	"./be.js": 239,
+	"./bg": 240,
+	"./bg.js": 240,
+	"./bn": 241,
+	"./bn.js": 241,
+	"./bo": 242,
+	"./bo.js": 242,
+	"./br": 243,
+	"./br.js": 243,
+	"./bs": 244,
+	"./bs.js": 244,
+	"./ca": 245,
+	"./ca.js": 245,
+	"./cs": 246,
+	"./cs.js": 246,
+	"./cv": 247,
+	"./cv.js": 247,
+	"./cy": 248,
+	"./cy.js": 248,
+	"./da": 249,
+	"./da.js": 249,
+	"./de": 250,
+	"./de-at": 251,
+	"./de-at.js": 251,
+	"./de-ch": 252,
+	"./de-ch.js": 252,
+	"./de.js": 250,
+	"./dv": 253,
+	"./dv.js": 253,
+	"./el": 254,
+	"./el.js": 254,
+	"./en-au": 255,
+	"./en-au.js": 255,
+	"./en-ca": 256,
+	"./en-ca.js": 256,
+	"./en-gb": 257,
+	"./en-gb.js": 257,
+	"./en-ie": 258,
+	"./en-ie.js": 258,
+	"./en-nz": 259,
+	"./en-nz.js": 259,
+	"./eo": 260,
+	"./eo.js": 260,
+	"./es": 261,
+	"./es-do": 262,
+	"./es-do.js": 262,
+	"./es.js": 261,
+	"./et": 263,
+	"./et.js": 263,
+	"./eu": 264,
+	"./eu.js": 264,
+	"./fa": 265,
+	"./fa.js": 265,
+	"./fi": 266,
+	"./fi.js": 266,
+	"./fo": 267,
+	"./fo.js": 267,
+	"./fr": 268,
+	"./fr-ca": 269,
+	"./fr-ca.js": 269,
+	"./fr-ch": 270,
+	"./fr-ch.js": 270,
+	"./fr.js": 268,
+	"./fy": 271,
+	"./fy.js": 271,
+	"./gd": 272,
+	"./gd.js": 272,
+	"./gl": 273,
+	"./gl.js": 273,
+	"./gom-latn": 274,
+	"./gom-latn.js": 274,
+	"./he": 275,
+	"./he.js": 275,
+	"./hi": 276,
+	"./hi.js": 276,
+	"./hr": 277,
+	"./hr.js": 277,
+	"./hu": 278,
+	"./hu.js": 278,
+	"./hy-am": 279,
+	"./hy-am.js": 279,
+	"./id": 280,
+	"./id.js": 280,
+	"./is": 281,
+	"./is.js": 281,
+	"./it": 282,
+	"./it.js": 282,
+	"./ja": 283,
+	"./ja.js": 283,
+	"./jv": 284,
+	"./jv.js": 284,
+	"./ka": 285,
+	"./ka.js": 285,
+	"./kk": 286,
+	"./kk.js": 286,
+	"./km": 287,
+	"./km.js": 287,
+	"./kn": 288,
+	"./kn.js": 288,
+	"./ko": 289,
+	"./ko.js": 289,
+	"./ky": 290,
+	"./ky.js": 290,
+	"./lb": 291,
+	"./lb.js": 291,
+	"./lo": 292,
+	"./lo.js": 292,
+	"./lt": 293,
+	"./lt.js": 293,
+	"./lv": 294,
+	"./lv.js": 294,
+	"./me": 295,
+	"./me.js": 295,
+	"./mi": 296,
+	"./mi.js": 296,
+	"./mk": 297,
+	"./mk.js": 297,
+	"./ml": 298,
+	"./ml.js": 298,
+	"./mr": 299,
+	"./mr.js": 299,
+	"./ms": 300,
+	"./ms-my": 301,
+	"./ms-my.js": 301,
+	"./ms.js": 300,
+	"./my": 302,
+	"./my.js": 302,
+	"./nb": 303,
+	"./nb.js": 303,
+	"./ne": 304,
+	"./ne.js": 304,
+	"./nl": 305,
+	"./nl-be": 306,
+	"./nl-be.js": 306,
+	"./nl.js": 305,
+	"./nn": 307,
+	"./nn.js": 307,
+	"./pa-in": 308,
+	"./pa-in.js": 308,
+	"./pl": 309,
+	"./pl.js": 309,
+	"./pt": 310,
+	"./pt-br": 311,
+	"./pt-br.js": 311,
+	"./pt.js": 310,
+	"./ro": 312,
+	"./ro.js": 312,
+	"./ru": 313,
+	"./ru.js": 313,
+	"./sd": 314,
+	"./sd.js": 314,
+	"./se": 315,
+	"./se.js": 315,
+	"./si": 316,
+	"./si.js": 316,
+	"./sk": 317,
+	"./sk.js": 317,
+	"./sl": 318,
+	"./sl.js": 318,
+	"./sq": 319,
+	"./sq.js": 319,
+	"./sr": 320,
+	"./sr-cyrl": 321,
+	"./sr-cyrl.js": 321,
+	"./sr.js": 320,
+	"./ss": 322,
+	"./ss.js": 322,
+	"./sv": 323,
+	"./sv.js": 323,
+	"./sw": 324,
+	"./sw.js": 324,
+	"./ta": 325,
+	"./ta.js": 325,
+	"./te": 326,
+	"./te.js": 326,
+	"./tet": 327,
+	"./tet.js": 327,
+	"./th": 328,
+	"./th.js": 328,
+	"./tl-ph": 329,
+	"./tl-ph.js": 329,
+	"./tlh": 330,
+	"./tlh.js": 330,
+	"./tr": 331,
+	"./tr.js": 331,
+	"./tzl": 332,
+	"./tzl.js": 332,
+	"./tzm": 333,
+	"./tzm-latn": 334,
+	"./tzm-latn.js": 334,
+	"./tzm.js": 333,
+	"./uk": 335,
+	"./uk.js": 335,
+	"./ur": 336,
+	"./ur.js": 336,
+	"./uz": 337,
+	"./uz-latn": 338,
+	"./uz-latn.js": 338,
+	"./uz.js": 337,
+	"./vi": 339,
+	"./vi.js": 339,
+	"./x-pseudo": 340,
+	"./x-pseudo.js": 340,
+	"./yo": 341,
+	"./yo.js": 341,
+	"./zh-cn": 342,
+	"./zh-cn.js": 342,
+	"./zh-hk": 343,
+	"./zh-hk.js": 343,
+	"./zh-tw": 344,
+	"./zh-tw.js": 344
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -3231,17 +3260,24 @@ var UsersInfoService = (function () {
          * Backend REST endpoint URL to retrieve the user info from JSON
          */
         this.apiRoot = '../assets/json/admin/usersinfo/usersinfo.json';
-        this.apiRootUsuario = 'http://localhost:3000/api/Usuarios';
     }
-    UsersInfoService.prototype.retrieveUserInfoById = function (idUsuario) {
+    // apiRootUsuario:string = 'http://localhost:3000/api/Usuarios';
+    UsersInfoService.prototype.createHeaders = function (authToken) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        headers.append('Authorization', authToken);
+        return new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+    };
+    UsersInfoService.prototype.retrieveUserInfoById = function (idUsuario, authToken) {
         var _this = this;
-        var apiURL = this.apiRootUsuario + "/" + idUsuario;
+        var apiRootUsuario = 'http://localhost:3000/api/UsuariosApp';
+        var apiURL = apiRootUsuario + "/" + idUsuario;
         var promise = new Promise(function (resolve, reject) {
-            _this.http.get(apiURL)
+            _this.http.get(apiURL, _this.createHeaders(authToken))
                 .toPromise()
                 .then(function (res) {
                 var user = res.json();
-                resolve(new Usuario(user.nombre, user.apellido, user.usuario, user.email, user.password, user.ciudades));
+                console.log(user);
+                resolve(new Usuario(user.nombre, user.apellido, user.usuario, user.email, null, user.ciudades));
             }, function (msg) {
                 reject(msg);
             });
@@ -3279,14 +3315,16 @@ var UsersInfoService = (function () {
      */
     UsersInfoService.prototype.createNewUser = function (usuario) {
         var _this = this;
-        var apiURL = "" + this.apiRootUsuario;
+        var apiRootUsuario = 'http://localhost:3000/api/UsuariosApp';
+        var apiURL = "" + apiRootUsuario;
         console.log(usuario);
         var params = {
             nombre: usuario.name,
             apellido: usuario.lastname,
             email: usuario.email,
             password: usuario.password,
-            usuario: usuario.username
+            usuario: usuario.username,
+            ciudades: []
         };
         console.log(params);
         var promise = new Promise(function (resolve, reject) {
@@ -3308,16 +3346,17 @@ var UsersInfoService = (function () {
      * @param params
      * @returns {Promise<T>}
      */
-    UsersInfoService.prototype.updateUserInfo = function (idUsuario, params) {
+    UsersInfoService.prototype.updateUserInfo = function (idUsuario, params, authToken) {
         var _this = this;
-        var apiURL = this.apiRootUsuario + "/" + idUsuario;
+        var apiRootUsuario = 'http://localhost:3000/api/UsuariosApp';
+        var apiURL = apiRootUsuario + "/" + idUsuario;
         console.log(apiURL);
         var promise = new Promise(function (resolve, reject) {
-            _this.http.put(apiURL, params)
+            _this.http.patch(apiURL, params, _this.createHeaders(authToken))
                 .toPromise()
                 .then(function (res) {
                 var user = res.json();
-                resolve(new Usuario(user.nombre, user.apellido, user.usuario, user.email, user.password, user.ciudades));
+                resolve(new Usuario(user.nombre, user.apellido, user.usuario, user.email, null, user.ciudades));
             }, function (msg) {
                 reject(msg);
             });
@@ -3419,7 +3458,7 @@ GraphsService = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavBar; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dashboard_dashboard__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dashboard_dashboard__ = __webpack_require__(351);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__cities_cities__ = __webpack_require__(352);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__myaccount_myaccount__ = __webpack_require__(353);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__stats_stats__ = __webpack_require__(354);
@@ -3641,7 +3680,9 @@ var ForecastService = (function () {
             "Patchy moderate snow": "md-snow",
             "Blowing snow": "md-snow",
             "Light drizzle": "md-umbrella",
-            "Light freezing rain": "md-snow"
+            "Light freezing rain": "md-snow",
+            "Moderate or heavy rain shower": "md-umbrella",
+            "Heavy rain at times": "md-umbrella"
         };
         /**
          * Utility map for pretty-printing dates
@@ -3756,15 +3797,206 @@ var ForecastService = (function () {
 }());
 ForecastService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
 ], ForecastService);
 
-var _a;
 //# sourceMappingURL=forecastService.js.map
 
 /***/ }),
 
-/***/ 70:
+/***/ 56:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return UserLogin; });
+/* unused harmony export AuthorizationToken */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthorizationService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Data transfer object that encodes the credentials of a potential user that wants to login into the system
+ */
+var UserLogin = (function () {
+    /**
+     * @param username: potential user username
+     * @param password: potential user password
+     * @param timestamp: time at which the login was attempted
+     * @param privileges: what kind of user, admin or common
+     */
+    function UserLogin(username, password, timestamp, privileges) {
+        this.username = username;
+        this.password = password;
+        this.timestamp = timestamp;
+        this.privileges = privileges;
+    }
+    return UserLogin;
+}());
+
+/**
+ * Data transfer object that serves as an authentication token for logged users
+ */
+var AuthorizationToken = (function () {
+    /**
+     * @param authorized: the user is authorized
+     * @param timestamp: authorization operation timestamp
+     * @param validUntil: time at which the token expires, users will be logged out if this happens
+     * @param privileges: what kind of user, admin or common
+     */
+    function AuthorizationToken(authorized, timestamp, validUntil, privileges) {
+        this.authorized = authorized;
+        this.timestamp = timestamp;
+        this.validUntil = validUntil;
+        this.privileges = privileges;
+    }
+    return AuthorizationToken;
+}());
+
+/**
+ * Service that provides authentication mechanisms for the login workflow
+ */
+var AuthorizationService = (function () {
+    function AuthorizationService(http) {
+        this.http = http;
+        /**
+         * Backend REST endpoint URL to retrieve the conversation between a user and the chatbot
+         */
+        this.apiRoot = '../assets/json/user/user.json';
+    }
+    AuthorizationService.prototype.login = function (email, password) {
+        var _this = this;
+        var apiUsuariosLogin = 'http://localhost:3000/api/UsuariosApp/login';
+        var params = {
+            email: email,
+            password: password
+        };
+        var promise = new Promise(function (resolve, reject) {
+            _this.http.post(apiUsuariosLogin, params)
+                .toPromise()
+                .then(function (res) {
+                var params = {
+                    id: res.json().id,
+                    userId: res.json().userId
+                };
+                resolve(params);
+            }, function (msg) {
+                reject(msg);
+            });
+        }).catch(function (e) {
+            console.log(e);
+        });
+        return promise;
+    };
+    AuthorizationService.prototype.createHeaders = function (authToken) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+        headers.append('Authorization', authToken);
+        return new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+    };
+    AuthorizationService.prototype.logout = function (authToken) {
+        var _this = this;
+        var apiUsuariosLogin = 'http://localhost:3000/api/UsuariosApp/logout?access_token=' + authToken;
+        var params = {
+            access_token: authToken,
+        };
+        var promise = new Promise(function (resolve, reject) {
+            _this.http.post(apiUsuariosLogin, params, _this.createHeaders(authToken))
+                .toPromise()
+                .then(function (res) {
+                console.log(res.json());
+                var params = {
+                    message: "logging out",
+                };
+                resolve(params);
+            }, function (msg) {
+                reject(msg);
+            });
+        }).catch(function (e) {
+            console.log(e);
+        });
+        return promise;
+    };
+    // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
+    /**
+     * This method performs a lookup in the database and checks if the credentials are valid,
+     * then builds the approprite authorization for administrators, common users or rejected users.
+     * @param userToBeAuthorized: user that wants to log into the system
+     * @returns {Promise<T>}: returns a promise that resolves to the authoriztion token encoded in the approprite DTO
+     */
+    //TODO: determine token expiration mechanisms, maybe set a default amount of time and extend based on activity??
+    AuthorizationService.prototype.authorizeUser = function (userToBeAuthorized) {
+        var _this = this;
+        var apiURL = "" + this.apiRoot;
+        var promise = new Promise(function (resolve, reject) {
+            _this.http.get(apiURL)
+                .toPromise()
+                .then(function (res) {
+                var users = __WEBPACK_IMPORTED_MODULE_2_jquery__["map"](res.json(), function (e) { return e; });
+                var authorized = false;
+                var timestamp = (new Date()) + "";
+                var validUntil = "0000";
+                var authTokenPrivileges = "user";
+                __WEBPACK_IMPORTED_MODULE_2_jquery__["each"](users, function (i, user) {
+                    console.log(user);
+                    if (userToBeAuthorized.password == user.password && userToBeAuthorized.username == user.username) {
+                        authorized = true;
+                        validUntil = "1111";
+                        if (user.privileges == "admin") {
+                            authTokenPrivileges = "admin";
+                        }
+                    }
+                });
+                resolve(new AuthorizationToken(authorized, timestamp, validUntil, authTokenPrivileges));
+            }, function (msg) {
+                reject(msg);
+            });
+        });
+        return promise;
+    };
+    AuthorizationService.prototype.retrieveUserInfo = function () {
+        var _this = this;
+        var apiURL = "" + this.apiRoot;
+        var promise = new Promise(function (resolve, reject) {
+            _this.http.get(apiURL)
+                .toPromise()
+                .then(function (res) {
+                var info = [];
+                var infoJson = __WEBPACK_IMPORTED_MODULE_2_jquery__["map"](res.json(), function (e) { return e; });
+                console.log(infoJson);
+                __WEBPACK_IMPORTED_MODULE_2_jquery__["each"](infoJson, function (i, information) {
+                    info.push(new UserLogin(information.username, information.password, information.timestamp, information.privilages));
+                });
+                resolve(info);
+            }, function (msg) {
+                reject(msg);
+            });
+        });
+        return promise;
+    };
+    return AuthorizationService;
+}());
+AuthorizationService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+], AuthorizationService);
+
+//# sourceMappingURL=authService.js.map
+
+/***/ }),
+
+/***/ 71:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3941,147 +4173,6 @@ CityManagerService = __decorate([
 ], CityManagerService);
 
 //# sourceMappingURL=cityManagerService.js.map
-
-/***/ }),
-
-/***/ 72:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return UserLogin; });
-/* unused harmony export AuthorizationToken */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthorizationService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_jquery__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-/**
- * Data transfer object that encodes the credentials of a potential user that wants to login into the system
- */
-var UserLogin = (function () {
-    /**
-     * @param username: potential user username
-     * @param password: potential user password
-     * @param timestamp: time at which the login was attempted
-     * @param privileges: what kind of user, admin or common
-     */
-    function UserLogin(username, password, timestamp, privileges) {
-        this.username = username;
-        this.password = password;
-        this.timestamp = timestamp;
-        this.privileges = privileges;
-    }
-    return UserLogin;
-}());
-
-/**
- * Data transfer object that serves as an authentication token for logged users
- */
-var AuthorizationToken = (function () {
-    /**
-     * @param authorized: the user is authorized
-     * @param timestamp: authorization operation timestamp
-     * @param validUntil: time at which the token expires, users will be logged out if this happens
-     * @param privileges: what kind of user, admin or common
-     */
-    function AuthorizationToken(authorized, timestamp, validUntil, privileges) {
-        this.authorized = authorized;
-        this.timestamp = timestamp;
-        this.validUntil = validUntil;
-        this.privileges = privileges;
-    }
-    return AuthorizationToken;
-}());
-
-/**
- * Service that provides authentication mechanisms for the login workflow
- */
-var AuthorizationService = (function () {
-    function AuthorizationService(http) {
-        this.http = http;
-        //Currently a dummy call to a local json
-        /**
-         * Backend REST endpoint URL to retrieve the conversation between a user and the chatbot
-         */
-        this.apiRoot = '../assets/json/user/user.json';
-    }
-    // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
-    /**
-     * This method performs a lookup in the database and checks if the credentials are valid,
-     * then builds the approprite authorization for administrators, common users or rejected users.
-     * @param userToBeAuthorized: user that wants to log into the system
-     * @returns {Promise<T>}: returns a promise that resolves to the authoriztion token encoded in the approprite DTO
-     */
-    //TODO: determine token expiration mechanisms, maybe set a default amount of time and extend based on activity??
-    AuthorizationService.prototype.authorizeUser = function (userToBeAuthorized) {
-        var _this = this;
-        var apiURL = "" + this.apiRoot;
-        var promise = new Promise(function (resolve, reject) {
-            _this.http.get(apiURL)
-                .toPromise()
-                .then(function (res) {
-                var users = __WEBPACK_IMPORTED_MODULE_2_jquery__["map"](res.json(), function (e) { return e; });
-                var authorized = false;
-                var timestamp = (new Date()) + "";
-                var validUntil = "0000";
-                var authTokenPrivileges = "user";
-                __WEBPACK_IMPORTED_MODULE_2_jquery__["each"](users, function (i, user) {
-                    console.log(user);
-                    if (userToBeAuthorized.password == user.password && userToBeAuthorized.username == user.username) {
-                        authorized = true;
-                        validUntil = "1111";
-                        if (user.privileges == "admin") {
-                            authTokenPrivileges = "admin";
-                        }
-                    }
-                });
-                resolve(new AuthorizationToken(authorized, timestamp, validUntil, authTokenPrivileges));
-            }, function (msg) {
-                reject(msg);
-            });
-        });
-        return promise;
-    };
-    AuthorizationService.prototype.retrieveUserInfo = function () {
-        var _this = this;
-        var apiURL = "" + this.apiRoot;
-        var promise = new Promise(function (resolve, reject) {
-            _this.http.get(apiURL)
-                .toPromise()
-                .then(function (res) {
-                var info = [];
-                var infoJson = __WEBPACK_IMPORTED_MODULE_2_jquery__["map"](res.json(), function (e) { return e; });
-                console.log(infoJson);
-                __WEBPACK_IMPORTED_MODULE_2_jquery__["each"](infoJson, function (i, information) {
-                    info.push(new UserLogin(information.username, information.password, information.timestamp, information.privilages));
-                });
-                resolve(info);
-            }, function (msg) {
-                reject(msg);
-            });
-        });
-        return promise;
-    };
-    return AuthorizationService;
-}());
-AuthorizationService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
-], AuthorizationService);
-
-//# sourceMappingURL=authService.js.map
 
 /***/ })
 

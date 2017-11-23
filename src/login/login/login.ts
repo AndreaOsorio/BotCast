@@ -5,6 +5,7 @@ import {RegisterPage} from '../register/register';
 import {UserLogin, AuthorizationService, AuthorizationToken} from '../../services/authService'
 
 import {AdminDashboard} from '../../pages/admin/dashboard/dashboard'
+import {PrincipalPage} from "../../pages/principal/principal";
 
 @Component({
     selector: 'login',
@@ -19,6 +20,9 @@ export class LoginPage {
         this.user = new UserLogin("x","123","",""); //testing user
     }
 
+    private email:string = "";
+    private password:string = "";
+
     /**
      * Makes a call to authorize users according to their credentials
      * Currently, only 2 types of users exist: administrators and common users
@@ -26,19 +30,21 @@ export class LoginPage {
      * page with current a list of currently registered cities.
      * An authorization token is provided to every user which specifies his/her privileges and expiration time
      */
-    public login():void{
-        console.log(this.user);
-        this.authorizationService.authorizeUser(this.user).then(data=>{
-            if(data.authorized){
-                if(data.privileges=="admin"){
-                    this.navCtrl.push(AdminDashboard,{
-                        authToken:data
+    public login(){
+
+        this.authorizationService.login(this.email, this.password).then(loginData=>{
+
+            console.log(loginData);
+
+            try {
+                this.navCtrl.push(TabsPage,
+                    {
+                        tokenId: loginData["id"],
+                        userId: loginData["userId"]
                     });
-                }else{
-                    this.navCtrl.push(TabsPage,{
-                        authToken:data
-                    });
-                }
+            } catch(e) {
+                console.log(e);
+                console.log("Oh no there was an error!!!");
 
             }
         });

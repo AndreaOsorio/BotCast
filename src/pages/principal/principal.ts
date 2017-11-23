@@ -5,8 +5,10 @@ import { ModalController, NavController, NavParams} from 'ionic-angular';
 import { GeolocationService, RawLocation, GeolocationAddress} from '../../services/geolocationService';
 import { CityManagerService } from '../../services/cityManagerService'
 import { UsersInfoService, Usuario } from '../../services/usersInfoService'
+import { AuthorizationService } from '../../services/authService'
 import { AddCityModal } from './addCity/addCity'
 import * as $ from 'jquery';
+import {LoginPage} from "../../login/login/login";
 
 @Component({
     selector: 'principal',
@@ -44,19 +46,21 @@ export class PrincipalPage {
         public navParams: NavParams,
         private geolocationService: GeolocationService,
         public modalCtrl: ModalController,
-        public usersInfoService: UsersInfoService) {
+        public usersInfoService: UsersInfoService,
+        public authorizationService: AuthorizationService) {
 
         this.todaysDate = this.getTodaysDate();
 
         this.makeApiCalls("");
-        // localStorage.idUsuario = "5a0b9f287a1a680d8bdeb0e5";
-        localStorage.idUsuario = "5a1280b7f266795bde5ec74f";
 
+        console.log("AUTHTOKEN")
+        console.log(localStorage.authToken)
+        console.log(navParams.get('tokenId'))
 
-        //TODO: connect with real user login id
-        usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(
+        usersInfoService.retrieveUserInfoById(localStorage.idUsuario, localStorage.authToken).then(
             res =>{
                 this.currentUser =  res;
+                console.log(this.currentUser);
             }
         );
 
@@ -72,6 +76,12 @@ export class PrincipalPage {
         this.checkCityAddedToFavorites();
         this.checkCityRemovedFromFavorites();
 
+    }
+
+    public logout(){
+        this.authorizationService.logout(localStorage.authToken)
+        localStorage.authToken = "";
+        this.navCtrl.push(LoginPage);
     }
 
     public checkCityAddedToFavorites(){
@@ -121,7 +131,6 @@ export class PrincipalPage {
             city = "Amsterdam";
         }
 
-
         this.forecastService.currentWeather(city).then( data=>{
             this.todayForecast = data
             this.todayHourlyForecast = this.todayForecast[0].hourlyForecast
@@ -133,7 +142,7 @@ export class PrincipalPage {
             console.log(this.nextDaysForecast)
         });
 
-        this.usersInfoService.retrieveUserInfoById(localStorage.idUsuario).then(
+        this.usersInfoService.retrieveUserInfoById(localStorage.idUsuario, localStorage.authToken).then(
             res =>{
                 this.currentUser=  res;
                 let arreglo_nombres = this.currentUser.cities.map(ciudad => new Ciudad(ciudad["name"]))

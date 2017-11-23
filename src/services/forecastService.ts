@@ -81,7 +81,7 @@ export class ForecastService {
      * Map for building the appropriate icons in the main users forecast tab based on
      * the apixu API data
      */
-    private iconMap ={
+    private iconMap = {
         "Partly cloudy": "md-partly-sunny",
         "Overcast": "md-cloudy",
         "Light rain":"md-umbrella",
@@ -101,7 +101,9 @@ export class ForecastService {
         "Patchy moderate snow":"md-snow",
         "Blowing snow":"md-snow",
         "Light drizzle":"md-umbrella",
-        "Light freezing rain":"md-snow"
+        "Light freezing rain":"md-snow",
+        "Moderate or heavy rain shower": "md-umbrella",
+        "Heavy rain at times":"md-umbrella"
     }
 
     /**

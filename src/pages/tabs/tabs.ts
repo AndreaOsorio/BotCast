@@ -3,6 +3,7 @@ import { PrincipalPage } from '../principal/principal'
 import { GraphsPage } from '../graficas/graficas'
 import { ChatbotPage } from '../chatbot/chatbot'
 import { MyForecastsPage } from '../myforecasts/myforecasts'
+import { ViewController, NavParams, NavController} from 'ionic-angular';
 
 
 @Component({
@@ -19,7 +20,11 @@ export class TabsPage {
   tab3Root = ChatbotPage;
   tab4Root = MyForecastsPage;
 
-  constructor() {
+  constructor(private navParams:NavParams,
+              private navController:NavController) {
+
+    localStorage.authToken = navParams.get('tokenId');
+    localStorage.idUsuario = navParams.get('userId');
 
   }
 }

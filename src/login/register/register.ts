@@ -36,14 +36,13 @@ export class RegisterPage {
 
     presentAlert() {
         let alert = this.alertCtrl.create({
-            title: 'Thanks for registering! You will now be taken to the site.',
+            title: 'Thanks for registering! You can now log in.',
             buttons: [{
                 text: 'Ok',
                 handler: () => {
                     let navTransition = alert.dismiss();
                         navTransition.then(() => {
                             this.navCtrl.pop();
-                            this.navCtrl.push(PrincipalPage);
                         });
                     return false;
                 }

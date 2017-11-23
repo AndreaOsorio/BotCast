@@ -25,6 +25,7 @@ export class AddCityModal {
             this.cities = res;
         });
 
+        console.log(params.get('user'))
         this.currentUser = params.get('user');
     }
 
@@ -63,18 +64,19 @@ export class AddCityModal {
             );
         });
         this.selectedCities = aux;
+        console.log(this.currentUser);
         let params = {
             nombre: this.currentUser.name,
             apellido:this.currentUser.lastname,
             email:this.currentUser.email,
-            password: this.currentUser.password,
             usuario: this.currentUser.username,
             ciudades: this.selectedCities
         }
 
-        this.usersInfoService.updateUserInfo(localStorage.idUsuario, params).then(res=>{
+        this.usersInfoService.updateUserInfo(localStorage.idUsuario, params, localStorage.authToken).then(res=>{
             console.log("Cambios a lista guardados!")
             console.log(res)
+            this.viewCtrl.dismiss(this.selectedCities);
         })
     }
 

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, RequestOptions, Headers, Request, RequestMethod} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -7,7 +7,6 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/do';
 import * as $ from 'jquery';
-
 
 export class Information{
     /**
@@ -69,24 +68,31 @@ export class UsersInfoService {
      * Backend REST endpoint URL to retrieve the user info from JSON
      */
     apiRoot:string = '../assets/json/admin/usersinfo/usersinfo.json';
+    // apiRootUsuario:string = 'http://localhost:3000/api/Usuarios';
 
-    apiRootUsuario:string = 'http://localhost:3000/api/Usuarios';
+    private createHeaders(authToken:string): RequestOptions{
+        let headers = new Headers();
+        headers.append('Authorization', authToken);
+        return new RequestOptions({ headers: headers });
 
+    }
 
-    public retrieveUserInfoById(idUsuario:string):Promise<Usuario>{
-        let apiURL = `${this.apiRootUsuario}/${idUsuario}`;
+    public retrieveUserInfoById(idUsuario:string, authToken:string):Promise<Usuario>{
+        let apiRootUsuario:string = 'http://localhost:3000/api/UsuariosApp';
+        let apiURL = `${apiRootUsuario}/${idUsuario}`;
         let promise = new Promise((resolve, reject) => {
-            this.http.get(apiURL)
+            this.http.get(apiURL, this.createHeaders(authToken))
                 .toPromise()
                 .then(
                     res=>{
                         let user = res.json()
+                        console.log(user)
                         resolve(new Usuario(
                             user.nombre,
                             user.apellido,
                             user.usuario,
                             user.email,
-                            user.password,
+                            null,
                             user.ciudades
                         ))
                     },
@@ -141,15 +147,16 @@ export class UsersInfoService {
      * @returns {Promise<T>}
      */
     public createNewUser(usuario:Usuario): Promise<UsuarioLogin>{
-
-        let apiURL = `${this.apiRootUsuario}`;
+        let apiRootUsuario:string = 'http://localhost:3000/api/UsuariosApp';
+        let apiURL = `${apiRootUsuario}`;
         console.log(usuario)
         let params = {
             nombre: usuario.name,
             apellido: usuario.lastname,
             email: usuario.email,
             password: usuario.password,
-            usuario: usuario.username
+            usuario: usuario.username,
+            ciudades: []
         }
         console.log(params)
         let promise = new Promise((resolve, reject) => {
@@ -179,11 +186,13 @@ export class UsersInfoService {
      * @param params
      * @returns {Promise<T>}
      */
-    public updateUserInfo(idUsuario:string, params):Promise<Usuario>{
-        let apiURL = `${this.apiRootUsuario}/${idUsuario}`;
+
+    public updateUserInfo(idUsuario:string, params, authToken):Promise<Usuario>{
+        let apiRootUsuario:string = 'http://localhost:3000/api/UsuariosApp';
+        let apiURL = `${apiRootUsuario}/${idUsuario}`;
         console.log(apiURL)
         let promise = new Promise((resolve, reject) => {
-            this.http.put(apiURL, params)
+            this.http.patch(apiURL, params, this.createHeaders(authToken))
                 .toPromise()
                 .then(
                     res=>{
@@ -193,7 +202,7 @@ export class UsersInfoService {
                             user.apellido,
                             user.usuario,
                             user.email,
-                            user.password,
+                            null,
                             user.ciudades
                         ))
                     },
