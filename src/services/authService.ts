@@ -122,12 +122,12 @@ export class AuthorizationService {
     // apiKey:String = '68940978733581cc8ee68abc6610f53e'; //for later
 
     /**
+     * MOCK: methods
      * This method performs a lookup in the database and checks if the credentials are valid,
      * then builds the approprite authorization for administrators, common users or rejected users.
      * @param userToBeAuthorized: user that wants to log into the system
      * @returns {Promise<T>}: returns a promise that resolves to the authoriztion token encoded in the approprite DTO
      */
-    //TODO: determine token expiration mechanisms, maybe set a default amount of time and extend based on activity??
     public authorizeUser(userToBeAuthorized:UserLogin):Promise<AuthorizationToken>{
         let apiURL = `${this.apiRoot}`;
 
@@ -167,6 +167,11 @@ export class AuthorizationService {
         return promise;
     }
 
+
+    /**
+     *
+     * @returns {Promise<T>}
+     */
     public retrieveUserInfo(): Promise<UserLogin[]>{
 
         let apiURL = `${this.apiRoot}`;

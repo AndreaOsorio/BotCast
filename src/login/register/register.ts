@@ -90,7 +90,7 @@ export class RegisterPage {
         this.addToErrorList(this.checkPasswordLength(this.password, this.confirmpassword));
 
         if (this.erroList.length==0) {
-            let usuario = new Usuario(this.name, this.lastname, this.username, this.email, this.password, [{}])
+            let usuario = new Usuario("", this.name, this.lastname, this.username, this.email, this.password, [{}], true, "")
             this.userInfoService.createNewUser(usuario).then(res => {
                 console.log(res);
                 this.presentAlert();

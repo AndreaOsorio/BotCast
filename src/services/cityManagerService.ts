@@ -60,29 +60,40 @@ export class CityManagerService {
             }
         }
 
-        let apiURL2 = `${this.apiRoot2}?filter=${JSON.stringify(query)}`;
+        let promise = null;
 
-        let promise = new Promise((resolve, reject) => {
-            this.http.get(apiURL2)
-                .toPromise()
-                .then(
-                    res => {
-                        let cities:Cities[] =[]
-                        let citiesJson = $.map(res.json(), function(e){return e});
-                        $.each(citiesJson, function(i,city){
-                            cities.push(new Cities(
-                                city.city,
-                                city.country,
-                                city.province)
-                            )
-                        });
-                        resolve(cities);
-                    },
-                    msg => {
-                        reject(msg);
-                    }
-                );
-        });
+        if(cityToSearch === "" || cityToSearch === undefined){
+            promise =  new Promise((resolve, reject)=>{
+                let arr = []
+                arr.push(new Cities("",0,""));
+                resolve(arr);
+            })
+        }else{
+            let apiURL2 = `${this.apiRoot2}?filter=${JSON.stringify(query)}`;
+
+            promise = new Promise((resolve, reject) => {
+                this.http.get(apiURL2)
+                    .toPromise()
+                    .then(
+                        res => {
+                            let cities:Cities[] =[]
+                            let citiesJson = $.map(res.json(), function(e){return e});
+                            $.each(citiesJson, function(i,city){
+                                cities.push(new Cities(
+                                    city.city,
+                                    city.country,
+                                    city.province)
+                                )
+                            });
+                            resolve(cities);
+                        },
+                        msg => {
+                            reject(msg);
+                        }
+                    );
+            });
+        }
+
         return promise;
     }
 

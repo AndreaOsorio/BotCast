@@ -40,12 +40,15 @@ export class Usuario{
      * @param cities
      */
     constructor(
+        public id:string,
         public name:string,
         public lastname:string,
         public username:string,
         public email:string,
         public password:string,
-        public cities: [object]
+        public cities: [object],
+        public active: boolean,
+        public credenciales:string
     ){}
 }
 
@@ -61,20 +64,50 @@ export class UsuarioLogin{
 @Injectable()
 export class UsersInfoService {
 
-    constructor(private http: Http) {
-    }
+    constructor(private http: Http) { }
 
     /**
      * Backend REST endpoint URL to retrieve the user info from JSON
      */
     apiRoot:string = '../assets/json/admin/usersinfo/usersinfo.json';
-    // apiRootUsuario:string = 'http://localhost:3000/api/Usuarios';
 
     private createHeaders(authToken:string): RequestOptions{
         let headers = new Headers();
         headers.append('Authorization', authToken);
         return new RequestOptions({ headers: headers });
 
+    }
+
+    public retrieveAllUsers(authToken:string): Promise<Usuario[]>{
+        let apiRootUsuario:string = 'http://localhost:3000/api/UsuariosApp';
+        let promise = new Promise((resolve, reject) => {
+            this.http.get(apiRootUsuario, this.createHeaders(authToken))
+                .toPromise()
+                .then(
+                    res=>{
+                        let arrUsuarios = res.json();
+                        let arrNuevo = []
+
+                        for(let user of arrUsuarios){
+                            arrNuevo.push(new Usuario(
+                                user.id,
+                                user.nombre,
+                                user.apellido,
+                                user.usuario,
+                                user.email,
+                                null,
+                                user.ciudades,
+                                user.activo,
+                                user.credenciales))
+                        }
+                        resolve(arrNuevo);
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                )
+        });
+        return promise;
     }
 
     public retrieveUserInfoById(idUsuario:string, authToken:string):Promise<Usuario>{
@@ -86,14 +119,16 @@ export class UsersInfoService {
                 .then(
                     res=>{
                         let user = res.json()
-                        console.log(user)
                         resolve(new Usuario(
+                            user.id,
                             user.nombre,
                             user.apellido,
                             user.usuario,
                             user.email,
                             null,
-                            user.ciudades
+                            user.ciudades,
+                            user.activo,
+                            user.credenciales
                         ))
                     },
                     msg => {
@@ -118,7 +153,6 @@ export class UsersInfoService {
                     res => {
                         let infos:Information[] =[]
                         let infosJson = $.map(res.json(), function(e){return e});
-                        console.log(infosJson)
                         $.each(infosJson, function(i,info){
                             infos.push(new Information(
                                 info.name,
@@ -149,7 +183,6 @@ export class UsersInfoService {
     public createNewUser(usuario:Usuario): Promise<UsuarioLogin>{
         let apiRootUsuario:string = 'http://localhost:3000/api/UsuariosApp';
         let apiURL = `${apiRootUsuario}`;
-        console.log(usuario)
         let params = {
             nombre: usuario.name,
             apellido: usuario.lastname,
@@ -158,13 +191,11 @@ export class UsersInfoService {
             usuario: usuario.username,
             ciudades: []
         }
-        console.log(params)
         let promise = new Promise((resolve, reject) => {
             this.http.post(apiURL, params)
                 .toPromise()
                 .then(
                     res=>{
-                        console.log(res)
                         let user = res.json()
                         resolve(new UsuarioLogin(
                             user.nombre,
@@ -190,7 +221,6 @@ export class UsersInfoService {
     public updateUserInfo(idUsuario:string, params, authToken):Promise<Usuario>{
         let apiRootUsuario:string = 'http://localhost:3000/api/UsuariosApp';
         let apiURL = `${apiRootUsuario}/${idUsuario}`;
-        console.log(apiURL)
         let promise = new Promise((resolve, reject) => {
             this.http.patch(apiURL, params, this.createHeaders(authToken))
                 .toPromise()
@@ -198,12 +228,15 @@ export class UsersInfoService {
                     res=>{
                         let user = res.json()
                         resolve(new Usuario(
+                            null,
                             user.nombre,
                             user.apellido,
                             user.usuario,
                             user.email,
                             null,
-                            user.ciudades
+                            user.ciudades,
+                            user.activo,
+                            null
                         ))
                     },
                     msg => {

@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import {LoginPage} from '../../../login/login/login'
-import {TopSearched, Visitors, VisitorService, SearchedService} from '../../../services/dashboardService';
+import { NavController, NavParams } from 'ionic-angular';
+import {TopSearched, Visitors } from '../../../services/dashboardService';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+import { StatService } from '../../../services/statsService'
 
 
 @Component({
@@ -16,9 +16,8 @@ import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 export class AdminDashboard {
 
 	/**
-	 *	Chart implementation for monthly visitors 
+	 *	Chart implementation for dialy visitors
 	 */
-	
 	@ViewChild("baseChart") chart: BaseChartDirective;
 
 	public lineChartData:Array<any>= [{data:[0,0,0,0,0,0], label:'Series A'}];
@@ -61,18 +60,52 @@ export class AdminDashboard {
 	public visitors: Visitors[] = [];
 
 
-    public constructor(private visitorService: VisitorService, private seachedService: SearchedService,  public navCtrl: NavController) {
-  
-        seachedService.retrieveInfo().then(data=>this.tops=data);
+    public constructor(public navCtrl: NavController,
+                       public navParams: NavParams,
+                       public statService:StatService) {
 
-        //visitorService.retrieveInfo().then(data=>this.visitors=data);
+        localStorage.authToken = navParams.get('tokenId');
+        localStorage.idUsuario = navParams.get('userId');
 
-        visitorService.retrieveInfo().then(data => 
-        {
-        	this.lineChartData = [{data: this.getVisits(data), label: "Monthly visits"}];
-            this.lineChartLabels = this.buildLabelArray(data);
-            this.reloadChart();
+        this.displayDashboardData();
+
+    }
+
+    /**
+     * Retrieve stat data to build dashboard data elements periodically
+     */
+    displayDashboardData(){
+        this.statService.retrieveRealStats().then(data=>{
+            this.buildVisitorsGraph(data);
+            this.buildTopCitiesTable(data);
+        })
+    }
+
+    /**
+     * Build visitor chart with stat service information
+     * @param data
+     */
+    buildVisitorsGraph(data){
+        let fechas = data[0].fechas;
+        this.lineChartData = [{data: fechas.map(fecha=>fecha.contador), label: "Daily visits"}];
+        this.lineChartLabels = fechas.map(f=>f.fecha);
+        this.reloadChart();
+    }
+
+    /**
+     * Build top favorite cities table with stat service information
+     * @param data
+     */
+    buildTopCitiesTable(data){
+        let ciudades = data[0].ciudades;
+        ciudades.sort(function(city1, city2){
+            return city1.contador - city2.contador
         });
+        ciudades.reverse();
+        ciudades = ciudades.slice(0,8);
+
+        this.tops = ciudades
+        console.log(this.tops);
     }
 
     /**
@@ -83,30 +116,10 @@ export class AdminDashboard {
         if (this.chart !== undefined) {
             this.chart.chart.destroy();
             this.chart.chart = 0;
-
             this.chart.labels = this.lineChartLabels;
             this.chart.datasets = this.lineChartData;
             this.chart.ngOnInit();
         }
     }
 
-    /**
-     * Auxiliary function for filling data buffers in the correct format
-     * @param visitors: takes in a Visitors array and maps it it to a typical JS array
-     * @returns {number,number,number,number,number]}: array of number of visits according to Json data
-     */
-    public getVisits(visitors:Visitors[]): number[]{
-        return visitors.map(e=>e.visits);
-    }
-
-    /**
-     * Auxiliary function for filling the label buffers in the correct format
-     * @param visitors: takes in a Visitors array, takes its months and build the label data buffer
-     * @returns {[string,string,string,string,string]}: array of months as strings in a correct format
-     */
-	public buildLabelArray(visitors:Visitors[]): string[]{
-        return visitors.map(e=>e.month);
-    }
-
-    
 }

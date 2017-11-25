@@ -238,7 +238,6 @@ export class ChatbotService {
         }
 
         return this.forecastService.weatherNextDays(location, diff).then( res => {
-            console.log("SHELLER")
             console.log(res)
             let forecast = res[res.length-1]
             if (datetime.grain=="day") {

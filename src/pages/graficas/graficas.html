@@ -54,7 +54,7 @@
     <ion-row>
         <ion-item>
             <ion-label>Initial date</ion-label>
-            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{todaysDate}} [(ngModel)]="selectedInitDate"></ion-datetime>
+            <ion-datetime displayFormat="MM/DD/YYYY" initialValue = {{todaysDate}} min={{todaysDate}} max={{maxFutureDate}} [(ngModel)]="selectedInitDate" (ngModelChange)="triggerChartUpdateOnFinalDateChange($event)"></ion-datetime>
         </ion-item>
     </ion-row>
     <ion-row>

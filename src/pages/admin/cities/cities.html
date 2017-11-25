@@ -35,13 +35,11 @@
             <ion-row>
                 <ion-col><h4>City</h4></ion-col>
                 <ion-col><h4>Country</h4></ion-col>
-                <ion-col><h4>Status</h4></ion-col>
                 <ion-col><h4></h4></ion-col>
             </ion-row>
             <ion-row *ngFor="let city of cities" class="row-cities">
                 <ion-col><input type="hidden" value={{city.id}} />{{city.name+", "+city.province}}</ion-col>
                 <ion-col>{{city.country}}</ion-col>
-                <ion-col>{{city.active}}</ion-col>
                 <ion-col>
                     <button ion-button icon-only clear item-right (click)="removeFromActiveCities($event)"><ion-icon name="close-circle"></ion-icon></button>
                 </ion-col>

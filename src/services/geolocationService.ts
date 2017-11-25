@@ -51,13 +51,11 @@ export class GeolocationService {
      */
     public getMyCurrentAddressBasedOnLatLong(latlng:RawLocation): Promise<GeolocationAddress> {
         let apiURL = `${this.apiRoot}?latlng=${latlng.latitude},${latlng.longitude}&key=${this.apiKey}`;
-        console.log(apiURL)
         let promise = new Promise((resolve, reject) => {
             this.http.get(apiURL)
                 .toPromise()
                 .then(
                     res => {
-                        console.log(res.json());
                         resolve(new GeolocationAddress(
                             new RawLocation(latlng.latitude,latlng.longitude),
                             res.json().results[0].formatted_address,

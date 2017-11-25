@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { MyCitiesService, Ciudad } from '../../services/citiesService';
+import { Ciudad } from '../../services/citiesService';
 import { ForecastService, TodayForecast, HourForecast, NextDaysForecast } from '../../services/forecastService';
 import { ModalController, NavController, NavParams} from 'ionic-angular';
 import { GeolocationService, RawLocation, GeolocationAddress} from '../../services/geolocationService';
-import { CityManagerService } from '../../services/cityManagerService'
 import { UsersInfoService, Usuario } from '../../services/usersInfoService'
 import { AuthorizationService } from '../../services/authService'
 import { AddCityModal } from './addCity/addCity'
 import * as $ from 'jquery';
-import {LoginPage} from "../../login/login/login";
+import { LoginPage } from "../../login/login/login";
+import { StatService } from '../../services/statsService'
 
 @Component({
     selector: 'principal',
@@ -47,37 +47,49 @@ export class PrincipalPage {
         private geolocationService: GeolocationService,
         public modalCtrl: ModalController,
         public usersInfoService: UsersInfoService,
-        public authorizationService: AuthorizationService) {
+        public authorizationService: AuthorizationService,
+        public statService:StatService) {
 
         this.todaysDate = this.getTodaysDate();
 
         this.makeApiCalls("");
 
-        console.log("AUTHTOKEN")
-        console.log(localStorage.authToken)
-        console.log(navParams.get('tokenId'))
-
-        usersInfoService.retrieveUserInfoById(localStorage.idUsuario, localStorage.authToken).then(
+        this.usersInfoService.retrieveUserInfoById(localStorage.idUsuario, localStorage.authToken).then(
             res =>{
                 this.currentUser =  res;
-                console.log(this.currentUser);
+                console.log(this.currentUser.credenciales);
             }
         );
 
-        console.log("IDUSUARIO IN LOCALSTORAGE")
-        console.log(localStorage.idUsuario);
+        this.statService.retrieveRealStats().then(res=>{
+            let listaFechas   = res[0].fechas;
 
-        localStorage.newForecastSaved = 0;
-        localStorage.citySelectedFromForecastList = 0;
-        localStorage.cityAddedToFavorites = 0;
-        localStorage.cityRemovedFromFavorites = 0;
-        localStorage.currentCity = "";
+            const statId      = res[0].id;
 
+            const today       = (new Date()).toISOString().substr(0,10);
+            const indexDate   = listaFechas.findIndex(fecha => fecha.fecha == today);
+
+            if (indexDate >= 0) {
+                listaFechas[indexDate].contador = listaFechas[indexDate].contador + 1;
+            } else {
+                listaFechas.push({fecha:today, contador:1});
+            }
+
+            const params = {
+                fechas: listaFechas,
+                ciudades: res[0].ciudades
+            }
+
+            this.statService.udpateRealStats(statId, params).then(result=>{
+                console.log("Stats upated!");
+            });
+        });
+
+        this.initializeGlobalVars();
         this.checkCityAddedToFavorites();
         this.checkCityRemovedFromFavorites();
-
     }
-
+    
     public logout(){
         this.authorizationService.logout(localStorage.authToken)
         localStorage.authToken = "";
@@ -104,12 +116,18 @@ export class PrincipalPage {
         }, 1000);
     }
 
+    public initializeGlobalVars(){
+        localStorage.newForecastSaved = 0;
+        localStorage.citySelectedFromForecastList = 0;
+        localStorage.cityAddedToFavorites = 0;
+        localStorage.cityRemovedFromFavorites = 0;
+        localStorage.currentCity = "";
+    }
 
     presentAddCityModal() {
         let contactModal = this.modalCtrl.create(AddCityModal, {user: this.currentUser});
         contactModal .onDidDismiss(ciudad => {
             if(ciudad!==null && ciudad.length>0){
-                console.log(ciudad)
                 let arreglo_nombres = ciudad.map(c=> new Ciudad(c.name))
                 localStorage.userCities = JSON.stringify(arreglo_nombres);
                 this.ciudades = arreglo_nombres
@@ -134,12 +152,10 @@ export class PrincipalPage {
         this.forecastService.currentWeather(city).then( data=>{
             this.todayForecast = data
             this.todayHourlyForecast = this.todayForecast[0].hourlyForecast
-            console.log(this.todayForecast)
         });
 
         this.forecastService.weatherNextDays(city).then( data=>{
             this.nextDaysForecast = data
-            console.log(this.nextDaysForecast)
         });
 
         this.usersInfoService.retrieveUserInfoById(localStorage.idUsuario, localStorage.authToken).then(
@@ -182,10 +198,6 @@ export class PrincipalPage {
         this.makeApiCalls(cityName);
         this.currentCity = cityName;
         localStorage.currentCity = this.currentCity
-    }
-
-    public moveToAddCityWindow() {
-        console.log("moving window!");
     }
 
     /**

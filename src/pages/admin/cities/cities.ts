@@ -43,7 +43,14 @@ export class AdminCities {
             $("#ion-grid-search-results-container").show();
         }
 
-        this.cityManagerService.retrieveSearchedCityInfo(searchedCity).then(data => this.citiesSearch = data);
+        this.cityManagerService.retrieveSearchedCityInfo(searchedCity).then(data => {
+                if (this.citiesSearch.length == 1 && this.citiesSearch[0].country == 0) {
+                    this.citiesSearch = [];
+                } else {
+                    this.citiesSearch = data;
+                }
+            }
+        );
     }
 
     removeFromActiveCities = function(e){
@@ -55,7 +62,6 @@ export class AdminCities {
                 return city.id !== idCityToDelete;
             });
         });
-
     }
 
     addToActiveCities = function(e){

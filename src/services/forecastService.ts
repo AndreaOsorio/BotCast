@@ -144,7 +144,6 @@ export class ForecastService {
             if((currentHour+5) > 23) days = 2;
         }
 
-        console.log()
 
         apiURL+="&days="+days
 
@@ -178,7 +177,6 @@ export class ForecastService {
                             let stringHour = numericHour <10 ? "0"+numericHour+":00" : numericHour+":00";
 
                             hours.push(new HourForecast(this.iconMap[h.condition.text], h.temp_c, stringHour))
-                            console.log(h.condition.text)
                             i++;
                         }
                         let todayForecastArray:TodayForecast[] = []
@@ -223,16 +221,11 @@ export class ForecastService {
 
                         let nextDaysForecasts:NextDaysForecast[] = [];
 
-                        console.log("Weather NExt Days")
-                        console.log(res.json())
 
                         let days = res.json().forecast.forecastday
                         let i = 0;
                         while(i < numberOfDays){
-
                             let dayOfWeekString = (i==0) ?  "Today" : this.dayOfWeekMap[new Date(days[i].date).getDay()];
-
-                            console.log(days[i].day.condition.text)
                             nextDaysForecasts.push(
                                 new NextDaysForecast(
                                     dayOfWeekString,

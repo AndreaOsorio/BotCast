@@ -55,4 +55,45 @@ export class StatService {
 
         return promise;
     }
+
+    retrieveRealStats(){
+        let apiURL:string = 'http://localhost:3000/api/Estadistica';
+        let promise = new Promise((resolve, reject) => {
+            this.http.get(apiURL)
+                .toPromise()
+                .then(
+                    res => {
+                        resolve(res.json());
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                );
+        });
+
+        return promise;
+    }
+
+    udpateRealStats(id, datos){
+        console.log(datos);
+        let fechas   =  datos.fechas
+        let ciudades =  datos.ciudades
+
+        let apiURL:string = 'http://localhost:3000/api/Estadistica/'+id;
+        let promise = new Promise((resolve, reject) => {
+            this.http.put(apiURL, {ciudades:ciudades, fechas:fechas})
+                .toPromise()
+                .then(
+                    res => {
+                        resolve(res.json());
+                    },
+                    msg => {
+                        reject(msg);
+                    }
+                );
+        });
+
+        return promise;
+    }
+
 }
